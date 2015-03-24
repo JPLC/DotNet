@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web API 1.Tests", "Web API 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloModel", "TrelloModel\TrelloModel.csproj", "{6350A9AC-917B-4A5D-8F81-DC4BEDBBC3D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrelloModelTests", "TrelloModelTests\TrelloModelTests.csproj", "{C2C68DB3-3470-4E19-B729-B02AD2E3D264}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6350A9AC-917B-4A5D-8F81-DC4BEDBBC3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6350A9AC-917B-4A5D-8F81-DC4BEDBBC3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6350A9AC-917B-4A5D-8F81-DC4BEDBBC3D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2C68DB3-3470-4E19-B729-B02AD2E3D264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2C68DB3-3470-4E19-B729-B02AD2E3D264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2C68DB3-3470-4E19-B729-B02AD2E3D264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2C68DB3-3470-4E19-B729-B02AD2E3D264}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
