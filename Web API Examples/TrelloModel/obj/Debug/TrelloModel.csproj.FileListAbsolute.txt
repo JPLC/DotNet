@@ -1,0 +1,12 @@
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\TrelloModel.dll.config
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\TrelloModel.dll
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\TrelloModel.pdb
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\EntityFramework.dll
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\EntityFramework.SqlServer.dll
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\MoreLinq.dll
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\EntityFramework.xml
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\EntityFramework.SqlServer.xml
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\bin\Debug\MoreLinq.xml
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\obj\Debug\TrelloModel.csprojResolveAssemblyReference.cache
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\obj\Debug\TrelloModel.dll
+c:\users\joão\documents\visual studio 2013\Projects\Web API Examples\TrelloModel\obj\Debug\TrelloModel.pdb

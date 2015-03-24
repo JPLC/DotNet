@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TrelloModelDB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="TrelloModelDBStoreContainer">
+    <EntitySet Name="Board" EntityType="TrelloModelDB.Store.Board" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="List" EntityType="TrelloModelDB.Store.List" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Card" EntityType="TrelloModelDB.Store.Card" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BoardList" Association="TrelloModelDB.Store.BoardList">
+      <End Role="Board" EntitySet="Board" />
+      <End Role="List" EntitySet="List" />
+    </AssociationSet>
+    <AssociationSet Name="BoardCard" Association="TrelloModelDB.Store.BoardCard">
+      <End Role="Board" EntitySet="Board" />
+      <End Role="Card" EntitySet="Card" />
+    </AssociationSet>
+    <AssociationSet Name="ListCard" Association="TrelloModelDB.Store.ListCard">
+      <End Role="List" EntitySet="List" />
+      <End Role="Card" EntitySet="Card" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Board">
+    <Key>
+      <PropertyRef Name="BoardId" />
+    </Key>
+    <Property Name="BoardId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Discription" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="List">
+    <Key>
+      <PropertyRef Name="ListId" />
+    </Key>
+    <Property Name="ListId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Lix" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BoardId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardId" />
+    </Key>
+    <Property Name="CardId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Cix" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Discription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreationDate" Type="time" Nullable="false" />
+    <Property Name="DueDate" Type="time" Nullable="false" />
+    <Property Name="BoardId" Type="int" Nullable="false" />
+    <Property Name="ListId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="BoardList">
+    <End Role="Board" Type="TrelloModelDB.Store.Board" Multiplicity="1" />
+    <End Role="List" Type="TrelloModelDB.Store.List" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Board">
+        <PropertyRef Name="BoardId" />
+      </Principal>
+      <Dependent Role="List">
+        <PropertyRef Name="BoardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BoardCard">
+    <End Role="Board" Type="TrelloModelDB.Store.Board" Multiplicity="1" />
+    <End Role="Card" Type="TrelloModelDB.Store.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Board">
+        <PropertyRef Name="BoardId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="BoardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ListCard">
+    <End Role="List" Type="TrelloModelDB.Store.List" Multiplicity="1" />
+    <End Role="Card" Type="TrelloModelDB.Store.Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="List">
+        <PropertyRef Name="ListId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="ListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

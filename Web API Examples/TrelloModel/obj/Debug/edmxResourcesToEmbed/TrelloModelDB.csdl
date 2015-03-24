@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="TrelloModelDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="TrelloModelDBContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Board" EntityType="TrelloModelDB.Board" />
+    <EntitySet Name="List" EntityType="TrelloModelDB.List" />
+    <EntitySet Name="Card" EntityType="TrelloModelDB.Card" />
+    <AssociationSet Name="BoardList" Association="TrelloModelDB.BoardList">
+      <End Role="Board" EntitySet="Board" />
+      <End Role="List" EntitySet="List" />
+    </AssociationSet>
+    <AssociationSet Name="BoardCard" Association="TrelloModelDB.BoardCard">
+      <End Role="Board" EntitySet="Board" />
+      <End Role="Card" EntitySet="Card" />
+    </AssociationSet>
+    <AssociationSet Name="ListCard" Association="TrelloModelDB.ListCard">
+      <End Role="List" EntitySet="List" />
+      <End Role="Card" EntitySet="Card" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Board">
+    <Key>
+      <PropertyRef Name="BoardId" />
+    </Key>
+    <Property Name="BoardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Discription" Type="String" Nullable="false" />
+    <NavigationProperty Name="Lists" Relationship="TrelloModelDB.BoardList" FromRole="Board" ToRole="List" />
+    <NavigationProperty Name="Cards" Relationship="TrelloModelDB.BoardCard" FromRole="Board" ToRole="Card" />
+  </EntityType>
+  <EntityType Name="List">
+    <Key>
+      <PropertyRef Name="ListId" />
+    </Key>
+    <Property Name="ListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Lix" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <NavigationProperty Name="Board" Relationship="TrelloModelDB.BoardList" FromRole="List" ToRole="Board" />
+    <Property Name="BoardId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Cards" Relationship="TrelloModelDB.ListCard" FromRole="List" ToRole="Card" />
+  </EntityType>
+  <EntityType Name="Card">
+    <Key>
+      <PropertyRef Name="CardId" />
+    </Key>
+    <Property Name="CardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Cix" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Discription" Type="String" Nullable="false" />
+    <Property Name="CreationDate" Type="Time" Nullable="false" />
+    <Property Name="DueDate" Type="Time" Nullable="false" />
+    <NavigationProperty Name="Board" Relationship="TrelloModelDB.BoardCard" FromRole="Card" ToRole="Board" />
+    <Property Name="BoardId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="List" Relationship="TrelloModelDB.ListCard" FromRole="Card" ToRole="List" />
+    <Property Name="ListId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <Association Name="BoardList">
+    <End Type="TrelloModelDB.Board" Role="Board" Multiplicity="1" />
+    <End Type="TrelloModelDB.List" Role="List" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Board">
+        <PropertyRef Name="BoardId" />
+      </Principal>
+      <Dependent Role="List">
+        <PropertyRef Name="BoardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BoardCard">
+    <End Type="TrelloModelDB.Board" Role="Board" Multiplicity="1" />
+    <End Type="TrelloModelDB.Card" Role="Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Board">
+        <PropertyRef Name="BoardId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="BoardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ListCard">
+    <End Type="TrelloModelDB.List" Role="List" Multiplicity="1" />
+    <End Type="TrelloModelDB.Card" Role="Card" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="List">
+        <PropertyRef Name="ListId" />
+      </Principal>
+      <Dependent Role="Card">
+        <PropertyRef Name="ListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
