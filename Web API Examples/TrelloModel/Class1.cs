@@ -8,5 +8,6 @@ namespace TrelloModel
 {
     public class Class1
     {
+        //teste
     }
 }
