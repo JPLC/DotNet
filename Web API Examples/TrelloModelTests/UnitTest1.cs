@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TrelloModel;
 using TrelloModel.Repository;
 
 namespace TrelloModelTests
@@ -12,7 +13,8 @@ namespace TrelloModelTests
         public void TestMethod1()
         {
             BoardRepository br = new BoardRepository();
-            Assert.AreSame(5,br.GetAll().Count());
+            Assert.AreEqual(1,br.GetAll().Count());
+            var x = br.ExecuteSP("ProcedureTest");
         }
     }
 }

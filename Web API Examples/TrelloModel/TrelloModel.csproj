@@ -58,8 +58,10 @@
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="ProcedureTest_Result.cs">
+      <DependentUpon>TrelloModelDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\BoardRepository.cs" />
-    <Compile Include="TrelloContext.cs" />
     <Compile Include="List.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>

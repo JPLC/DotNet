@@ -127,6 +127,5 @@ C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Microsoft.Owin.Security.Goo
 C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\João\DotNet\Web API Examples\Web API 1\bin\System.Web.Http.Owin.xml
-C:\Users\João\DotNet\Web API Examples\Web API 1\obj\Debug\Web API 1.csprojResolveAssemblyReference.cache
 C:\Users\João\DotNet\Web API Examples\Web API 1\obj\Debug\Web API 1.dll
 C:\Users\João\DotNet\Web API Examples\Web API 1\obj\Debug\Web API 1.pdb
