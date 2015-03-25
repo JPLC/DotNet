@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
@@ -12,32 +9,44 @@ namespace TrelloModel.Repository
     {
         public IEnumerable<Card> GetAll()
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.ToList();
+            }
         }
 
-        public Card GetSingle(int fooId)
+        public Card GetSingle(int id)
         {
-            throw new NotImplementedException();
+            return GetAll().FirstOrDefault(c => c.CardId == id);
         }
 
-        public IEnumerable<Card> FindBy(Expression<Func<Card, bool>> predicate)
+        public IEnumerable<Card> FindBy(Func<Card, bool> predicate)
         {
-            throw new NotImplementedException();
+            return GetAll().Where(predicate);
         }
 
         public void Add(Card entity)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+
+            }
         }
 
         public void Delete(Card entity)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+
+            }
         }
 
         public void Edit(Card entity)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+
+            }
         }
     }
 }
