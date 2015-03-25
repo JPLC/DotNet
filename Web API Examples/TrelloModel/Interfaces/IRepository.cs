@@ -8,14 +8,14 @@ namespace TrelloModel.Interfaces
     {
         IEnumerable<T> GetAll();
 
-        T GetSingle(int fooId);
+        T GetSingle(int id);
 
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
 
-        void Add(T entity);
+        void Add(T t);
 
-        void Delete(T entity);
+        void Delete(T t);
 
-        void Edit(T entity);
+        void Edit(T t);
     }
 }
