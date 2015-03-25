@@ -30,41 +30,6 @@ namespace TrelloModel
             throw new UnintentionalCodeFirstException();
         }
 
-        protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, System.Collections.Generic.IDictionary<object, object> items)
-        {
-            if (entityEntry.Entity is Board)
-            {
-                if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)
-                {
-                    var list = new List<System.Data.Entity.Validation.DbValidationError>();
-                    list.Add(new System.Data.Entity.Validation.DbValidationError("Name", "Board Name is required"));
-
-                    return new DbEntityValidationResult(entityEntry, list);
-                }
-            }
-            if (entityEntry.Entity is List)
-            {
-                if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)
-                {
-                    var list = new List<System.Data.Entity.Validation.DbValidationError>();
-                    list.Add(new System.Data.Entity.Validation.DbValidationError("Name", "List Name is required"));
-
-                    return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
-                }
-            }
-            if (entityEntry.Entity is Card)
-            {
-                if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)
-                {
-                    var list = new List<System.Data.Entity.Validation.DbValidationError>();
-                    list.Add(new System.Data.Entity.Validation.DbValidationError("Name", "Card Name is required"));
-
-                    return new System.Data.Entity.Validation.DbEntityValidationResult(entityEntry, list);
-                }
-            }
-            return base.ValidateEntity(entityEntry, items);
-        }
-
         public virtual DbSet<Board> Board { get; set; }
         public virtual DbSet<List> List { get; set; }
         public virtual DbSet<Card> Card { get; set; }

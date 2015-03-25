@@ -57,6 +57,7 @@
     <Compile Include="Card.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB Context\TrelloModelDBContainer.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="ProcedureTest_Result.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
