@@ -8,6 +8,7 @@ namespace TrelloModel
     {
         protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
         {
+            //TODO Acabar as validações do modelo de dados
             if (entityEntry.Entity is Board)
             {
                 if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)

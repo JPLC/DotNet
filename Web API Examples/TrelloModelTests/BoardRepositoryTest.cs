@@ -7,7 +7,7 @@ using TrelloModel.Repository;
 namespace TrelloModelTests
 {
     [TestClass]
-    public class UnitTest1
+    public class BoardRepositoryTest
     {
         [TestMethod]
         public void TestMethod1()
