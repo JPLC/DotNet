@@ -9,17 +9,22 @@ namespace TrelloModel.Repository
 {
     public class BoardRepository : IRepository<Board>
     {
+
+        public BoardRepository()
+        {
+        }
+
         public IEnumerable<Board> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
             {
-               return db.Board.ToList();
+                return db.Board.ToList();
             }
         }
 
         public Board GetSingle(int id)
         {
-            return GetAll().FirstOrDefault(b=>b.BoardId==id);         
+            return GetAll().FirstOrDefault(b => b.BoardId == id);
         }
 
         public IEnumerable<Board> FindBy(Func<Board, bool> predicate)
@@ -43,8 +48,7 @@ namespace TrelloModel.Repository
             }
         }
 
-        public
-            void Delete(Board entity)
+        public void Delete(Board entity)
         {
             using (var db = new TrelloModelDBContainer())
             {

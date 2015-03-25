@@ -54,6 +54,9 @@
     <Compile Include="Board.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Business\BoardBusiness.cs" />
+    <Compile Include="Business\CardBusiness.cs" />
+    <Compile Include="Business\ListBusiness.cs" />
     <Compile Include="Card.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>

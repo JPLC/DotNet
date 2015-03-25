@@ -129,3 +129,10 @@ C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Microsoft.Owin.Security.Mic
 C:\Users\João\DotNet\Web API Examples\Web API 1\bin\System.Web.Http.Owin.xml
 C:\Users\João\DotNet\Web API Examples\Web API 1\obj\Debug\Web API 1.dll
 C:\Users\João\DotNet\Web API Examples\Web API 1\obj\Debug\Web API 1.pdb
+C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Ninject.dll
+C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Ninject.Web.Common.dll
+C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Ninject.Web.WebApi.dll
+C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Ninject.xml
+C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Ninject.Web.Common.xml
+C:\Users\João\DotNet\Web API Examples\Web API 1\bin\Ninject.Web.WebApi.xml
+C:\Users\João\DotNet\Web API Examples\Web API 1\obj\Debug\Web API 1.csprojResolveAssemblyReference.cache

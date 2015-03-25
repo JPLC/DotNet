@@ -16,14 +16,18 @@
       <End Role="List" EntitySet="List" />
       <End Role="Card" EntitySet="Card" />
     </AssociationSet>
+    <FunctionImport Name="ProcedureTest" ReturnType="Collection(TrelloModelDB.ProcedureTest_Result)">
+      <Parameter Name="param1" Mode="In" Type="Int32" />
+      <Parameter Name="param2" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Board">
     <Key>
       <PropertyRef Name="BoardId" />
     </Key>
     <Property Name="BoardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" Nullable="false" />
-    <Property Name="Discription" Type="String" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Discription" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Lists" Relationship="TrelloModelDB.BoardList" FromRole="Board" ToRole="List" />
     <NavigationProperty Name="Cards" Relationship="TrelloModelDB.BoardCard" FromRole="Board" ToRole="Card" />
   </EntityType>
@@ -33,7 +37,7 @@
     </Key>
     <Property Name="ListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Lix" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="Board" Relationship="TrelloModelDB.BoardList" FromRole="List" ToRole="Board" />
     <Property Name="BoardId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Cards" Relationship="TrelloModelDB.ListCard" FromRole="List" ToRole="Card" />
@@ -44,10 +48,10 @@
     </Key>
     <Property Name="CardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Cix" Type="Int32" Nullable="false" />
-    <Property Name="Name" Type="String" Nullable="false" />
-    <Property Name="Discription" Type="String" Nullable="false" />
-    <Property Name="CreationDate" Type="Time" Nullable="false" />
-    <Property Name="DueDate" Type="Time" Nullable="false" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Discription" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CreationDate" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="DueDate" Type="Time" Nullable="false" Precision="7" />
     <NavigationProperty Name="Board" Relationship="TrelloModelDB.BoardCard" FromRole="Card" ToRole="Board" />
     <Property Name="BoardId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="List" Relationship="TrelloModelDB.ListCard" FromRole="Card" ToRole="List" />
@@ -89,4 +93,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <ComplexType Name="ProcedureTest_Result">
+    <Property Type="Int32" Name="BoardId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Discription" Nullable="false" />
+  </ComplexType>
 </Schema>
