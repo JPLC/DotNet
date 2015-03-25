@@ -68,7 +68,6 @@
     <Compile Include="Repository\BoardRepository.cs" />
     <Compile Include="Repository\CardRepository.cs" />
     <Compile Include="Repository\ListRespository.cs" />
-    <Compile Include="TrelloDBInit.cs" />
     <Compile Include="TrelloModelDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

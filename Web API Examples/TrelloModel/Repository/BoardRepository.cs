@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using TrelloModel.Interfaces;
 
@@ -30,12 +31,20 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.Board.Add(entity);
-                db.SaveChanges();
+                try
+                {
+                    db.Board.Add(entity);
+                    db.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    var error = ex.EntityValidationErrors.First().ValidationErrors.First();
+                }
             }
         }
 
-        public void Delete(Board entity)
+        public
+            void Delete(Board entity)
         {
             using (var db = new TrelloModelDBContainer())
             {

@@ -13,8 +13,9 @@ namespace TrelloModelTests
         public void TestMethod1()
         {
             BoardRepository br = new BoardRepository();
-            Assert.AreEqual(1,br.GetAll().Count());
-            var x = br.ExecuteSP("ProcedureTest");
+            //Assert.AreEqual(1,br.GetAll().Count());
+            br.Add(new Board{ Name="",Discription = ""});
+            //var x = br.ExecuteSP("ProcedureTest");
         }
     }
 }
