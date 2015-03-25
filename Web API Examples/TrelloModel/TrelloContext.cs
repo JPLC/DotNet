@@ -9,7 +9,7 @@ namespace TrelloModel
 {
     public class TrelloContext : DbContext
     {
-        public TrelloContext() : base("TrelloContext")
+        public TrelloContext() : base("TrelloDB")
         {
         }
 
