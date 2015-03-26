@@ -34,5 +34,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="ProcedureTest" FunctionName="TrelloModelDB.Store.ProcedureTest">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TrelloModelDB.ProcedureTest_Result">
+          <ScalarProperty Name="BoardId" ColumnName="BoardId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Discription" ColumnName="Discription" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

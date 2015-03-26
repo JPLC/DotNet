@@ -22,3 +22,15 @@ C:\Users\João\DotNet\Web API Examples\TrelloModel\bin\Debug\MoreLinq.xml
 C:\Users\João\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.csprojResolveAssemblyReference.cache
 C:\Users\João\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.dll
 C:\Users\João\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.pdb
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.dll
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.pdb
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\TrelloModel.dll.config
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\TrelloModel.dll
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\TrelloModel.pdb
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\EntityFramework.dll
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\MoreLinq.dll
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\EntityFramework.xml
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\MoreLinq.xml
+C:\Users\jlc\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.csprojResolveAssemblyReference.cache
