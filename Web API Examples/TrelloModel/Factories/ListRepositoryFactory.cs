@@ -7,7 +7,7 @@ namespace TrelloModel.Factories
     {
         public IRepository<List> GetListRepository()
         {
-            return new ListRepository();
+            return ListRepository.Instance;
         }
     }
 }

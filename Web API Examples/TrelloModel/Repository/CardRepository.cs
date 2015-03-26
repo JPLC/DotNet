@@ -7,8 +7,11 @@ namespace TrelloModel.Repository
 {
     public class CardRepository : IRepository<Card>
     {
+        private static readonly Lazy<CardRepository> CardRepo = new Lazy<CardRepository>(() => new CardRepository());
 
-        internal CardRepository()
+        public static CardRepository Instance { get { return CardRepo.Value; } }
+
+        private CardRepository()
         {
         }
 

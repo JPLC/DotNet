@@ -7,7 +7,11 @@ namespace TrelloModel.Repository
 {
     public class ListRepository : IRepository<List>
     {
-        internal ListRepository()
+        private static readonly Lazy<ListRepository> ListRepo = new Lazy<ListRepository>(() => new ListRepository());
+
+        public static ListRepository Instance { get { return ListRepo.Value; } }
+
+        private ListRepository()
         {
         }
 

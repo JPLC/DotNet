@@ -9,8 +9,11 @@ namespace TrelloModel.Repository
 {
     public class BoardRepository : IRepository<Board>
     {
+        private static readonly Lazy<BoardRepository> BoardRepo = new Lazy<BoardRepository>(() => new BoardRepository());
 
-        internal BoardRepository()
+        public static BoardRepository Instance { get { return BoardRepo.Value; } }
+
+        private BoardRepository()
         {
         }
 
