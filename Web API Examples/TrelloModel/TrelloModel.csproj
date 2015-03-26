@@ -61,6 +61,14 @@
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DB Context\TrelloModelDBContainer.cs" />
+    <Compile Include="Factories\BoardRepositoryFactory.cs" />
+    <Compile Include="Factories\CardRepositoryFactory.cs" />
+    <Compile Include="Factories\ListRepositoryFactory.cs" />
+    <Compile Include="Factories\RepositoryAbstractFactory.cs" />
+    <Compile Include="Factories\RepositoryConcreteFactory.cs" />
+    <Compile Include="Interfaces\IBoardRepositoryFactory.cs" />
+    <Compile Include="Interfaces\ICardRepositoryFactory.cs" />
+    <Compile Include="Interfaces\IListRepositoryFactory.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="ProcedureTest_Result.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>

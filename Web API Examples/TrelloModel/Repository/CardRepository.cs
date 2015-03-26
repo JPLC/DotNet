@@ -8,7 +8,7 @@ namespace TrelloModel.Repository
     public class CardRepository : IRepository<Card>
     {
 
-        private CardRepository()
+        internal CardRepository()
         {
         }
 

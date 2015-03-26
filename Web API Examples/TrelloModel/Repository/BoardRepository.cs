@@ -10,7 +10,7 @@ namespace TrelloModel.Repository
     public class BoardRepository : IRepository<Board>
     {
 
-        public BoardRepository()
+        internal BoardRepository()
         {
         }
 

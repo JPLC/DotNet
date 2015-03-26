@@ -8,7 +8,7 @@ namespace TrelloModel.Repository
     public class ListRespository : IRepository<List>
     {
 
-        private ListRespository()
+        internal ListRespository()
         {
         }
 
