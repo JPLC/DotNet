@@ -1,7 +1,5 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using TrelloModel;
 using TrelloModel.Factories;
 using TrelloModel.Repository;
@@ -11,11 +9,12 @@ namespace TrelloModelTests
     [TestClass]
     public class BoardRepositoryTest
     {
-        private readonly BoardRepository _br;
+        private static BoardRepository _br;
 
-        public BoardRepositoryTest()
+        [ClassInitialize]
+        public static void ClassInitialize_BoardRepositoryTests(TestContext context)
         {
-           _br = (BoardRepository) new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
+            _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
         }
 
         [TestMethod]

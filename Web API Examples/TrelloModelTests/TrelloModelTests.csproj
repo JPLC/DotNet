@@ -59,6 +59,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BoardRepositoryTest.cs" />
+    <Compile Include="CardRepositoryTest.cs" />
+    <Compile Include="ListRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

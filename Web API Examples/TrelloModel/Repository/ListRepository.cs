@@ -5,10 +5,9 @@ using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
 {
-    public class ListRespository : IRepository<List>
+    public class ListRepository : IRepository<List>
     {
-
-        internal ListRespository()
+        internal ListRepository()
         {
         }
 
