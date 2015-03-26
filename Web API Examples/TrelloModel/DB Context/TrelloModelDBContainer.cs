@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using TrelloModel.Business;
 
 namespace TrelloModel
 {
@@ -8,34 +9,44 @@ namespace TrelloModel
     {
         protected override DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, IDictionary<object, object> items)
         {
-            //TODO Acabar as validações do modelo de dados
             if (entityEntry.Entity is Board)
             {
-                if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)
+                List<KeyValuePair<string, string>> errorMsgDic;
+                if (!BoardBusiness.ValidateBoard((Board)entityEntry.Entity, out errorMsgDic))
                 {
                     var list = new List<DbValidationError>();
-                    list.Add(new DbValidationError("Name", "Board Name is required"));
-
+                    foreach (var err in errorMsgDic)
+                    {                      
+                        list.Add(new DbValidationError(err.Key,err.Value));
+                    }                  
                     return new DbEntityValidationResult(entityEntry, list);
                 }
             }
             if (entityEntry.Entity is List)
             {
-                if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)
+                List<KeyValuePair<string, string>> errorMsgDic;
+                if (!ListBusiness.ValidateList((List)entityEntry.Entity, out errorMsgDic))
                 {
                     var list = new List<DbValidationError>();
-                    list.Add(new DbValidationError("Name", "List Name is required"));
+                    foreach (var err in errorMsgDic)
+                    {
 
+                        list.Add(new DbValidationError(err.Key, err.Value));
+                    }
                     return new DbEntityValidationResult(entityEntry, list);
                 }
             }
             if (entityEntry.Entity is Card)
             {
-                if (entityEntry.CurrentValues.GetValue<string>("Name") == string.Empty)
+                List<KeyValuePair<string, string>> errorMsgDic;
+                if (!CardBusiness.ValidateCard((Card)entityEntry.Entity, out errorMsgDic))
                 {
                     var list = new List<DbValidationError>();
-                    list.Add(new DbValidationError("Name", "Card Name is required"));
+                    foreach (var err in errorMsgDic)
+                    {
 
+                        list.Add(new DbValidationError(err.Key, err.Value));
+                    }
                     return new DbEntityValidationResult(entityEntry, list);
                 }
             }

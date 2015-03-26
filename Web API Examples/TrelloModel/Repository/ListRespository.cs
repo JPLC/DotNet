@@ -7,6 +7,11 @@ namespace TrelloModel.Repository
 {
     public class ListRespository : IRepository<List>
     {
+
+        private ListRespository()
+        {
+        }
+
         public IEnumerable<List> GetAll()
         {
             using (var db = new TrelloModelDBContainer())

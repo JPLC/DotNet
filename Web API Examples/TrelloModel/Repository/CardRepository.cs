@@ -5,8 +5,13 @@ using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
 {
-    public class CardRepository :IRepository<Card>
+    public class CardRepository : IRepository<Card>
     {
+
+        private CardRepository()
+        {
+        }
+
         public IEnumerable<Card> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
