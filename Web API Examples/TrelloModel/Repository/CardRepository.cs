@@ -35,6 +35,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
+                card.Cix = db.List.Count(l => l.ListId == card.ListId) + 1;
                 db.Card.Add(card);
             }
         }
