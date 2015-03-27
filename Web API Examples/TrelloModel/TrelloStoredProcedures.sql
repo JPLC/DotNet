@@ -99,8 +99,8 @@ CREATE PROCEDURE [dbo].[EditCard]
 	,@Cix int
 	,@Name varchar(255)
 	,@Discription varchar(255)
-	,@CreationDate Date
-	,@DueDate Date
+	,@CreationDate Time
+	,@DueDate Time
 	,@ListId int
 AS
 BEGIN
