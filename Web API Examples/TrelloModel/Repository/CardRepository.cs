@@ -31,27 +31,27 @@ namespace TrelloModel.Repository
             return GetAll().Where(predicate);
         }
 
-        public void Add(Card entity)
+        public void Add(Card card)
         {
             using (var db = new TrelloModelDBContainer())
             {
-
+                db.Card.Add(card);
             }
         }
 
-        public void Delete(Card entity)
+        public void Delete(Card card)
         {
             using (var db = new TrelloModelDBContainer())
             {
-
+                db.DeleteCard(card.CardId, card.Cix, card.ListId);
             }
         }
 
-        public void Edit(Card entity)
+        public void Edit(Card card)
         {
             using (var db = new TrelloModelDBContainer())
             {
-
+                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.CreationDate, card.DueDate, card.ListId);
             }
         }
     }
