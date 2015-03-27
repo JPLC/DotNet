@@ -48,6 +48,7 @@ namespace TrelloModel.Repository
             }
         }
 
+        //TODO Acabar o SP que faz a edição do Card
         public void Edit(Card card)
         {
             using (var db = new TrelloModelDBContainer())

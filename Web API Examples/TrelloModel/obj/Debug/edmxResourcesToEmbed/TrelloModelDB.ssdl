@@ -66,9 +66,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Function Name="ProcedureTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="param1" Type="int" Mode="In" />
-    <Parameter Name="param2" Type="int" Mode="In" />
+  <Function Name="DeleteCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardId" Type="int" Mode="In" />
+    <Parameter Name="Cix" Type="int" Mode="In" />
+    <Parameter Name="ListId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="DeleteList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ListId" Type="int" Mode="In" />
+    <Parameter Name="Lix" Type="int" Mode="In" />
+    <Parameter Name="BoardId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="EditCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CardId" Type="int" Mode="In" />
+    <Parameter Name="Cix" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Discription" Type="varchar" Mode="In" />
+    <Parameter Name="CreationDate" Type="time" Mode="In" />
+    <Parameter Name="DueDate" Type="time" Mode="In" />
+    <Parameter Name="ListId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="EditList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ListId" Type="int" Mode="In" />
+    <Parameter Name="Lix" Type="int" Mode="In" />
+    <Parameter Name="BoardId" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
   </Function>
   <EntityContainer Name="TrelloModelDBStoreContainer">
     <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />

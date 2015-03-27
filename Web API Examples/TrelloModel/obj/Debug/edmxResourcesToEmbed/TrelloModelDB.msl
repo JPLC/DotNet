@@ -34,14 +34,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="ProcedureTest" FunctionName="TrelloModelDB.Store.ProcedureTest">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="TrelloModelDB.ProcedureTest_Result">
-          <ScalarProperty Name="BoardId" ColumnName="BoardId" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Discription" ColumnName="Discription" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteList" FunctionName="TrelloModelDB.Store.DeleteList" />
+    <FunctionImportMapping FunctionImportName="EditList" FunctionName="TrelloModelDB.Store.EditList" />
+    <FunctionImportMapping FunctionImportName="DeleteCard" FunctionName="TrelloModelDB.Store.DeleteCard" />
+    <FunctionImportMapping FunctionImportName="EditCard" FunctionName="TrelloModelDB.Store.EditCard" />
   </EntityContainerMapping>
 </Mapping>

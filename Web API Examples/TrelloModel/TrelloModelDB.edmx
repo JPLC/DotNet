@@ -86,8 +86,8 @@
           <Parameter Name="Cix" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="Discription" Type="varchar" Mode="In" />
-          <Parameter Name="CreationDate" Type="date" Mode="In" />
-          <Parameter Name="DueDate" Type="date" Mode="In" />
+          <Parameter Name="CreationDate" Type="time" Mode="In" />
+          <Parameter Name="DueDate" Type="time" Mode="In" />
           <Parameter Name="ListId" Type="int" Mode="In" />
         </Function>
         <Function Name="EditList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -158,8 +158,8 @@
             <Parameter Name="Cix" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Discription" Mode="In" Type="String" />
-            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
-            <Parameter Name="DueDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CreationDate" Mode="In" Type="Time" />
+            <Parameter Name="DueDate" Mode="In" Type="Time" />
             <Parameter Name="ListId" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>

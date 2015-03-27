@@ -99,7 +99,7 @@ namespace TrelloModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCard", cardIdParameter, cixParameter, listIdParameter);
         }
     
-        public virtual int EditCard(Nullable<int> cardId, Nullable<int> cix, string name, string discription, Nullable<System.DateTime> creationDate, Nullable<System.DateTime> dueDate, Nullable<int> listId)
+        public virtual int EditCard(Nullable<int> cardId, Nullable<int> cix, string name, string discription, Nullable<System.TimeSpan> creationDate, Nullable<System.TimeSpan> dueDate, Nullable<int> listId)
         {
             var cardIdParameter = cardId.HasValue ?
                 new ObjectParameter("CardId", cardId) :
@@ -119,11 +119,11 @@ namespace TrelloModel
     
             var creationDateParameter = creationDate.HasValue ?
                 new ObjectParameter("CreationDate", creationDate) :
-                new ObjectParameter("CreationDate", typeof(System.DateTime));
+                new ObjectParameter("CreationDate", typeof(System.TimeSpan));
     
             var dueDateParameter = dueDate.HasValue ?
                 new ObjectParameter("DueDate", dueDate) :
-                new ObjectParameter("DueDate", typeof(System.DateTime));
+                new ObjectParameter("DueDate", typeof(System.TimeSpan));
     
             var listIdParameter = listId.HasValue ?
                 new ObjectParameter("ListId", listId) :

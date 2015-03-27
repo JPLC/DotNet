@@ -20,6 +20,31 @@
       <Parameter Name="param1" Mode="In" Type="Int32" />
       <Parameter Name="param2" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="DeleteList">
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+      <Parameter Name="Lix" Mode="In" Type="Int32" />
+      <Parameter Name="BoardId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="EditList">
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+      <Parameter Name="Lix" Mode="In" Type="Int32" />
+      <Parameter Name="BoardId" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteCard">
+      <Parameter Name="CardId" Mode="In" Type="Int32" />
+      <Parameter Name="Cix" Mode="In" Type="Int32" />
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="EditCard">
+      <Parameter Name="CardId" Mode="In" Type="Int32" />
+      <Parameter Name="Cix" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Discription" Mode="In" Type="String" />
+      <Parameter Name="CreationDate" Mode="In" Type="Time" />
+      <Parameter Name="DueDate" Mode="In" Type="Time" />
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="Board">
     <Key>

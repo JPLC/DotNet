@@ -33,3 +33,6 @@ C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\EntityFramework.xml
 C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\jlc\DotNet\Web API Examples\TrelloModel\bin\Debug\MoreLinq.xml
 C:\Users\jlc\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.csprojResolveAssemblyReference.cache
+C:\Users\João\DotNet\Web API Examples\TrelloModel\bin\Debug\TrelloModel.dll.CodeAnalysisLog.xml
+C:\Users\João\DotNet\Web API Examples\TrelloModel\bin\Debug\TrelloModel.dll.lastcodeanalysissucceeded
+C:\Users\João\DotNet\Web API Examples\TrelloModel\obj\Debug\TrelloModel.csprojResolveAssemblyReference.cache
