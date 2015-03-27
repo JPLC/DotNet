@@ -7,12 +7,18 @@ namespace TrelloModel.Repository
 {
     public class ListRepository : IRepository<List>
     {
+        #region Variables and Properties
         private static readonly Lazy<ListRepository> ListRepo = new Lazy<ListRepository>(() => new ListRepository());
 
         public static ListRepository Instance { get { return ListRepo.Value; } }
+        #endregion
 
+        #region Constructor
         private ListRepository() { }
+        #endregion
 
+        //TODO aplicar e melhorar expection handling
+        #region Methods
         public IEnumerable<List> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
@@ -55,5 +61,6 @@ namespace TrelloModel.Repository
                 db.EditList(list.ListId, list.Lix, list.BoardId, list.Name);
             }
         }
+        #endregion
     }
 }

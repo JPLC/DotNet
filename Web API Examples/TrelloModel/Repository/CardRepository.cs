@@ -7,12 +7,18 @@ namespace TrelloModel.Repository
 {
     public class CardRepository : IRepository<Card>
     {
+        #region Variables and Properties
         private static readonly Lazy<CardRepository> CardRepo = new Lazy<CardRepository>(() => new CardRepository());
 
         public static CardRepository Instance { get { return CardRepo.Value; } }
+        #endregion
 
+        #region Constructor
         private CardRepository() { }
+        #endregion
 
+        //TODO aplicar e melhorar expection handling
+        #region Methods
         public IEnumerable<Card> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
@@ -56,5 +62,6 @@ namespace TrelloModel.Repository
                 db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.CreationDate, card.DueDate, card.ListId);
             }
         }
+        #endregion
     }
 }
