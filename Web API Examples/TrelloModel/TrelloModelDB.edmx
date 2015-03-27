@@ -71,9 +71,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="ProcedureTest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="param1" Type="int" Mode="In" />
-          <Parameter Name="param2" Type="int" Mode="In" />
+        <Function Name="DeleteList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ListId" Type="int" Mode="In" />
+          <Parameter Name="Lix" Type="int" Mode="In" />
+          <Parameter Name="BoardId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EditList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ListId" Type="int" Mode="In" />
+          <Parameter Name="Lix" Type="int" Mode="In" />
+          <Parameter Name="BoardId" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="TrelloModelDBStoreContainer">
           <EntitySet Name="Board" EntityType="Self.Board" Schema="dbo" store:Type="Tables" />
@@ -115,6 +122,17 @@
           <FunctionImport Name="ProcedureTest" ReturnType="Collection(TrelloModelDB.ProcedureTest_Result)">
             <Parameter Name="param1" Mode="In" Type="Int32" />
             <Parameter Name="param2" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteList">
+            <Parameter Name="ListId" Mode="In" Type="Int32" />
+            <Parameter Name="Lix" Mode="In" Type="Int32" />
+            <Parameter Name="BoardId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EditList">
+            <Parameter Name="ListId" Mode="In" Type="Int32" />
+            <Parameter Name="Lix" Mode="In" Type="Int32" />
+            <Parameter Name="BoardId" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Board">
@@ -233,15 +251,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ProcedureTest" FunctionName="TrelloModelDB.Store.ProcedureTest">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TrelloModelDB.ProcedureTest_Result">
-                <ScalarProperty Name="BoardId" ColumnName="BoardId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Discription" ColumnName="Discription" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteList" FunctionName="TrelloModelDB.Store.DeleteList" />
+          <FunctionImportMapping FunctionImportName="EditList" FunctionName="TrelloModelDB.Store.EditList" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

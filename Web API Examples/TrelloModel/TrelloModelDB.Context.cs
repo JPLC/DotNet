@@ -7,9 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Data.Entity.Validation;
-
 namespace TrelloModel
 {
     using System;
@@ -29,7 +26,7 @@ namespace TrelloModel
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<Board> Board { get; set; }
         public virtual DbSet<List> List { get; set; }
         public virtual DbSet<Card> Card { get; set; }
@@ -45,6 +42,44 @@ namespace TrelloModel
                 new ObjectParameter("param2", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProcedureTest_Result>("ProcedureTest", param1Parameter, param2Parameter);
+        }
+    
+        public virtual int DeleteList(Nullable<int> listId, Nullable<int> lix, Nullable<int> boardId)
+        {
+            var listIdParameter = listId.HasValue ?
+                new ObjectParameter("ListId", listId) :
+                new ObjectParameter("ListId", typeof(int));
+    
+            var lixParameter = lix.HasValue ?
+                new ObjectParameter("Lix", lix) :
+                new ObjectParameter("Lix", typeof(int));
+    
+            var boardIdParameter = boardId.HasValue ?
+                new ObjectParameter("BoardId", boardId) :
+                new ObjectParameter("BoardId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteList", listIdParameter, lixParameter, boardIdParameter);
+        }
+    
+        public virtual int EditList(Nullable<int> listId, Nullable<int> lix, Nullable<int> boardId, string name)
+        {
+            var listIdParameter = listId.HasValue ?
+                new ObjectParameter("ListId", listId) :
+                new ObjectParameter("ListId", typeof(int));
+    
+            var lixParameter = lix.HasValue ?
+                new ObjectParameter("Lix", lix) :
+                new ObjectParameter("Lix", typeof(int));
+    
+            var boardIdParameter = boardId.HasValue ?
+                new ObjectParameter("BoardId", boardId) :
+                new ObjectParameter("BoardId", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditList", listIdParameter, lixParameter, boardIdParameter, nameParameter);
         }
     }
 }
