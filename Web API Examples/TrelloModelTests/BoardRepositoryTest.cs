@@ -12,7 +12,7 @@ namespace TrelloModelTests
         private static BoardRepository _br;
 
         [ClassInitialize]
-        public static void ClassInitialize_BoardRepositoryTests(TestContext context)
+        public static void ClassInitializeBoardRepositoryTests(TestContext context)
         {
             _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
         }
@@ -20,7 +20,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestGetAllBoards()
         {
-            //Assert.AreEqual(1,br.GetAll().Count());
+            Assert.AreEqual(3,_br.GetAll().Count());
         }
 
         [TestMethod]

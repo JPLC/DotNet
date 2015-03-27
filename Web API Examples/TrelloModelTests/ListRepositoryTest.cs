@@ -9,18 +9,20 @@ namespace TrelloModelTests
     [TestClass]
     public class ListRepositoryTest
     {
+        private static BoardRepository _br;
         private static ListRepository _lr;
 
         [ClassInitialize]
-        public static void ClassInitialize_ListRepositoryTests(TestContext context)
+        public static void ClassInitializeListRepositoryTests(TestContext context)
         {
-            _lr = (ListRepository)new RepositoryConcreteFactory().GetListFactory().GetListRepository();
+            _br = (BoardRepository) new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
+            _lr = (ListRepository)  new RepositoryConcreteFactory().GetListFactory().GetListRepository();
         }
 
         [TestMethod]
         public void TestGetAllLists()
         {
-            //Assert.AreEqual(1,br.GetAll().Count());
+            Assert.AreEqual(9, _lr.GetAll().Count());
         }
 
         [TestMethod]
@@ -38,7 +40,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddDeleteList()
         {
-            var list = new List { Name = "List PI Teste", Lix = 1 };
+            var list = new List { Name = "List PI Teste", BoardId = 1};
             _lr.Add(list);
             var addedlist = _lr.FindBy(l => l.Name == list.Name).FirstOrDefault();
             Assert.IsNotNull(addedlist);

@@ -9,46 +9,50 @@ namespace TrelloModelTests
     [TestClass]
     public class CardRepositoryTest
     {
+        private static BoardRepository _br;
+        private static ListRepository _lr;
         private static CardRepository _cr;
 
         [ClassInitialize]
-        public static void ClassInitialize_ListRepositoryTests(TestContext context)
+        public static void ClassInitializeCardRepositoryTests(TestContext context)
         {
-            _cr = (CardRepository)new RepositoryConcreteFactory().GetCardFactory().GetCardRepository();
+            _br = (BoardRepository) new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
+            _lr = (ListRepository)  new RepositoryConcreteFactory().GetListFactory().GetListRepository();
+            _cr = (CardRepository)  new RepositoryConcreteFactory().GetCardFactory().GetCardRepository();
         }
 
         [TestMethod]
-        public void TestGetAllLists()
+        public void TestGetAllCards()
         {
-            //Assert.AreEqual(1,br.GetAll().Count());
+            Assert.AreEqual(27, _cr.GetAll().Count());
         }
 
         [TestMethod]
-        public void TestGetSingleList()
+        public void TestGetSingleCard()
         {
             Assert.IsNotNull(_cr.GetSingle(1));
         }
 
         [TestMethod]
-        public void TestFindListBy()
+        public void TestFindCardBy()
         {
-            Assert.IsNotNull(_cr.FindBy(l => l.ListId == 1));
+            Assert.IsNotNull(_cr.FindBy(l => l.CardId == 1));
         }
 
         [TestMethod]
-        public void TestAddDeleteList()
+        public void TestAddDeleteCard()
         {
-            var card = new Card { Name = "Card PI Teste", Cix = 1 };
+            var card = new Card { Name = "Card PI Teste", };
             _cr.Add(card);
-            var addedlist = _cr.FindBy(l => l.Name == card.Name).FirstOrDefault();
-            Assert.IsNotNull(addedlist);
-            Card del = _cr.GetSingle(addedlist.ListId);
+            var addedCard = _cr.FindBy(l => l.Name == card.Name).FirstOrDefault();
+            Assert.IsNotNull(addedCard);
+            Card del = _cr.GetSingle(addedCard.CardId);
             _cr.Delete(del);
-            Assert.IsNull(_cr.FindBy(l => l.Name == addedlist.Name));
+            Assert.IsNull(_cr.FindBy(l => l.Name == addedCard.Name));
         }
 
         [TestMethod]
-        public void TestEditList()
+        public void TestEditCard()
         {
             var card = _cr.GetSingle(1);
             var ecard = new Card { CardId = card.CardId, Name = "", Cix = 1 };
