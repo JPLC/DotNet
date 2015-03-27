@@ -9,16 +9,21 @@ namespace TrelloModelTests
     [TestClass]
     public class ListRepositoryTest
     {
+        #region Variables and Properties
         private static BoardRepository _br;
         private static ListRepository _lr;
+        #endregion
 
+        #region Constructor
         [ClassInitialize]
         public static void ClassInitializeListRepositoryTests(TestContext context)
         {
             _br = (BoardRepository) new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
             _lr = (ListRepository)  new RepositoryConcreteFactory().GetListFactory().GetListRepository();
         }
+        #endregion
 
+        #region Test Methods
         [TestMethod]
         public void TestGetAllLists()
         {
@@ -59,5 +64,6 @@ namespace TrelloModelTests
             Assert.Equals(list.Name, elist.Name);
             Assert.Equals(list.ListId, elist.ListId);
         }
+        #endregion
     }
 }

@@ -9,10 +9,13 @@ namespace TrelloModelTests
     [TestClass]
     public class CardRepositoryTest
     {
+        #region Variables and Properties
         private static BoardRepository _br;
         private static ListRepository _lr;
         private static CardRepository _cr;
+        #endregion
 
+        #region Constructor
         [ClassInitialize]
         public static void ClassInitializeCardRepositoryTests(TestContext context)
         {
@@ -20,7 +23,9 @@ namespace TrelloModelTests
             _lr = (ListRepository)  new RepositoryConcreteFactory().GetListFactory().GetListRepository();
             _cr = (CardRepository)  new RepositoryConcreteFactory().GetCardFactory().GetCardRepository();
         }
+        #endregion
 
+        #region Test Methods
         [TestMethod]
         public void TestGetAllCards()
         {
@@ -61,5 +66,6 @@ namespace TrelloModelTests
             Assert.Equals(card.Name, ecard.Name);
             Assert.Equals(card.CardId, ecard.CardId);
         }
+        #endregion
     }
 }

@@ -9,14 +9,19 @@ namespace TrelloModelTests
     [TestClass]
     public class BoardRepositoryTest
     {
+        #region Variables and Properties
         private static BoardRepository _br;
+        #endregion
 
+        #region Constructor
         [ClassInitialize]
         public static void ClassInitializeBoardRepositoryTests(TestContext context)
         {
             _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
         }
+        #endregion
 
+        #region Test Methods
         [TestMethod]
         public void TestGetAllBoards()
         {
@@ -38,7 +43,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddDeleteBoard()
         {
-            var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet" };
+            var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
             _br.Add(board);
             var addedboard = _br.FindBy(b => b.Name == board.Name).FirstOrDefault();
             Assert.IsNotNull(addedboard);
@@ -58,5 +63,6 @@ namespace TrelloModelTests
             Assert.Equals(board.Discription, eboard.Discription);
             Assert.Equals(board.BoardId, eboard.BoardId);
         }
+        #endregion
     }
 }
