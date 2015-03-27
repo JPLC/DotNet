@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TrelloModel.Business
 {
@@ -17,7 +13,7 @@ namespace TrelloModel.Business
                 isValid = false;
                 errorMsgDic.Add(new KeyValuePair<string, string>("Name", "Name is mandatory"));
             }
-            else if (board.Name.Length>255)
+            else if (board.Name.Length > 255)
             {
                 isValid = false;
                 errorMsgDic.Add(new KeyValuePair<string, string>("Name", "Name is bigger than max value"));

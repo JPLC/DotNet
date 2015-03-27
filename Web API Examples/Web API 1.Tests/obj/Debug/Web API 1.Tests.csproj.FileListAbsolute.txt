@@ -99,7 +99,6 @@ C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\bin\Debug\Microsoft.Owin.
 C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\bin\Debug\EntityFramework.xml
 C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\bin\Debug\Microsoft.Owin.Security.Cookies.xml
 C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\bin\Debug\System.Web.Http.Owin.xml
-C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\obj\Debug\Web API 1.Tests.csprojResolveAssemblyReference.cache
 C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\obj\Debug\Web API 1.Tests.dll
 C:\Users\João\DotNet\Web API Examples\Web API 1.Tests\obj\Debug\Web API 1.Tests.pdb
 C:\Users\jlc\DotNet\Web API Examples\Web API 1.Tests\bin\Debug\Web API 1.Tests.dll.config
