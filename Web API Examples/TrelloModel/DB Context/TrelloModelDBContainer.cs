@@ -30,7 +30,6 @@ namespace TrelloModel
                     var list = new List<DbValidationError>();
                     foreach (var err in errorMsgDic)
                     {
-
                         list.Add(new DbValidationError(err.Key, err.Value));
                     }
                     return new DbEntityValidationResult(entityEntry, list);
@@ -44,7 +43,6 @@ namespace TrelloModel
                     var list = new List<DbValidationError>();
                     foreach (var err in errorMsgDic)
                     {
-
                         list.Add(new DbValidationError(err.Key, err.Value));
                     }
                     return new DbEntityValidationResult(entityEntry, list);

@@ -119,6 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="TrelloModelDB.edmx.sql" />
+    <Content Include="TrelloPopulateBD.sql" />
+    <Content Include="TrelloStoredProcedures.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
