@@ -13,9 +13,7 @@ namespace TrelloModel.Repository
 
         public static BoardRepository Instance { get { return BoardRepo.Value; } }
 
-        private BoardRepository()
-        {
-        }
+        private BoardRepository() { }
 
         public IEnumerable<Board> GetAll()
         {

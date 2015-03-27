@@ -11,9 +11,7 @@ namespace TrelloModel.Repository
 
         public static ListRepository Instance { get { return ListRepo.Value; } }
 
-        private ListRepository()
-        {
-        }
+        private ListRepository() { }
 
         public IEnumerable<List> GetAll()
         {

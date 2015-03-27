@@ -81,5 +81,55 @@ namespace TrelloModel
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditList", listIdParameter, lixParameter, boardIdParameter, nameParameter);
         }
+    
+        public virtual int DeleteCard(Nullable<int> cardId, Nullable<int> cix, Nullable<int> listId)
+        {
+            var cardIdParameter = cardId.HasValue ?
+                new ObjectParameter("CardId", cardId) :
+                new ObjectParameter("CardId", typeof(int));
+    
+            var cixParameter = cix.HasValue ?
+                new ObjectParameter("Cix", cix) :
+                new ObjectParameter("Cix", typeof(int));
+    
+            var listIdParameter = listId.HasValue ?
+                new ObjectParameter("ListId", listId) :
+                new ObjectParameter("ListId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCard", cardIdParameter, cixParameter, listIdParameter);
+        }
+    
+        public virtual int EditCard(Nullable<int> cardId, Nullable<int> cix, string name, string discription, Nullable<System.DateTime> creationDate, Nullable<System.DateTime> dueDate, Nullable<int> listId)
+        {
+            var cardIdParameter = cardId.HasValue ?
+                new ObjectParameter("CardId", cardId) :
+                new ObjectParameter("CardId", typeof(int));
+    
+            var cixParameter = cix.HasValue ?
+                new ObjectParameter("Cix", cix) :
+                new ObjectParameter("Cix", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var discriptionParameter = discription != null ?
+                new ObjectParameter("Discription", discription) :
+                new ObjectParameter("Discription", typeof(string));
+    
+            var creationDateParameter = creationDate.HasValue ?
+                new ObjectParameter("CreationDate", creationDate) :
+                new ObjectParameter("CreationDate", typeof(System.DateTime));
+    
+            var dueDateParameter = dueDate.HasValue ?
+                new ObjectParameter("DueDate", dueDate) :
+                new ObjectParameter("DueDate", typeof(System.DateTime));
+    
+            var listIdParameter = listId.HasValue ?
+                new ObjectParameter("ListId", listId) :
+                new ObjectParameter("ListId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditCard", cardIdParameter, cixParameter, nameParameter, discriptionParameter, creationDateParameter, dueDateParameter, listIdParameter);
+        }
     }
 }

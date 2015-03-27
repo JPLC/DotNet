@@ -71,10 +71,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CardId" Type="int" Mode="In" />
+          <Parameter Name="Cix" Type="int" Mode="In" />
+          <Parameter Name="ListId" Type="int" Mode="In" />
+        </Function>
         <Function Name="DeleteList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ListId" Type="int" Mode="In" />
           <Parameter Name="Lix" Type="int" Mode="In" />
           <Parameter Name="BoardId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EditCard" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CardId" Type="int" Mode="In" />
+          <Parameter Name="Cix" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Discription" Type="varchar" Mode="In" />
+          <Parameter Name="CreationDate" Type="date" Mode="In" />
+          <Parameter Name="DueDate" Type="date" Mode="In" />
+          <Parameter Name="ListId" Type="int" Mode="In" />
         </Function>
         <Function Name="EditList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ListId" Type="int" Mode="In" />
@@ -133,6 +147,20 @@
             <Parameter Name="Lix" Mode="In" Type="Int32" />
             <Parameter Name="BoardId" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteCard">
+            <Parameter Name="CardId" Mode="In" Type="Int32" />
+            <Parameter Name="Cix" Mode="In" Type="Int32" />
+            <Parameter Name="ListId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EditCard">
+            <Parameter Name="CardId" Mode="In" Type="Int32" />
+            <Parameter Name="Cix" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Discription" Mode="In" Type="String" />
+            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DueDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ListId" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="Board">
@@ -253,6 +281,8 @@
     </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DeleteList" FunctionName="TrelloModelDB.Store.DeleteList" />
           <FunctionImportMapping FunctionImportName="EditList" FunctionName="TrelloModelDB.Store.EditList" />
+          <FunctionImportMapping FunctionImportName="DeleteCard" FunctionName="TrelloModelDB.Store.DeleteCard" />
+          <FunctionImportMapping FunctionImportName="EditCard" FunctionName="TrelloModelDB.Store.EditCard" />
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

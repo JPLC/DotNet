@@ -11,9 +11,7 @@ namespace TrelloModel.Repository
 
         public static CardRepository Instance { get { return CardRepo.Value; } }
 
-        private CardRepository()
-        {
-        }
+        private CardRepository() { }
 
         public IEnumerable<Card> GetAll()
         {
