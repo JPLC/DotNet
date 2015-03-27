@@ -43,6 +43,7 @@ namespace TrelloModel.Repository
             {
                 card.Cix = db.List.Count(l => l.ListId == card.ListId) + 1;
                 db.Card.Add(card);
+                db.SaveChanges();
             }
         }
 

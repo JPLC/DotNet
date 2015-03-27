@@ -43,6 +43,7 @@ namespace TrelloModel.Repository
             {
                 list.Lix = db.List.Count() + 1;
                 db.List.Add(list);
+                db.SaveChanges();
             }
         }
 
@@ -50,7 +51,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.DeleteList(list.ListId, list.Lix, list.BoardId);
+                db.DeleteList(list.ListId, list.Lix, list.BoardId);              
             }
         }
 

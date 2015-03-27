@@ -59,9 +59,9 @@ namespace TrelloModelTests
             var eboard = new Board {BoardId = board.BoardId, Name = "Board Edited", Discription = "Board usado para editar"};
             _br.Edit(eboard);
             board = _br.GetSingle(1);
-            Assert.Equals(board.Name,eboard.Name);
-            Assert.Equals(board.Discription, eboard.Discription);
-            Assert.Equals(board.BoardId, eboard.BoardId);
+            Assert.AreEqual(board.Name,eboard.Name);
+            Assert.AreEqual(board.Discription, eboard.Discription);
+            Assert.AreEqual(board.BoardId, eboard.BoardId);
         }
         #endregion
     }

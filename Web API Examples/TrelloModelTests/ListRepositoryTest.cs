@@ -51,16 +51,17 @@ namespace TrelloModelTests
             Assert.IsNotNull(addedlist);
             List del = _lr.GetSingle(addedlist.ListId);
             _lr.Delete(del);
-            Assert.IsNull(_lr.FindBy(l => l.Name == addedlist.Name));
+            Assert.AreEqual(0,_lr.FindBy(l2 => l2.Name == addedlist.Name).Count());
         }
 
         [TestMethod]
         public void TestEditList()
         {
-            var list = _lr.GetSingle(1);
-            var elist = new List { ListId = list.ListId, Name = "", Lix = 1 };
+            var list = new List { Name = "List PI Teste", BoardId = 1 };
+            _lr.Add(list);
+            var elist = new List { ListId = list.ListId, Name = "List PI Teste2", Lix = list.Lix+1 };
             _lr.Edit(elist);
-            list = _lr.GetSingle(1);
+            list = _lr.GetSingle(elist.ListId);
             Assert.Equals(list.Name, elist.Name);
             Assert.Equals(list.ListId, elist.ListId);
         }
