@@ -18,8 +18,8 @@ namespace TrelloModelTests
         [ClassInitialize]
         public static void ClassInitializeListRepositoryTests(TestContext context)
         {
-            _br = (BoardRepository) new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
-            _lr = (ListRepository)  new RepositoryConcreteFactory().GetListFactory().GetListRepository();
+            _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
+            _lr = (ListRepository)new RepositoryConcreteFactory().GetListFactory().GetListRepository();
         }
         #endregion
 
@@ -45,13 +45,13 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddDeleteList()
         {
-            var list = new List { Name = "List PI Teste", BoardId = 1};
+            var list = new List { Name = "List PI Teste", BoardId = 1 };
             _lr.Add(list);
             var addedlist = _lr.FindBy(l => l.Name == list.Name).FirstOrDefault();
             Assert.IsNotNull(addedlist);
             List del = _lr.GetSingle(addedlist.ListId);
             _lr.Delete(del);
-            Assert.AreEqual(0,_lr.FindBy(l2 => l2.Name == addedlist.Name).Count());
+            Assert.AreEqual(0, _lr.FindBy(l2 => l2.Name == addedlist.Name).Count());
         }
 
         [TestMethod]
@@ -59,11 +59,11 @@ namespace TrelloModelTests
         {
             var list = new List { Name = "List PI Teste", BoardId = 1 };
             _lr.Add(list);
-            var elist = new List { ListId = list.ListId, Name = "List PI Teste2", Lix = list.Lix+1 };
+            var elist = new List { ListId = list.ListId, Name = "List PI Teste2", Lix = list.Lix + 1, BoardId = list.BoardId };
             _lr.Edit(elist);
             list = _lr.GetSingle(elist.ListId);
-            Assert.Equals(list.Name, elist.Name);
-            Assert.Equals(list.ListId, elist.ListId);
+            Assert.AreEqual(list.Name, elist.Name);
+            Assert.AreEqual(list.ListId, elist.ListId);
         }
         #endregion
     }

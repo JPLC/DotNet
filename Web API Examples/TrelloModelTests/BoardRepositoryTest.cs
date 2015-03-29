@@ -25,7 +25,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestGetAllBoards()
         {
-            Assert.AreEqual(3,_br.GetAll().Count());
+            Assert.AreEqual(3, _br.GetAll().Count());
         }
 
         [TestMethod]
@@ -37,29 +37,31 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestFindBoardBy()
         {
-            Assert.IsNotNull(_br.FindBy(b=>b.BoardId==1));
+            Assert.IsNotNull(_br.FindBy(b => b.BoardId == 1));
         }
 
         [TestMethod]
         public void TestAddDeleteBoard()
         {
+            var startNBoards = _br.GetAll().Count();
             var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
             _br.Add(board);
+            Assert.AreEqual(startNBoards + 1, _br.GetAll().Count());
             var addedboard = _br.FindBy(b => b.Name == board.Name).FirstOrDefault();
             Assert.IsNotNull(addedboard);
-            Board del = _br.GetSingle(addedboard.BoardId);
-            _br.Delete(del);
-            Assert.IsNull(_br.FindBy(b => b.Name == addedboard.Name));
+            _br.Delete(addedboard);
+            Assert.AreEqual(0, _br.FindBy(b => b.Name == addedboard.Name).Count());
+            Assert.AreEqual(startNBoards, _br.GetAll().Count());
         }
 
         [TestMethod]
         public void TestEditBoard()
         {
             var board = _br.GetSingle(1);
-            var eboard = new Board {BoardId = board.BoardId, Name = "Board Edited", Discription = "Board usado para editar"};
+            var eboard = new Board { BoardId = board.BoardId, Name = "Board Edited", Discription = "Board usado para editar" };
             _br.Edit(eboard);
             board = _br.GetSingle(1);
-            Assert.AreEqual(board.Name,eboard.Name);
+            Assert.AreEqual(board.Name, eboard.Name);
             Assert.AreEqual(board.Discription, eboard.Discription);
             Assert.AreEqual(board.BoardId, eboard.BoardId);
         }

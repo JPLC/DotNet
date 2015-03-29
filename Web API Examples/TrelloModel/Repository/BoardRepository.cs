@@ -39,36 +39,43 @@ namespace TrelloModel.Repository
             return GetAll().Where(predicate);
         }
 
-        public void Add(Board entity)
+        public void Add(Board board)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 //try
                 //{
-                    db.Board.Add(entity);
+                    db.Board.Add(board);
                     db.SaveChanges();
                 //}
-                //catch (DbEntityValidationException ex)
+                //catch (DbboardValidationException ex)
                 //{
-                //    var error = ex.EntityValidationErrors.First().ValidationErrors.First();
+                //    var error = ex.boardValidationErrors.First().ValidationErrors.First();
                 //}
             }
         }
 
-        public void Delete(Board entity)
+        
+        public void Delete(Board board)
+        {
+            Delete(board.BoardId);
+        }
+
+        private void Delete(int boardId)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.Board.Remove(entity);
+                var board = db.Board.FirstOrDefault(b => b.BoardId == boardId);
+                db.Board.Remove(board);
                 db.SaveChanges();
             }
         }
 
-        public void Edit(Board entity)
+        public void Edit(Board board)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.Entry(entity).State = EntityState.Modified;
+                db.Entry(board).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
