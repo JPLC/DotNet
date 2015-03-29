@@ -18,8 +18,8 @@ namespace TrelloModel
         public int Cix { get; set; }
         public string Name { get; set; }
         public string Discription { get; set; }
-        public System.TimeSpan CreationDate { get; set; }
-        public System.TimeSpan DueDate { get; set; }
+        public System.DateTime CreationDate { get; set; }
+        public System.DateTime DueDate { get; set; }
         public int BoardId { get; set; }
         public int ListId { get; set; }
     

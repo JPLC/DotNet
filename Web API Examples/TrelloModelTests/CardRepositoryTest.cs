@@ -55,8 +55,7 @@ namespace TrelloModelTests
                 BoardId = 1,
                 ListId = 1,
                 Discription = "Card para teste",
-                CreationDate = new TimeSpan(),
-                DueDate = new TimeSpan()
+                DueDate = DateTime.Now
             };
             _cr.Add(card);
             var addedCard = _cr.FindBy(l => l.Name == card.Name).FirstOrDefault();
@@ -65,7 +64,7 @@ namespace TrelloModelTests
             _cr.Delete(del);
             Assert.AreEqual(0, _cr.FindBy(l => l.Name == addedCard.Name).Count());
         }
-        /*
+        
         [TestMethod]
         public void TestEditCard()
         {
@@ -78,15 +77,13 @@ namespace TrelloModelTests
                 BoardId = 1,
                 ListId = 1,
                 Discription = "Card para teste",
-                CreationDate = new TimeSpan(),
-                DueDate = new TimeSpan()
+                DueDate = DateTime.Now
             };
             _cr.Edit(ecard);
             card = _cr.GetSingle(1);
             Assert.AreEqual(card.Name, ecard.Name);
             Assert.AreEqual(card.CardId, ecard.CardId);
         }
-        */
         #endregion
     }
 }

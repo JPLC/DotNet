@@ -42,6 +42,7 @@ namespace TrelloModel.Repository
             using (var db = new TrelloModelDBContainer())
             {
                 card.Cix = db.List.Count(l => l.ListId == card.ListId) + 1;
+                card.CreationDate = DateTime.Now;
                 db.Card.Add(card);
                 db.SaveChanges();
             }
@@ -55,12 +56,11 @@ namespace TrelloModel.Repository
             }
         }
 
-        //TODO Acabar o SP que faz a edição do Card
         public void Edit(Card card)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.CreationDate, card.DueDate, card.ListId);
+                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
             }
         }
         #endregion

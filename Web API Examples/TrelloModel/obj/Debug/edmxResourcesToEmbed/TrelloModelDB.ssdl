@@ -16,8 +16,8 @@
     <Property Name="Cix" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Discription" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreationDate" Type="time" Precision="7" Nullable="false" />
-    <Property Name="DueDate" Type="time" Precision="7" Nullable="false" />
+    <Property Name="CreationDate" Type="datetime" Nullable="false" />
+    <Property Name="DueDate" Type="datetime" Nullable="false" />
     <Property Name="BoardId" Type="int" Nullable="false" />
     <Property Name="ListId" Type="int" Nullable="false" />
   </EntityType>
@@ -81,8 +81,7 @@
     <Parameter Name="Cix" Type="int" Mode="In" />
     <Parameter Name="Name" Type="varchar" Mode="In" />
     <Parameter Name="Discription" Type="varchar" Mode="In" />
-    <Parameter Name="CreationDate" Type="time" Mode="In" />
-    <Parameter Name="DueDate" Type="time" Mode="In" />
+    <Parameter Name="DueDate" Type="datetime" Mode="In" />
     <Parameter Name="ListId" Type="int" Mode="In" />
   </Function>
   <Function Name="EditList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">

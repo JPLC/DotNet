@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/25/2015 00:09:14
+-- Date Created: 03/29/2015 18:30:12
 -- Generated from EDMX file: C:\Users\João\DotNet\Web API Examples\TrelloModel\TrelloModelDB.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,11 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_BoardList]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[List] DROP CONSTRAINT [FK_BoardList];
-GO
 IF OBJECT_ID(N'[dbo].[FK_BoardCard]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Card] DROP CONSTRAINT [FK_BoardCard];
+GO
+IF OBJECT_ID(N'[dbo].[FK_BoardList]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[List] DROP CONSTRAINT [FK_BoardList];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ListCard]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Card] DROP CONSTRAINT [FK_ListCard];
@@ -34,11 +34,11 @@ GO
 IF OBJECT_ID(N'[dbo].[Board]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Board];
 GO
-IF OBJECT_ID(N'[dbo].[List]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[List];
-GO
 IF OBJECT_ID(N'[dbo].[Card]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Card];
+GO
+IF OBJECT_ID(N'[dbo].[List]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[List];
 GO
 
 -- --------------------------------------------------
@@ -68,8 +68,8 @@ CREATE TABLE [dbo].[Card] (
     [Cix] int  NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Discription] nvarchar(max)  NOT NULL,
-    [CreationDate] time  NOT NULL,
-    [DueDate] time  NOT NULL,
+    [CreationDate] datetime  NOT NULL,
+    [DueDate] datetime  NOT NULL,
     [BoardId] int  NOT NULL,
     [ListId] int  NOT NULL
 );

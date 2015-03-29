@@ -99,15 +99,42 @@ CREATE PROCEDURE [dbo].[EditCard]
 	,@Cix int
 	,@Name varchar(255)
 	,@Discription varchar(255)
-	,@CreationDate Time
-	,@DueDate Time
+	,@DueDate DateTime
 	,@ListId int
 AS
 BEGIN
 	SET NOCOUNT ON;
 	BEGIN TRY
 		BEGIN TRAN
+		declare @oldCix int = (select Cix from [Card] where CardId=@CardId)
+		declare @oldListId int = (select ListId from [Card] where CardId=@CardId)
 
+		/* Editar na mesma lista e para a mesma posição*/
+		if (@Cix = @oldCix AND @ListId = @oldListId)
+		BEGIN
+			UPDATE [Card]
+			SET Name = @Name, 
+                Discription = @Discription,
+				DueDate = @DueDate
+			WHERE CardId=@CardId
+		END
+		ELSE
+			BEGIN
+			UPDATE [Card]
+			SET Name = @Name, 
+                Discription = @Discription,
+				DueDate = @DueDate,
+				ListId = @ListId
+			WHERE CardId=@CardId
+
+			UPDATE [Card]
+			SET Cix=Cix-1
+			WHERE Cix > @oldCix and ListId = @oldListId
+
+			UPDATE [Card]
+			SET Cix=Cix+1
+			WHERE Cix > @Cix and ListId = @ListId
+			END
 		COMMIT
 	END TRY
 
@@ -115,4 +142,5 @@ BEGIN
 		ROLLBACK
 	END CATCH
 END
+
 GO

@@ -41,9 +41,32 @@
       <Parameter Name="Cix" Mode="In" Type="Int32" />
       <Parameter Name="Name" Mode="In" Type="String" />
       <Parameter Name="Discription" Mode="In" Type="String" />
-      <Parameter Name="CreationDate" Mode="In" Type="Time" />
       <Parameter Name="DueDate" Mode="In" Type="Time" />
       <Parameter Name="ListId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteCard1">
+      <Parameter Name="CardId" Mode="In" Type="Int32" />
+      <Parameter Name="Cix" Mode="In" Type="Int32" />
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteList1">
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+      <Parameter Name="Lix" Mode="In" Type="Int32" />
+      <Parameter Name="BoardId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="EditCard1">
+      <Parameter Name="CardId" Mode="In" Type="Int32" />
+      <Parameter Name="Cix" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Discription" Mode="In" Type="String" />
+      <Parameter Name="DueDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="EditList1">
+      <Parameter Name="ListId" Mode="In" Type="Int32" />
+      <Parameter Name="Lix" Mode="In" Type="Int32" />
+      <Parameter Name="BoardId" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="Board">
@@ -75,8 +98,8 @@
     <Property Name="Cix" Type="Int32" Nullable="false" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
     <Property Name="Discription" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-    <Property Name="CreationDate" Type="Time" Nullable="false" Precision="7" />
-    <Property Name="DueDate" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DueDate" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="Board" Relationship="TrelloModelDB.BoardCard" FromRole="Card" ToRole="Board" />
     <Property Name="BoardId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="List" Relationship="TrelloModelDB.ListCard" FromRole="Card" ToRole="List" />

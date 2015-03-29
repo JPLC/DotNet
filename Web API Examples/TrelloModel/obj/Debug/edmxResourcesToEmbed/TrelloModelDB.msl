@@ -34,9 +34,9 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <FunctionImportMapping FunctionImportName="DeleteList" FunctionName="TrelloModelDB.Store.DeleteList" />
-    <FunctionImportMapping FunctionImportName="EditList" FunctionName="TrelloModelDB.Store.EditList" />
-    <FunctionImportMapping FunctionImportName="DeleteCard" FunctionName="TrelloModelDB.Store.DeleteCard" />
-    <FunctionImportMapping FunctionImportName="EditCard" FunctionName="TrelloModelDB.Store.EditCard" />
+    <FunctionImportMapping FunctionImportName="DeleteCard1" FunctionName="TrelloModelDB.Store.DeleteCard" />
+    <FunctionImportMapping FunctionImportName="DeleteList1" FunctionName="TrelloModelDB.Store.DeleteList" />
+    <FunctionImportMapping FunctionImportName="EditCard1" FunctionName="TrelloModelDB.Store.EditCard" />
+    <FunctionImportMapping FunctionImportName="EditList1" FunctionName="TrelloModelDB.Store.EditList" />
   </EntityContainerMapping>
 </Mapping>
