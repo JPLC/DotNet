@@ -24,6 +24,10 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
+        #region Invalid Assert
+        #endregion
+
+        #region  Valid Assert
         [TestMethod]
         public void TestGetAllLists()
         {
@@ -66,6 +70,7 @@ namespace TrelloModelTests
             Assert.AreEqual(list.ListId, elist.ListId);
             _lr.Delete(elist);
         }
+        #endregion
         #endregion
     }
 }

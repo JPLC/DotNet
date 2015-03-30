@@ -27,6 +27,10 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
+        #region Invalid Assert
+        #endregion
+
+        #region  Valid Assert
         [TestMethod]
         public void TestGetAllCards()
         {
@@ -84,6 +88,7 @@ namespace TrelloModelTests
             Assert.AreEqual(card.Name, ecard.Name);
             Assert.AreEqual(card.CardId, ecard.CardId);
         }
+        #endregion
         #endregion
     }
 }

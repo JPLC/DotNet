@@ -22,6 +22,10 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
+        #region Invalid Assert
+        #endregion
+
+        #region  Valid Assert
         [TestMethod]
         public void TestGetAllBoards()
         {
@@ -65,6 +69,7 @@ namespace TrelloModelTests
             Assert.AreEqual(board.Discription, eboard.Discription);
             Assert.AreEqual(board.BoardId, eboard.BoardId);
         }
+        #endregion
         #endregion
     }
 }
