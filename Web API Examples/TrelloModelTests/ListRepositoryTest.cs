@@ -64,6 +64,7 @@ namespace TrelloModelTests
             list = _lr.GetSingle(elist.ListId);
             Assert.AreEqual(list.Name, elist.Name);
             Assert.AreEqual(list.ListId, elist.ListId);
+            _lr.Delete(elist);
         }
         #endregion
     }
