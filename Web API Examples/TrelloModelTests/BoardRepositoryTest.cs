@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
 using TrelloModel.Repository;
+using TSC = TrelloModel.Business.Constants.TrelloSizeConstants;
 
 namespace TrelloModelTests
 {
@@ -26,6 +27,13 @@ namespace TrelloModelTests
         #region Invalid Assert
 
         [TestMethod]
+        public void TestAddInvalidBoardNull()
+        {
+            var board = new Board { Name = null, Discription = null };
+            _br.Add(board);
+        }
+
+        [TestMethod]
         public void TestAddInvalidBoardEmpty()
         {
             var board = new Board { Name = string.Empty, Discription = string.Empty };
@@ -35,14 +43,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddInvalidBoardBiggerThanMaxValue()
         {
-            var board = new Board { Name = new String('a', 11), Discription = new String('a', 11) };
-            _br.Add(board);
-        }
-
-        [TestMethod]
-        public void TestAddInvalidBoardNull()
-        {
-            var board = new Board { Name = null, Discription = null };
+            var board = new Board { Name = new String('a', TSC.BoardNameSize + 1), Discription = new String('a', TSC.BoardDiscriptionSize + 1) };
             _br.Add(board);
         }
 
