@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
@@ -23,6 +24,43 @@ namespace TrelloModelTests
 
         #region Test Methods
         #region Invalid Assert
+
+        [TestMethod]
+        public void TestAddInvalidBoardEmpty()
+        {
+            var board = new Board { Name = string.Empty, Discription = string.Empty };
+            _br.Add(board);
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardBiggerThanMaxValue()
+        {
+            var board = new Board { Name = new String('a', 11), Discription = new String('a', 11) };
+            _br.Add(board);
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardNull()
+        {
+            var board = new Board { Name = null, Discription = null };
+            _br.Add(board);
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardInvalidChars()
+        {
+            var board = new Board { Name = "#$%@£@erfnerio", Discription = "#$%@£@erfnerio" };
+            _br.Add(board);
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardSameName()
+        {
+            var uniqueboard = _br.GetSingle(1);
+            var board = new Board { Name = uniqueboard.Name, Discription = "teste repeated board" };
+            _br.Add(board);
+        }
+
         #endregion
 
         #region  Valid Assert
@@ -35,13 +73,19 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestGetSingleBoard()
         {
-            Assert.IsNotNull(_br.GetSingle(1));
+            var board = _br.GetSingle(1);
+            Assert.IsNotNull(board);
+            Assert.AreEqual(1, board.BoardId);
+            Assert.AreEqual("Caetano", board.Name);
+            Assert.AreEqual("Quadro do Caetano", board.Discription);
         }
 
         [TestMethod]
         public void TestFindBoardBy()
         {
             Assert.IsNotNull(_br.FindBy(b => b.BoardId == 1));
+            Assert.IsNotNull(_br.FindBy(b => b.Name == "Caetano"));
+            Assert.IsNotNull(_br.FindBy(b => b.Discription == "Quadro do Caetano"));
         }
 
         [TestMethod]
@@ -61,10 +105,16 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestEditBoard()
         {
-            var board = _br.GetSingle(1);
+            var board = _br.GetSingle(2);
             var eboard = new Board { BoardId = board.BoardId, Name = "Board Edited", Discription = "Board usado para editar" };
             _br.Edit(eboard);
-            board = _br.GetSingle(1);
+            board = _br.GetSingle(2);
+            Assert.AreEqual(board.Name, eboard.Name);
+            Assert.AreEqual(board.Discription, eboard.Discription);
+            Assert.AreEqual(board.BoardId, eboard.BoardId);
+            eboard = new Board { BoardId = board.BoardId, Name = "Pedro", Discription = "Quadro do Pedro" };
+            _br.Edit(eboard);
+            board = _br.GetSingle(2);
             Assert.AreEqual(board.Name, eboard.Name);
             Assert.AreEqual(board.Discription, eboard.Discription);
             Assert.AreEqual(board.BoardId, eboard.BoardId);

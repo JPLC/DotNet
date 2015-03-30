@@ -56,6 +56,10 @@
     </Compile>
     <Compile Include="Business\BoardBusiness.cs" />
     <Compile Include="Business\CardBusiness.cs" />
+    <Compile Include="Business\Constants\TrelloRegularExpressions.cs" />
+    <Compile Include="Business\Enumerators\BoardValidationCodes.cs" />
+    <Compile Include="Business\Enumerators\CardValidationCodes.cs" />
+    <Compile Include="Business\Enumerators\ListValidationCodes.cs" />
     <Compile Include="Business\ListBusiness.cs" />
     <Compile Include="Card.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
