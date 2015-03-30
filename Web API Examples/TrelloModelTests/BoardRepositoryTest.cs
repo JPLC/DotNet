@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.Validation;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
@@ -30,28 +31,56 @@ namespace TrelloModelTests
         public void TestAddInvalidBoardNull()
         {
             var board = new Board { Name = null, Discription = null };
-            _br.Add(board);
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
         }
 
         [TestMethod]
         public void TestAddInvalidBoardEmpty()
         {
             var board = new Board { Name = string.Empty, Discription = string.Empty };
-            _br.Add(board);
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
         }
 
         [TestMethod]
         public void TestAddInvalidBoardBiggerThanMaxValue()
         {
             var board = new Board { Name = new String('a', TSC.BoardNameSize + 1), Discription = new String('a', TSC.BoardDiscriptionSize + 1) };
-            _br.Add(board);
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
         }
 
         [TestMethod]
         public void TestAddInvalidBoardInvalidChars()
         {
             var board = new Board { Name = "#$%@£@erfnerio", Discription = "#$%@£@erfnerio" };
-            _br.Add(board);
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
         }
 
         [TestMethod]
@@ -59,7 +88,14 @@ namespace TrelloModelTests
         {
             var uniqueboard = _br.GetSingle(1);
             var board = new Board { Name = uniqueboard.Name, Discription = "teste repeated board" };
-            _br.Add(board);
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
         }
 
         #endregion

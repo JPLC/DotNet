@@ -43,15 +43,8 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //try
-                //{
-                    db.Board.Add(board);
-                    db.SaveChanges();
-                //}
-                //catch (DbboardValidationException ex)
-                //{
-                //    var error = ex.boardValidationErrors.First().ValidationErrors.First();
-                //}
+                db.Board.Add(board);
+                db.SaveChanges();
             }
         }
 

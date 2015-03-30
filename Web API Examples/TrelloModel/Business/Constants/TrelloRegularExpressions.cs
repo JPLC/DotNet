@@ -5,11 +5,11 @@ namespace TrelloModel.Business.Constants
     public static class TrelloRegularExpressions
     {
         #region Regex Constants
-        public const string BoardNameRegex = "";
-        public const string BoardDiscriptionRegex = "";
-        public const string ListNameRegex = "";
-        public const string CardNameRegex = "";
-        public const string CardDiscriptionRegex = "";
+        public const string BoardNameRegex = @"^[A-Za-z 0-9]+$";
+        public const string BoardDiscriptionRegex = @"^[A-Za-z 0-9]+$";
+        public const string ListNameRegex = @"^[A-Za-z 0-9]+$";
+        public const string CardNameRegex = @"^[A-Za-z 0-9]+$";
+        public const string CardDiscriptionRegex = @"^[A-Za-z 0-9]+$";
         #endregion
 
         #region Methods
