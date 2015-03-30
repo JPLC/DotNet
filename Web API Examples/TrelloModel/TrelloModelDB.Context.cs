@@ -31,19 +31,6 @@ namespace TrelloModel
         public virtual DbSet<List> List { get; set; }
         public virtual DbSet<Card> Card { get; set; }
     
-        public virtual ObjectResult<ProcedureTest_Result> ProcedureTest(Nullable<int> param1, Nullable<int> param2)
-        {
-            var param1Parameter = param1.HasValue ?
-                new ObjectParameter("param1", param1) :
-                new ObjectParameter("param1", typeof(int));
-    
-            var param2Parameter = param2.HasValue ?
-                new ObjectParameter("param2", param2) :
-                new ObjectParameter("param2", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProcedureTest_Result>("ProcedureTest", param1Parameter, param2Parameter);
-        }
-    
         public virtual int DeleteList(Nullable<int> listId, Nullable<int> lix, Nullable<int> boardId)
         {
             var listIdParameter = listId.HasValue ?
@@ -99,70 +86,7 @@ namespace TrelloModel
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCard", cardIdParameter, cixParameter, listIdParameter);
         }
     
-        public virtual int EditCard(Nullable<int> cardId, Nullable<int> cix, string name, string discription, Nullable<System.TimeSpan> dueDate, Nullable<int> listId)
-        {
-            var cardIdParameter = cardId.HasValue ?
-                new ObjectParameter("CardId", cardId) :
-                new ObjectParameter("CardId", typeof(int));
-    
-            var cixParameter = cix.HasValue ?
-                new ObjectParameter("Cix", cix) :
-                new ObjectParameter("Cix", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            var discriptionParameter = discription != null ?
-                new ObjectParameter("Discription", discription) :
-                new ObjectParameter("Discription", typeof(string));
-    
-            var dueDateParameter = dueDate.HasValue ?
-                new ObjectParameter("DueDate", dueDate) :
-                new ObjectParameter("DueDate", typeof(System.TimeSpan));
-    
-            var listIdParameter = listId.HasValue ?
-                new ObjectParameter("ListId", listId) :
-                new ObjectParameter("ListId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditCard", cardIdParameter, cixParameter, nameParameter, discriptionParameter, dueDateParameter, listIdParameter);
-        }
-    
-        public virtual int DeleteCard1(Nullable<int> cardId, Nullable<int> cix, Nullable<int> listId)
-        {
-            var cardIdParameter = cardId.HasValue ?
-                new ObjectParameter("CardId", cardId) :
-                new ObjectParameter("CardId", typeof(int));
-    
-            var cixParameter = cix.HasValue ?
-                new ObjectParameter("Cix", cix) :
-                new ObjectParameter("Cix", typeof(int));
-    
-            var listIdParameter = listId.HasValue ?
-                new ObjectParameter("ListId", listId) :
-                new ObjectParameter("ListId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteCard1", cardIdParameter, cixParameter, listIdParameter);
-        }
-    
-        public virtual int DeleteList1(Nullable<int> listId, Nullable<int> lix, Nullable<int> boardId)
-        {
-            var listIdParameter = listId.HasValue ?
-                new ObjectParameter("ListId", listId) :
-                new ObjectParameter("ListId", typeof(int));
-    
-            var lixParameter = lix.HasValue ?
-                new ObjectParameter("Lix", lix) :
-                new ObjectParameter("Lix", typeof(int));
-    
-            var boardIdParameter = boardId.HasValue ?
-                new ObjectParameter("BoardId", boardId) :
-                new ObjectParameter("BoardId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteList1", listIdParameter, lixParameter, boardIdParameter);
-        }
-    
-        public virtual int EditCard1(Nullable<int> cardId, Nullable<int> cix, string name, string discription, Nullable<System.DateTime> dueDate, Nullable<int> listId)
+        public virtual int EditCard(Nullable<int> cardId, Nullable<int> cix, string name, string discription, Nullable<System.DateTime> dueDate, Nullable<int> listId)
         {
             var cardIdParameter = cardId.HasValue ?
                 new ObjectParameter("CardId", cardId) :
@@ -188,28 +112,7 @@ namespace TrelloModel
                 new ObjectParameter("ListId", listId) :
                 new ObjectParameter("ListId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditCard1", cardIdParameter, cixParameter, nameParameter, discriptionParameter, dueDateParameter, listIdParameter);
-        }
-    
-        public virtual int EditList1(Nullable<int> listId, Nullable<int> lix, Nullable<int> boardId, string name)
-        {
-            var listIdParameter = listId.HasValue ?
-                new ObjectParameter("ListId", listId) :
-                new ObjectParameter("ListId", typeof(int));
-    
-            var lixParameter = lix.HasValue ?
-                new ObjectParameter("Lix", lix) :
-                new ObjectParameter("Lix", typeof(int));
-    
-            var boardIdParameter = boardId.HasValue ?
-                new ObjectParameter("BoardId", boardId) :
-                new ObjectParameter("BoardId", typeof(int));
-    
-            var nameParameter = name != null ?
-                new ObjectParameter("Name", name) :
-                new ObjectParameter("Name", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditList1", listIdParameter, lixParameter, boardIdParameter, nameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EditCard", cardIdParameter, cixParameter, nameParameter, discriptionParameter, dueDateParameter, listIdParameter);
         }
     }
 }

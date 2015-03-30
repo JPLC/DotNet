@@ -60,7 +60,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate.TimeOfDay, card.ListId);
+                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
             }
         }
         #endregion
