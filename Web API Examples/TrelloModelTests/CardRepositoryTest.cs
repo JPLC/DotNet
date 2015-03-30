@@ -55,7 +55,7 @@ namespace TrelloModelTests
                 BoardId = 1,
                 ListId = 1,
                 Discription = "Card para teste",
-                DueDate = DateTime.Now
+                DueDate = DateTime.Now.AddDays(1)
             };
             _cr.Add(card);
             var addedCard = _cr.FindBy(l => l.Name == card.Name).FirstOrDefault();
