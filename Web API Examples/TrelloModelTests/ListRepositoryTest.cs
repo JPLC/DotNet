@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity.Validation;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
 using TrelloModel.Repository;
+using TSC = TrelloModel.Business.Constants.TrelloSizeConstants;
 
 namespace TrelloModelTests
 {
@@ -24,9 +27,66 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
+        //TODO Improve Failed Scenarios and add EditInvalid cases
         #region Invalid Assert
+        [TestMethod]
+        public void TestAddInvalidBoardNull()
+        {
+            var list = new List { Name = null};
+            try
+            {
+                _lr.Add(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardEmpty()
+        {
+            var list = new List { Name = string.Empty};
+            try
+            {
+                _lr.Add(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardBiggerThanMaxValue()
+        {
+            var list = new List { Name = new String('a', TSC.ListNameSize + 1)};
+            try
+            {
+                _lr.Add(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddInvalidBoardInvalidChars()
+        {
+            var list = new List { Name = "#$%@£@erfnerio"};
+            try
+            {
+                _lr.Add(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
         #endregion
 
+        //TODO Add Tests: EditList inferior and superior Index, and DeleteList to see if index of other changes
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllLists()

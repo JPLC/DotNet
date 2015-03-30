@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
 using TrelloModel.Repository;
+using TSC = TrelloModel.Business.Constants.TrelloSizeConstants;
 
 namespace TrelloModelTests
 {
@@ -27,9 +28,11 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
+        //TODO Improve Failed Scenarios and add EditInvalid cases
         #region Invalid Assert
         #endregion
 
+        //TODO Add Tests: EditCard inferior and superior Index, and DeleteCard to see if index of other changes
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllCards()

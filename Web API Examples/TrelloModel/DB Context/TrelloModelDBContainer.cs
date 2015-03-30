@@ -7,6 +7,7 @@ using TrelloModel.Business.Enumerators;
 
 namespace TrelloModel
 {
+    //TODO aplicar e melhorar expection handling
     public partial class TrelloModelDBContainer
     {
         public override int SaveChanges()
