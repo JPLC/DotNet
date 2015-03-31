@@ -130,6 +130,21 @@ namespace TrelloModelTests
             Assert.AreEqual(list.ListId, elist.ListId);
             _lr.Delete(elist);
         }
+
+        [TestMethod]
+        public void TestEditListSuperiorIndex()
+        {
+        }
+
+        [TestMethod]
+        public void TestEditListInferiorIndex()
+        {
+        }
+
+        [TestMethod]
+        public void TestDeleteList()
+        {
+        }
         #endregion
         #endregion
     }
