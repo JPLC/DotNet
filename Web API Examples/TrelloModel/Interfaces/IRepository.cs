@@ -22,5 +22,7 @@ namespace TrelloModel.Interfaces
         void DeleteRange(IEnumerable<T> t);
 
         void Edit(T t);
+
+        void EditRange(IEnumerable<T> t);
     }
 }

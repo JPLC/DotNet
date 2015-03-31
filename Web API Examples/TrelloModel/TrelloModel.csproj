@@ -33,6 +33,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.133\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
@@ -72,7 +75,9 @@
     <Compile Include="Factories\RepositoryAbstractFactory.cs" />
     <Compile Include="Factories\RepositoryConcreteFactory.cs" />
     <Compile Include="Interfaces\IBoardRepositoryFactory.cs" />
+    <Compile Include="Interfaces\ICardRepository.cs" />
     <Compile Include="Interfaces\ICardRepositoryFactory.cs" />
+    <Compile Include="Interfaces\IListRepository.cs" />
     <Compile Include="Interfaces\IListRepositoryFactory.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="ProcedureTest_Result.cs">

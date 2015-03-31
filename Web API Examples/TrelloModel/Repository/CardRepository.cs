@@ -5,7 +5,7 @@ using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
 {
-    public class CardRepository : IRepository<Card>
+    public class CardRepository : ICardRepository
     {
         #region Variables and Properties
         private static readonly Lazy<CardRepository> CardRepo = new Lazy<CardRepository>(() => new CardRepository());
@@ -97,6 +97,27 @@ namespace TrelloModel.Repository
             using (var db = new TrelloModelDBContainer())
             {
                 db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
+            }
+        }
+
+        public void EditRange(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Card> GetCardsOfBoard(int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Where(c => c.BoardId == boardId).ToList();
+            }
+        }
+
+        public IEnumerable<Card> GetCardsOfList(int listId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Where(c=>c.ListId==listId).ToList();
             }
         }
         #endregion

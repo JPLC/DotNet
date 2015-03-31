@@ -5,7 +5,7 @@ using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
 {
-    public class ListRepository : IRepository<List>
+    public class ListRepository : IListRepository
     {
         #region Variables and Properties
         private static readonly Lazy<ListRepository> ListRepo = new Lazy<ListRepository>(() => new ListRepository());
@@ -100,6 +100,20 @@ namespace TrelloModel.Repository
                 db.EditList(list.ListId, list.Lix, list.BoardId, list.Name);
             }
         }
+
+        public void EditRange(IEnumerable<List> t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<List> GetListsOfBoard(int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.List.Where(l => l.BoardId == boardId).ToList();
+            }
+        }
+
         #endregion
     }
 }

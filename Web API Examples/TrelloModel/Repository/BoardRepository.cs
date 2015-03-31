@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using EntityFramework.Extensions;
 using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
@@ -43,7 +44,7 @@ namespace TrelloModel.Repository
             using (var db = new TrelloModelDBContainer())
             {
                 //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
-                return db.Board.Where(predicate).FirstOrDefault();
+                return db.Board.FirstOrDefault(predicate);
             }
         }
 
@@ -76,24 +77,18 @@ namespace TrelloModel.Repository
 
         public void Delete(Board board)
         {
-            Delete(board.BoardId);
+            using (var db = new TrelloModelDBContainer())
+            {
+                db.Board.Where(b => b.BoardId == board.BoardId).Delete();
+                db.SaveChanges();
+            }
         }
 
         public void DeleteRange(IEnumerable<Board> boards)
         {
-            foreach (var b in boards)
-            {
-                Delete(b);
-            }
-        }
-
-        private void Delete(int boardId)
-        {
             using (var db = new TrelloModelDBContainer())
             {
-                var board = db.Board.FirstOrDefault(b => b.BoardId == boardId);
-                db.Board.Remove(board);
-                db.SaveChanges();
+                db.Board.Where(b => boards.Any(b1 => b1.BoardId == b.BoardId)).Delete();
             }
         }
 
@@ -103,6 +98,20 @@ namespace TrelloModel.Repository
             {
                 db.Entry(board).State = EntityState.Modified;
                 db.SaveChanges();
+            }
+        }
+
+        public void EditRange(IEnumerable<Board> t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditRange(IEnumerable<Board> board, Func<Board> predicate)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+               // db.Board.Update(board, predicate);
+               // db.SaveChanges();
             }
         }
         #endregion
