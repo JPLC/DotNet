@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TrelloModel.Interfaces;
 
@@ -101,9 +102,12 @@ namespace TrelloModel.Repository
             }
         }
 
-        public void EditRange(IEnumerable<List> t)
+        public void EditRange(IEnumerable<List> lists)
         {
-            throw new NotImplementedException();
+            foreach (var list in lists)
+            {
+                Edit(list);
+            }
         }
 
         public IEnumerable<List> GetListsOfBoard(int boardId)

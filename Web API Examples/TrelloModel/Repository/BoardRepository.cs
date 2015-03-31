@@ -101,19 +101,14 @@ namespace TrelloModel.Repository
             }
         }
 
-        public void EditRange(IEnumerable<Board> t)
+        public void EditRange(IEnumerable<Board> boards)
         {
-            throw new NotImplementedException();
-        }
-
-        public void EditRange(IEnumerable<Board> board, Func<Board> predicate)
-        {
-            using (var db = new TrelloModelDBContainer())
+            foreach (var board in boards)
             {
-               // db.Board.Update(board, predicate);
-               // db.SaveChanges();
+                Edit(board);
             }
         }
+
         #endregion
     }
 }

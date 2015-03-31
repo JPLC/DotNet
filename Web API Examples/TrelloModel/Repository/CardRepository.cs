@@ -100,9 +100,12 @@ namespace TrelloModel.Repository
             }
         }
 
-        public void EditRange(IEnumerable<Card> t)
+        public void EditRange(IEnumerable<Card> cards)
         {
-            throw new NotImplementedException();
+            foreach (var card in cards)
+            {
+                Edit(card);
+            }
         }
 
         public IEnumerable<Card> GetCardsOfBoard(int boardId)
@@ -117,7 +120,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                return db.Card.Where(c=>c.ListId==listId).ToList();
+                return db.Card.Where(c => c.ListId == listId).ToList();
             }
         }
         #endregion
