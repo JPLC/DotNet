@@ -48,6 +48,20 @@ namespace TrelloModel.Repository
             }
         }
 
+        public void AddRange(IEnumerable<Card> cards)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                foreach (var c in cards)
+                {
+                    c.Cix = db.List.Count(l => l.ListId == c.ListId) + 1;
+                    c.CreationDate = DateTime.Now;
+                    db.Card.Add(c);
+                }
+                db.SaveChanges();
+            }
+        }
+
         public void Delete(Card card)
         {
             using (var db = new TrelloModelDBContainer())

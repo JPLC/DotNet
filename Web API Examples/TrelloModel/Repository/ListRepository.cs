@@ -47,11 +47,24 @@ namespace TrelloModel.Repository
             }
         }
 
+        public void AddRange(IEnumerable<List> lists)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                foreach (var l in lists)
+                {
+                    l.Lix = db.List.Count() + 1;
+                    db.List.Add(l);
+                }
+                db.SaveChanges();
+            }
+        }
+
         public void Delete(List list)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.DeleteList(list.ListId, list.Lix, list.BoardId);              
+                db.DeleteList(list.ListId, list.Lix, list.BoardId);
             }
         }
 

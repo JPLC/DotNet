@@ -47,6 +47,15 @@ namespace TrelloModel.Repository
             }
         }
 
+        public void AddRange(IEnumerable<Board> boards)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                db.Board.AddRange(boards);
+                db.SaveChanges();
+            }
+        }
+
         public void Delete(Board board)
         {
             Delete(board.BoardId);

@@ -13,6 +13,8 @@ namespace TrelloModel.Interfaces
 
         void Add(T t);
 
+        void AddRange(IEnumerable<T> t);
+
         void Delete(T t);
 
         void Edit(T t);
