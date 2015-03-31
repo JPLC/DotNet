@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
@@ -87,8 +88,7 @@ namespace TrelloModelTests
         }
         #endregion
 
-        //TODO DeleteRange and EditRange Tests
-        //TODO Add Tests: EditList inferior and superior Index, and DeleteList to see if index of other changes
+        //TODO EditRange Tests
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllLists()
@@ -128,6 +128,22 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
+        public void TestAddDeleteRangeList()
+        {
+            var list = new List<List>
+            {
+                new List{Name = "List PI Teste1", BoardId = 1 },
+                new List{Name = "List PI Teste2", BoardId = 1 },
+                new List{Name = "List PI Teste3", BoardId = 1 },
+                new List{Name = "List PI Teste4", BoardId = 1 }
+            };
+            _lr.AddRange(list);
+            Assert.AreEqual(7, _lr.GetListsOfBoard(1).Count());
+            _lr.DeleteRange(list);
+            Assert.AreEqual(3, _lr.GetListsOfBoard(1).Count());
+        }
+        
+        [TestMethod]
         public void TestEditList()
         {
             var list = new List { Name = "List PI Teste", BoardId = 1 };
@@ -141,47 +157,92 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditListSuperiorIndex()
+        public void TestEditRangeList()
         {
-            var list = new List<List>
-            {
-                new List{Name = "List PI Teste1", BoardId = 1 },
-                new List{Name = "List PI Teste2", BoardId = 1 },
-                new List{Name = "List PI Teste3", BoardId = 1 },
-                new List{Name = "List PI Teste4", BoardId = 1 }
-            };
-            _lr.AddRange(list);
-            var listtodelete = _lr.FindBy(l => l.Name == "List PI Teste4");
-            _lr.Delete(listtodelete);
-
+            /*var list = new List { Name = "List PI Teste", BoardId = 1 };
+            _lr.Add(list);
+            var elist = new List { ListId = list.ListId, Name = "List PI Teste2", Lix = list.Lix + 1, BoardId = list.BoardId };
+            _lr.Edit(elist);
+            list = _lr.GetSingle(elist.ListId);
+            Assert.AreEqual(list.Name, elist.Name);
+            Assert.AreEqual(list.ListId, elist.ListId);
+            _lr.Delete(elist);*/
         }
 
         [TestMethod]
-        public void TestEditListInferiorIndex()
+        public void TestEditListFromSuperiorIndex()
         {
+            var countinit = _lr.Count();
+            var lindex = _lr.GetListsOfBoard(1).Count();
             var list = new List<List>
             {
-                new List{Name = "List PI Teste1", BoardId = 1 },
-                new List{Name = "List PI Teste2", BoardId = 1 },
-                new List{Name = "List PI Teste3", BoardId = 1 },
-                new List{Name = "List PI Teste4", BoardId = 1 }
+                new List{Name = "List PI Teste1", BoardId = 1, Lix = lindex+1},
+                new List{Name = "List PI Teste2", BoardId = 1, Lix = lindex+2},
+                new List{Name = "List PI Teste3", BoardId = 1, Lix = lindex+3},
+                new List{Name = "List PI Teste4", BoardId = 1, Lix = lindex+4}
             };
             _lr.AddRange(list);
-            var listtodelete = _lr.FindBy(l => l.Name == "List PI Teste2");
-            _lr.Delete(listtodelete);
+            _lr.Count().Should().Be(countinit + list.Count);
+            var listtoedit = _lr.FindBy(l => l.Name == "List PI Teste4");
+            listtoedit.Lix = lindex + 2;
+            _lr.Edit(listtoedit);
+            _lr.FindBy(l => l.Name == "List PI Teste1").Lix.Should().Be(lindex + 1);
+            _lr.FindBy(l => l.Name == "List PI Teste2").Lix.Should().Be(lindex + 3);
+            _lr.FindBy(l => l.Name == "List PI Teste3").Lix.Should().Be(lindex + 4);
+            _lr.DeleteRange(list);
+            _lr.Count().Should().Be(countinit);
         }
 
         [TestMethod]
-        public void TestDeleteList()
+        public void TestEditListFromInferiorIndex()
         {
+            var countinit = _lr.Count();
+            var lindex = _lr.GetListsOfBoard(1).Count();
             var list = new List<List>
             {
-                new List{Name = "List PI Teste1", BoardId = 1 },
-                new List{Name = "List PI Teste2", BoardId = 1 },
-                new List{Name = "List PI Teste3", BoardId = 1 },
-                new List{Name = "List PI Teste4", BoardId = 1 }
+                new List{Name = "List PI Teste1", BoardId = 1, Lix = lindex+1},
+                new List{Name = "List PI Teste2", BoardId = 1, Lix = lindex+2},
+                new List{Name = "List PI Teste3", BoardId = 1, Lix = lindex+3},
+                new List{Name = "List PI Teste4", BoardId = 1, Lix = lindex+4}
             };
             _lr.AddRange(list);
+            _lr.Count().Should().Be(countinit + list.Count);
+            var listtoedit = _lr.FindBy(l => l.Name == "List PI Teste1");
+            listtoedit.Lix = lindex + 4;
+            _lr.Edit(listtoedit);
+            _lr.FindBy(l => l.Name == "List PI Teste2").Lix.Should().Be(lindex + 1);
+            _lr.FindBy(l => l.Name == "List PI Teste3").Lix.Should().Be(lindex + 2);
+            _lr.FindBy(l => l.Name == "List PI Teste4").Lix.Should().Be(lindex + 3);
+            _lr.DeleteRange(list);
+            _lr.Count().Should().Be(countinit);
+        }
+
+        [TestMethod]
+        public void TestRemoveListIndex()
+        {
+            var countinit = _lr.Count();
+            var lindex = _lr.GetListsOfBoard(1).Count();
+            var list = new List<List>
+            {
+                new List{Name = "List PI Teste1", BoardId = 1, Lix = lindex+1},
+                new List{Name = "List PI Teste2", BoardId = 1, Lix = lindex+2},
+                new List{Name = "List PI Teste3", BoardId = 1, Lix = lindex+3},
+                new List{Name = "List PI Teste4", BoardId = 1, Lix = lindex+4}
+            };
+            _lr.AddRange(list);
+            _lr.Count().Should().Be(countinit + list.Count);
+            _lr.Delete(_lr.FindBy(l => l.Name == "List PI Teste3"));
+            _lr.FindBy(l => l.Name == "List PI Teste1").Lix.Should().Be(lindex + 1);
+            _lr.FindBy(l => l.Name == "List PI Teste2").Lix.Should().Be(lindex + 2);
+            _lr.FindBy(l => l.Name == "List PI Teste4").Lix.Should().Be(lindex + 3);
+            _lr.DeleteRange(list);
+            _lr.Count().Should().Be(countinit);
+        }
+
+        [TestMethod]
+        public void TestGetListsOfBoard()
+        {
+            Assert.AreEqual(3,_lr.GetListsOfBoard(1).Count());
         }
         #endregion
         #endregion

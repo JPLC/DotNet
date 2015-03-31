@@ -59,7 +59,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                list.Lix = db.List.Count() + 1;
+                list.Lix = db.List.Count(li => li.BoardId == list.BoardId) + 1;
                 db.List.Add(list);
                 db.SaveChanges();
             }
@@ -69,10 +69,12 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
+                int i = 1;
                 foreach (var l in lists)
                 {
-                    l.Lix = db.List.Count() + 1;
+                    l.Lix = db.List.Count(li => li.BoardId == l.BoardId) + i;
                     db.List.Add(l);
+                    i++;
                 }
                 db.SaveChanges();
             }
@@ -123,7 +125,7 @@ namespace TrelloModel.Repository
             using (var db = new TrelloModelDBContainer())
             {
                 //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
-                return db.Board.Count();
+                return db.List.Count();
             }
         }
         #endregion
