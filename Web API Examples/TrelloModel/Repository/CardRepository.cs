@@ -32,7 +32,12 @@ namespace TrelloModel.Repository
             return GetAll().FirstOrDefault(c => c.CardId == id);
         }
 
-        public IEnumerable<Card> FindBy(Func<Card, bool> predicate)
+        public Card FindBy(Func<Card, bool> predicate)
+        {
+            return GetAll().Where(predicate).FirstOrDefault();
+        }
+
+        public IEnumerable<Card> FindAllBy(Func<Card, bool> predicate)
         {
             return GetAll().Where(predicate);
         }

@@ -120,9 +120,9 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestFindBoardBy()
         {
-            Assert.IsNotNull(_br.FindBy(b => b.BoardId == 1));
-            Assert.IsNotNull(_br.FindBy(b => b.Name == "Caetano"));
-            Assert.IsNotNull(_br.FindBy(b => b.Discription == "Quadro do Caetano"));
+            Assert.IsNotNull(_br.FindAllBy(b => b.BoardId == 1));
+            Assert.IsNotNull(_br.FindAllBy(b => b.Name == "Caetano"));
+            Assert.IsNotNull(_br.FindAllBy(b => b.Discription == "Quadro do Caetano"));
         }
 
         [TestMethod]
@@ -132,10 +132,10 @@ namespace TrelloModelTests
             var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
             _br.Add(board);
             Assert.AreEqual(startNBoards + 1, _br.GetAll().Count());
-            var addedboard = _br.FindBy(b => b.Name == board.Name).FirstOrDefault();
+            var addedboard = _br.FindAllBy(b => b.Name == board.Name).FirstOrDefault();
             Assert.IsNotNull(addedboard);
             _br.Delete(addedboard);
-            Assert.AreEqual(0, _br.FindBy(b => b.Name == addedboard.Name).Count());
+            Assert.AreEqual(0, _br.FindAllBy(b => b.Name == addedboard.Name).Count());
             Assert.AreEqual(startNBoards, _br.GetAll().Count());
         }
 

@@ -49,7 +49,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestFindCardBy()
         {
-            Assert.IsNotNull(_cr.FindBy(l => l.CardId == 1));
+            Assert.IsNotNull(_cr.FindAllBy(l => l.CardId == 1));
         }
 
         [TestMethod]
@@ -65,11 +65,11 @@ namespace TrelloModelTests
                 DueDate = DateTime.Now.AddDays(1)
             };
             _cr.Add(card);
-            var addedCard = _cr.FindBy(l => l.Name == card.Name).FirstOrDefault();
+            var addedCard = _cr.FindAllBy(l => l.Name == card.Name).FirstOrDefault();
             Assert.IsNotNull(addedCard);
             Card del = _cr.GetSingle(addedCard.CardId);
             _cr.Delete(del);
-            Assert.AreEqual(0, _cr.FindBy(l => l.Name == addedCard.Name).Count());
+            Assert.AreEqual(0, _cr.FindAllBy(l => l.Name == addedCard.Name).Count());
         }
         
         [TestMethod]

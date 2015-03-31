@@ -104,7 +104,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestFindListBy()
         {
-            Assert.IsNotNull(_lr.FindBy(l => l.ListId == 1));
+            Assert.IsNotNull(_lr.FindAllBy(l => l.ListId == 1));
         }
 
         [TestMethod]
@@ -112,11 +112,11 @@ namespace TrelloModelTests
         {
             var list = new List { Name = "List PI Teste", BoardId = 1 };
             _lr.Add(list);
-            var addedlist = _lr.FindBy(l => l.Name == list.Name).FirstOrDefault();
+            var addedlist = _lr.FindAllBy(l => l.Name == list.Name).FirstOrDefault();
             Assert.IsNotNull(addedlist);
             List del = _lr.GetSingle(addedlist.ListId);
             _lr.Delete(del);
-            Assert.AreEqual(0, _lr.FindBy(l2 => l2.Name == addedlist.Name).Count());
+            Assert.AreEqual(0, _lr.FindAllBy(l2 => l2.Name == addedlist.Name).Count());
         }
 
         [TestMethod]
@@ -143,6 +143,9 @@ namespace TrelloModelTests
                 new List{Name = "List PI Teste4", BoardId = 1 }
             };
             _lr.AddRange(list);
+            var listtodelete = _lr.FindBy(l => l.Name == "List PI Teste2");
+            _lr.Delete(listtodelete);
+
 
         }
 

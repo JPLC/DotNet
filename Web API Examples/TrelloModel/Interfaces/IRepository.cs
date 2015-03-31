@@ -9,7 +9,9 @@ namespace TrelloModel.Interfaces
 
         T GetSingle(int id);
 
-        IEnumerable<T> FindBy(Func<T,bool> predicate);
+        T FindBy(Func<T, bool> predicate);
+
+        IEnumerable<T> FindAllBy(Func<T,bool> predicate);
 
         void Add(T t);
 
