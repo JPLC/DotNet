@@ -87,6 +87,7 @@ namespace TrelloModelTests
         }
         #endregion
 
+        //TODO DeleteRange and EditRange Tests
         //TODO Add Tests: EditList inferior and superior Index, and DeleteList to see if index of other changes
         #region  Valid Assert
         [TestMethod]

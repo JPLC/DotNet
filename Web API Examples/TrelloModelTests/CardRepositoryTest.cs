@@ -32,6 +32,7 @@ namespace TrelloModelTests
         #region Invalid Assert
         #endregion
 
+        //TODO DeleteRange and EditRange Tests
         //TODO Add Tests: EditCard inferior and superior Index, and DeleteCard to see if index of other changes
         #region  Valid Assert
         [TestMethod]
