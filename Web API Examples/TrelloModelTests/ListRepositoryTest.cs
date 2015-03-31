@@ -143,9 +143,8 @@ namespace TrelloModelTests
                 new List{Name = "List PI Teste4", BoardId = 1 }
             };
             _lr.AddRange(list);
-            var listtodelete = _lr.FindBy(l => l.Name == "List PI Teste2");
+            var listtodelete = _lr.FindBy(l => l.Name == "List PI Teste4");
             _lr.Delete(listtodelete);
-
 
         }
 
@@ -160,6 +159,8 @@ namespace TrelloModelTests
                 new List{Name = "List PI Teste4", BoardId = 1 }
             };
             _lr.AddRange(list);
+            var listtodelete = _lr.FindBy(l => l.Name == "List PI Teste2");
+            _lr.Delete(listtodelete);
         }
 
         [TestMethod]

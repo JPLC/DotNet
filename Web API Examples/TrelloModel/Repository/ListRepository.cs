@@ -19,6 +19,14 @@ namespace TrelloModel.Repository
 
         //TODO aplicar e melhorar expection handling
         #region Methods
+        private IQueryable<List> GetAllPrivate()
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.List;
+            }
+        }
+
         public IEnumerable<List> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
@@ -29,17 +37,17 @@ namespace TrelloModel.Repository
 
         public List GetSingle(int id)
         {
-            return GetAll().FirstOrDefault(l => l.ListId == id);
+            return GetAllPrivate().FirstOrDefault(l => l.ListId == id);
         }
 
         public List FindBy(Func<List, bool> predicate)
         {
-            return GetAll().Where(predicate).FirstOrDefault();
+            return GetAllPrivate().Where(predicate).FirstOrDefault();
         }
 
         public IEnumerable<List> FindAllBy(Func<List, bool> predicate)
         {
-            return GetAll().Where(predicate);
+            return GetAllPrivate().Where(predicate);
         }
 
         public void Add(List list)
