@@ -85,6 +85,21 @@
     <Compile Include="Repository\BoardRepository.cs" />
     <Compile Include="Repository\CardRepository.cs" />
     <Compile Include="Repository\ListRepository.cs" />
+    <Compile Include="Resources\BoardResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BoardResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CardResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CardResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ListResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ListResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="TrelloModelDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -130,7 +145,20 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\BoardResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BoardResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CardResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CardResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ListResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ListResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
