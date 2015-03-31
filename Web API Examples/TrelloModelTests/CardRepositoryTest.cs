@@ -37,7 +37,15 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestGetAllCards()
         {
-            Assert.AreEqual(27, _cr.GetAll().Count());
+            var c = _cr.GetAll();
+            var count = c.Count();
+            Assert.AreEqual(27, count);
+        }
+
+        [TestMethod]
+        public void TestCountAllCards()
+        {
+            Assert.AreEqual(27, _cr.Count());
         }
 
         [TestMethod]

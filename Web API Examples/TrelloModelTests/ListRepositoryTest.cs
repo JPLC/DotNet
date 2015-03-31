@@ -92,7 +92,14 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestGetAllLists()
         {
-            Assert.AreEqual(9, _lr.GetAll().Count());
+            var l = _lr.GetAll();
+            var count = l.Count();
+            Assert.AreEqual(9, count);
+        }
+
+        public void TestCountAllLists()
+        {
+            Assert.AreEqual(9, _lr.Count());
         }
 
         [TestMethod]

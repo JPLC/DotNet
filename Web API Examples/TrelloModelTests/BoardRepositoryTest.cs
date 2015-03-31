@@ -104,7 +104,15 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestGetAllBoards()
         {
-            Assert.AreEqual(3, _br.GetAll().Count());
+            var b = _br.GetAll();
+            var count = b.Count();
+            Assert.AreEqual(3, count);
+        }
+
+        [TestMethod]
+        public void TestCountAllBoards()
+        {
+            Assert.AreEqual(9, _br.Count());
         }
 
         [TestMethod]
@@ -128,7 +136,21 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddDeleteBoard()
         {
-            var startNBoards = _br.GetAll().Count();
+            var startNBoards = _br.Count();
+            var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
+            _br.Add(board);
+            Assert.AreEqual(startNBoards + 1, _br.GetAll().Count());
+            var addedboard = _br.FindAllBy(b => b.Name == board.Name).FirstOrDefault();
+            Assert.IsNotNull(addedboard);
+            _br.Delete(addedboard);
+            Assert.AreEqual(0, _br.FindAllBy(b => b.Name == addedboard.Name).Count());
+            Assert.AreEqual(startNBoards, _br.GetAll().Count());
+        }
+
+        [TestMethod]
+        public void TestAddDeleteRangeBoard()
+        {
+            var startNBoards = _br.Count();
             var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
             _br.Add(board);
             Assert.AreEqual(startNBoards + 1, _br.GetAll().Count());

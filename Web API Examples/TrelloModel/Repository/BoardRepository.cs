@@ -109,6 +109,14 @@ namespace TrelloModel.Repository
             }
         }
 
+        public int Count()
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
+                return db.Board.Count();
+            }
+        }
         #endregion
     }
 }

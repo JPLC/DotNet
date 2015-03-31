@@ -24,5 +24,7 @@ namespace TrelloModel.Interfaces
         void Edit(T t);
 
         void EditRange(IEnumerable<T> t);
+
+        int Count();
     }
 }
