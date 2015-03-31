@@ -129,7 +129,7 @@ namespace TrelloModel.Repository
             using (var db = new TrelloModelDBContainer())
             {
                 //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
-                return db.Board.Count();
+                return db.Card.Count();
             }
         }
         #endregion

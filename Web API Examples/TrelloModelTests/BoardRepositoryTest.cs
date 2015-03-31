@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -100,7 +101,6 @@ namespace TrelloModelTests
 
         #endregion
 
-        //TODO DeleteRange and EditRange Tests
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllBoards()
@@ -113,7 +113,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestCountAllBoards()
         {
-            Assert.AreEqual(9, _br.Count());
+            Assert.AreEqual(3, _br.Count());
         }
 
         [TestMethod]
@@ -140,27 +140,32 @@ namespace TrelloModelTests
             var startNBoards = _br.Count();
             var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
             _br.Add(board);
-            Assert.AreEqual(startNBoards + 1, _br.GetAll().Count());
+            Assert.AreEqual(startNBoards + 1, _br.Count());
             var addedboard = _br.FindAllBy(b => b.Name == board.Name).FirstOrDefault();
             Assert.IsNotNull(addedboard);
             _br.Delete(addedboard);
             Assert.AreEqual(0, _br.FindAllBy(b => b.Name == addedboard.Name).Count());
-            Assert.AreEqual(startNBoards, _br.GetAll().Count());
+            Assert.AreEqual(startNBoards, _br.Count());
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void TestAddDeleteRangeBoard()
         {
             var startNBoards = _br.Count();
-            var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
-            _br.Add(board);
-            Assert.AreEqual(startNBoards + 1, _br.GetAll().Count());
-            var addedboard = _br.FindAllBy(b => b.Name == board.Name).FirstOrDefault();
-            Assert.IsNotNull(addedboard);
-            _br.Delete(addedboard);
-            Assert.AreEqual(0, _br.FindAllBy(b => b.Name == addedboard.Name).Count());
-            Assert.AreEqual(startNBoards, _br.GetAll().Count());
-        }
+            var boardlist = new List<Board>()
+                            {
+                                new Board {Name = "Board PI TestAddDeleteRange1", Discription = "Board Programacao na Internet Teste"},
+                                new Board {Name = "Board PI TestAddDeleteRange2", Discription = "Board Programacao na Internet Teste"},
+                                new Board {Name = "Board PI TestAddDeleteRange3", Discription = "Board Programacao na Internet Teste"}
+                            };
+            _br.AddRange(boardlist);
+            Assert.AreEqual(startNBoards + 3, _br.Count());
+            var addedboards = _br.FindAllBy(b => b.Discription == "Board Programacao na Internet Teste");
+            Assert.AreEqual(3,addedboards.Count());
+            _br.DeleteRange(addedboards);
+            Assert.AreEqual(0, _br.FindAllBy(b => b.Discription == "Board Programacao na Internet Teste").Count());
+            Assert.AreEqual(startNBoards, _br.Count());
+        }*/
 
         [TestMethod]
         public void TestEditBoard()
@@ -178,6 +183,49 @@ namespace TrelloModelTests
             Assert.AreEqual(board.Name, eboard.Name);
             Assert.AreEqual(board.Discription, eboard.Discription);
             Assert.AreEqual(board.BoardId, eboard.BoardId);
+        }
+
+        [TestMethod]
+        public void TestEditRangeBoard()
+        {
+            var eboardlist = new List<Board>()
+                         {
+                             new Board {BoardId = 1, Name = "Board Edited1", Discription = "Board usado para editar"},
+                             new Board {BoardId = 2, Name = "Board Edited2", Discription = "Board usado para editar"},
+                             new Board {BoardId = 3, Name = "Board Edited3", Discription = "Board usado para editar"}
+                         };
+            _br.EditRange(eboardlist);
+            var board = _br.GetSingle(1);
+            Assert.AreEqual(board.BoardId, 1);
+            Assert.AreEqual(board.Name, "Board Edited1");
+            Assert.AreEqual(board.Discription, "Board usado para editar");
+            board = _br.GetSingle(2);
+            Assert.AreEqual(board.BoardId, 2);
+            Assert.AreEqual(board.Name, "Board Edited2");
+            Assert.AreEqual(board.Discription, "Board usado para editar");
+            board = _br.GetSingle(3);
+            Assert.AreEqual(board.BoardId, 3);
+            Assert.AreEqual(board.Name, "Board Edited3");
+            Assert.AreEqual(board.Discription, "Board usado para editar");
+            eboardlist = new List<Board>()
+                         {
+                             new Board {BoardId = 1, Name = "Caetano", Discription = "Quadro do Caetano"},
+                             new Board {BoardId = 2, Name = "Pedro", Discription = "Quadro do Pedro"},
+                             new Board {BoardId = 3, Name = "Joao", Discription = "Quadro do Joao"}
+                         };
+            _br.EditRange(eboardlist);
+            board = _br.GetSingle(1);
+            Assert.AreEqual(board.BoardId, 1);
+            Assert.AreEqual(board.Name, "Caetano");
+            Assert.AreEqual(board.Discription, "Quadro do Caetano");
+            board = _br.GetSingle(2);
+            Assert.AreEqual(board.BoardId, 2);
+            Assert.AreEqual(board.Name, "Pedro");
+            Assert.AreEqual(board.Discription, "Quadro do Pedro");
+            board = _br.GetSingle(3);
+            Assert.AreEqual(board.BoardId, 3);
+            Assert.AreEqual(board.Name, "Joao");
+            Assert.AreEqual(board.Discription, "Quadro do Joao");
         }
         #endregion
         #endregion
