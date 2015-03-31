@@ -70,6 +70,14 @@ namespace TrelloModel.Repository
             }
         }
 
+        public void DeleteRange(IEnumerable<Card> cards)
+        {
+            foreach (var c in cards)
+            {
+                Delete(c);
+            }
+        }
+
         public void Edit(Card card)
         {
             using (var db = new TrelloModelDBContainer())

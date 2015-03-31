@@ -61,6 +61,14 @@ namespace TrelloModel.Repository
             Delete(board.BoardId);
         }
 
+        public void DeleteRange(IEnumerable<Board> boards)
+        {
+            foreach (var b in boards)
+            {
+                Delete(b);
+            }
+        }
+
         private void Delete(int boardId)
         {
             using (var db = new TrelloModelDBContainer())

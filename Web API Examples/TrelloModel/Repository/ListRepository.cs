@@ -68,6 +68,14 @@ namespace TrelloModel.Repository
             }
         }
 
+        public void DeleteRange(IEnumerable<List> lists)
+        {
+            foreach (var l in lists)
+            {
+                Delete(l);
+            }
+        }
+
         public void Edit(List list)
         {
             using (var db = new TrelloModelDBContainer())

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -134,16 +135,41 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestEditListSuperiorIndex()
         {
+            var list = new List<List>
+            {
+                new List{Name = "List PI Teste1", BoardId = 1 },
+                new List{Name = "List PI Teste2", BoardId = 1 },
+                new List{Name = "List PI Teste3", BoardId = 1 },
+                new List{Name = "List PI Teste4", BoardId = 1 }
+            };
+            _lr.AddRange(list);
+
         }
 
         [TestMethod]
         public void TestEditListInferiorIndex()
         {
+            var list = new List<List>
+            {
+                new List{Name = "List PI Teste1", BoardId = 1 },
+                new List{Name = "List PI Teste2", BoardId = 1 },
+                new List{Name = "List PI Teste3", BoardId = 1 },
+                new List{Name = "List PI Teste4", BoardId = 1 }
+            };
+            _lr.AddRange(list);
         }
 
         [TestMethod]
         public void TestDeleteList()
         {
+            var list = new List<List>
+            {
+                new List{Name = "List PI Teste1", BoardId = 1 },
+                new List{Name = "List PI Teste2", BoardId = 1 },
+                new List{Name = "List PI Teste3", BoardId = 1 },
+                new List{Name = "List PI Teste4", BoardId = 1 }
+            };
+            _lr.AddRange(list);
         }
         #endregion
         #endregion
