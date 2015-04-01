@@ -15,7 +15,6 @@ namespace TrelloModelTests
     public class ListRepositoryTest
     {
         #region Variables and Properties
-        private static BoardRepository _br;
         private static ListRepository _lr;
         #endregion
 
@@ -23,7 +22,6 @@ namespace TrelloModelTests
         [ClassInitialize]
         public static void ClassInitializeListRepositoryTests(TestContext context)
         {
-            _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
             _lr = (ListRepository)new RepositoryConcreteFactory().GetListFactory().GetListRepository();
         }
         #endregion

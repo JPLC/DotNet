@@ -128,12 +128,16 @@ BEGIN
 			WHERE CardId=@CardId
 
 			UPDATE [Card]
+			SET Cix=@Cix
+			WHERE CardId = @CardId 
+
+			UPDATE [Card]
 			SET Cix=Cix-1
-			WHERE Cix > @oldCix and ListId = @oldListId
+			WHERE Cix >= @oldCix and ListId = @oldListId and CardId!=@CardId
 
 			UPDATE [Card]
 			SET Cix=Cix+1
-			WHERE Cix > @Cix and ListId = @ListId
+			WHERE Cix >= @Cix and ListId = @ListId and CardId!=@CardId
 			END
 		COMMIT
 	END TRY

@@ -14,8 +14,6 @@ namespace TrelloModelTests
     public class CardRepositoryTest
     {
         #region Variables and Properties
-        private static BoardRepository _br;
-        private static ListRepository _lr;
         private static CardRepository _cr;
         #endregion
 
@@ -23,8 +21,6 @@ namespace TrelloModelTests
         [ClassInitialize]
         public static void ClassInitializeCardRepositoryTests(TestContext context)
         {
-            _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
-            _lr = (ListRepository)new RepositoryConcreteFactory().GetListFactory().GetListRepository();
             _cr = (CardRepository)new RepositoryConcreteFactory().GetCardFactory().GetCardRepository();
         }
         #endregion
@@ -124,6 +120,7 @@ namespace TrelloModelTests
         {
         }
 
+        
         [TestMethod]
         public void TestEditCardFromSuperiorIndex()
         {
@@ -147,7 +144,8 @@ namespace TrelloModelTests
             _cr.DeleteRange(cards);
             _cr.Count().Should().Be(countinit);
         }
-
+        
+        
         [TestMethod]
         public void TestEditCardFromInferiorIndex()
         {
@@ -171,7 +169,7 @@ namespace TrelloModelTests
             _cr.DeleteRange(cards);
             _cr.Count().Should().Be(countinit);
         }
-
+        
         [TestMethod]
         public void TestRemoveCardIndex()
         {
