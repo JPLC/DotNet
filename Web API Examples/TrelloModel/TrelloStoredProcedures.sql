@@ -1,4 +1,4 @@
-use [TrelloDB]
+--use [TrelloDB]
 
 SET ANSI_NULLS ON
 GO
