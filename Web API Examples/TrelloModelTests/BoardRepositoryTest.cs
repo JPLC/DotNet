@@ -226,7 +226,7 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddDeleteRangeBoard()
         {
-            var desc = "Board PI TestAddDeleteRangeBoard";
+            const string desc = "Board PI TestAddDeleteRangeBoard";
             var startNBoards = _br.Count();
             var boardlist = new List<Board>()
                             {

@@ -212,18 +212,47 @@ namespace TrelloModelTests
             _lr.Delete(elist);
         }
 
-        /*TODO TestEditRangeList*/
         [TestMethod]
         public void TestEditRangeList()
         {
-            /*var list = new List { Name = "List PI Teste", BoardId = 1 };
-            _lr.Add(list);
-            var elist = new List { ListId = list.ListId, Name = "List PI Teste2", Lix = list.Lix + 1, BoardId = list.BoardId };
-            _lr.Edit(elist);
-            list = _lr.GetSingle(elist.ListId);
-            Assert.AreEqual(list.Name, elist.Name);
-            Assert.AreEqual(list.ListId, elist.ListId);
-            _lr.Delete(elist);*/
+            var elistlist = new List<List>()
+                         {
+                             new List {ListId = 1, Name = "List Edited1",  BoardId = 1, Lix = 3},
+                             new List {ListId = 2, Name = "List Edited2",  BoardId = 1, Lix = 2},
+                             new List {ListId = 3, Name = "List Edited3",  BoardId = 1, Lix = 1}
+                         };
+            _lr.EditRange(elistlist);
+            var list = _lr.GetSingle(1);
+            Assert.AreEqual(list.ListId, 1);
+            Assert.AreEqual(list.Name, "List Edited1");
+            Assert.AreEqual(list.Lix, 3);
+            list = _lr.GetSingle(2);
+            Assert.AreEqual(list.ListId, 2);
+            Assert.AreEqual(list.Name, "List Edited2");
+            Assert.AreEqual(list.Lix, 2);
+            list = _lr.GetSingle(3);
+            Assert.AreEqual(list.ListId, 3);
+            Assert.AreEqual(list.Name, "List Edited3");
+            Assert.AreEqual(list.Lix, 1);
+            elistlist = new List<List>()
+                         {
+                             new List {ListId = 1, Name = "LS", BoardId = 1, Lix = 1},
+                             new List {ListId = 2, Name = "AVE", BoardId = 1, Lix = 2},
+                             new List {ListId = 3, Name = "PSC", BoardId = 1, Lix = 3}
+                         };
+            _lr.EditRange(elistlist);
+            list = _lr.GetSingle(1);
+            Assert.AreEqual(list.ListId, 1);
+            Assert.AreEqual(list.Name, "LS");
+            Assert.AreEqual(list.Lix, 1);
+            list = _lr.GetSingle(2);
+            Assert.AreEqual(list.ListId, 2);
+            Assert.AreEqual(list.Name, "AVE");
+            Assert.AreEqual(list.Lix, 2);
+            list = _lr.GetSingle(3);
+            Assert.AreEqual(list.ListId, 3);
+            Assert.AreEqual(list.Name, "PSC");
+            Assert.AreEqual(list.Lix, 3);
         }
 
         [TestMethod]
