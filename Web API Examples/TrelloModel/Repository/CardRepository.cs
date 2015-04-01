@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
+using TrelloModel.Business;
+using TrelloModel.Business.Enumerators;
 using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
@@ -66,7 +69,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                int i = 1;
+                var i = 1;
                 foreach (var c in cards)
                 {
                     c.Cix = db.Card.Count(ca => ca.ListId == c.ListId) + i;
@@ -98,8 +101,15 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //TODO Antes de chamar o stored procedure não corre a validação
-                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
+                List<KeyValuePair<CardValidationCodes, KeyValuePair<string, string>>> errorMsgDic;
+                if (CardBusiness.ValidateCard(card, out errorMsgDic))
+                {
+                    db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
+                }
+                else
+                {
+                    throw new DbEntityValidationException("Card validation error");
+                }
             }
         }
 

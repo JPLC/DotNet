@@ -96,7 +96,7 @@ namespace TrelloModelTests
             }
             catch (Exception ex)
             {
-                Assert.IsTrue(ex != null);
+                Assert.IsTrue(ex is DbEntityValidationException);
             }
         }
 
@@ -232,8 +232,8 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestEditRangeCard()
         {
-            var ecardlist = new List<Card>()
-                         {
+            var ecardlist = new List<Card>
+            {
                              new Card {CardId = 1, ListId = 1, BoardId = 1, Cix = 3, Name = "Card Edited1", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)},
                              new Card {CardId = 2, ListId = 1, BoardId = 1, Cix = 2, Name = "Card Edited2", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)},
                              new Card {CardId = 3, ListId = 1, BoardId = 1, Cix = 1, Name = "Card Edited3", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)}
