@@ -148,24 +148,25 @@ namespace TrelloModelTests
             Assert.AreEqual(startNBoards, _br.Count());
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void TestAddDeleteRangeBoard()
         {
+            var desc = "Board PI TestAddDeleteRangeBoard";
             var startNBoards = _br.Count();
             var boardlist = new List<Board>()
                             {
-                                new Board {Name = "Board PI TestAddDeleteRange1", Discription = "Board Programacao na Internet Teste"},
-                                new Board {Name = "Board PI TestAddDeleteRange2", Discription = "Board Programacao na Internet Teste"},
-                                new Board {Name = "Board PI TestAddDeleteRange3", Discription = "Board Programacao na Internet Teste"}
+                                new Board {Name = "Board PI TestAddDeleteRange1", Discription = desc},
+                                new Board {Name = "Board PI TestAddDeleteRange2", Discription = desc},
+                                new Board {Name = "Board PI TestAddDeleteRange3", Discription = desc}
                             };
             _br.AddRange(boardlist);
             Assert.AreEqual(startNBoards + 3, _br.Count());
-            var addedboards = _br.FindAllBy(b => b.Discription == "Board Programacao na Internet Teste");
+            var addedboards = _br.FindAllBy(b => b.Discription == desc);
             Assert.AreEqual(3,addedboards.Count());
             _br.DeleteRange(addedboards);
-            Assert.AreEqual(0, _br.FindAllBy(b => b.Discription == "Board Programacao na Internet Teste").Count());
+            Assert.AreEqual(0, _br.FindAllBy(b => b.Discription == desc).Count());
             Assert.AreEqual(startNBoards, _br.Count());
-        }*/
+        }
 
         [TestMethod]
         public void TestEditBoard()

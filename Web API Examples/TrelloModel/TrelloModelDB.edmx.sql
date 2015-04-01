@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/29/2015 18:30:12
--- Generated from EDMX file: C:\Users\João\DotNet\Web API Examples\TrelloModel\TrelloModelDB.edmx
+-- Date Created: 04/01/2015 10:58:20
+-- Generated from EDMX file: C:\Users\jlc\DotNet\Web API Examples\TrelloModel\TrelloModelDB.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;

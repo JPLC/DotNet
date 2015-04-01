@@ -55,7 +55,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                card.Cix = db.List.Count(l => l.ListId == card.ListId) + 1;
+                card.Cix = db.Card.Count(ca => ca.ListId == card.ListId) + 1;
                 card.CreationDate = DateTime.Now;
                 db.Card.Add(card);
                 db.SaveChanges();
@@ -68,7 +68,7 @@ namespace TrelloModel.Repository
             {
                 foreach (var c in cards)
                 {
-                    c.Cix = db.List.Count(l => l.ListId == c.ListId) + 1;
+                    c.Cix = db.Card.Count(ca => ca.ListId == c.ListId) + 1;
                     c.CreationDate = DateTime.Now;
                     db.Card.Add(c);
                 }
