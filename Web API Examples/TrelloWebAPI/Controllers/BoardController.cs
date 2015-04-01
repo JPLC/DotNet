@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using TrelloModel;
 using TrelloModel.Interfaces;
 using TrelloModel.Repository;
@@ -19,15 +21,22 @@ namespace TrelloWebAPI.Controllers
         }
 
         // GET: api/Board
-        public IEnumerable<Board> Get()
+        public IHttpActionResult GetAllBoards()
         {
-            return _br.GetAll();
+            return Ok(_br.GetAll());
         }
 
         // GET: api/Board/5
-        public string Get(int id)
+        [ResponseType(typeof(Board))]
+        public IHttpActionResult GetOneBoard(int id)
         {
-            return "value";
+            var board = _br.GetSingle(id);
+            if (board == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(board);
         }
 
         // POST: api/Board

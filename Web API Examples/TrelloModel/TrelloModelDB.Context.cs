@@ -19,7 +19,8 @@ namespace TrelloModel
     {
         public TrelloModelDBContainer()
             : base("name=TrelloModelDBContainer")
-        {
+        {     
+            base.Configuration.ProxyCreationEnabled = false;      
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

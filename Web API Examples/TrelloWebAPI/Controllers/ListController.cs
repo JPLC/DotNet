@@ -1,33 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using TrelloModel;
+using TrelloModel.Interfaces;
+using TrelloModel.Repository;
 
 namespace TrelloWebAPI.Controllers
 {
     public class ListController : ApiController
     {
-        private TrelloModelDBContainer db = new TrelloModelDBContainer();
+        private static ListRepository _lr;
+        public ListController(IListRepositoryFactory listRepository)
+        {
+            _lr = (ListRepository)listRepository.GetListRepository();
+        }
+
 
         // GET: api/List
-        public IQueryable<List> GetList()
+        /*public IQueryable<List> GetList()
         {
-            return db.List;
-        }
+            return _lr.List;
+        }*/
 
         // GET: api/List/5
         [ResponseType(typeof(List))]
         public async Task<IHttpActionResult> GetList(int id)
         {
-            List list = await db.List.FindAsync(id);
+            List list = _lr.GetSingle(id);// await _lr.List.FindAsync(id);
             if (list == null)
             {
                 return NotFound();
@@ -50,11 +50,11 @@ namespace TrelloWebAPI.Controllers
                 return BadRequest();
             }
 
-            db.Entry(list).State = EntityState.Modified;
-
-            try
+            //_lr.Entry(list).State = EntityState.Modified;
+            _lr.Edit(list);
+           /* try
             {
-                await db.SaveChangesAsync();
+                await _lr.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -66,7 +66,7 @@ namespace TrelloWebAPI.Controllers
                 {
                     throw;
                 }
-            }
+            }*/
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -80,9 +80,9 @@ namespace TrelloWebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.List.Add(list);
-            await db.SaveChangesAsync();
-
+            //_lr.List.Add(list);
+            //await _lr.SaveChangesAsync();
+            _lr.Add(list);
             return CreatedAtRoute("DefaultApi", new { id = list.ListId }, list);
         }
 
@@ -90,30 +90,30 @@ namespace TrelloWebAPI.Controllers
         [ResponseType(typeof(List))]
         public async Task<IHttpActionResult> DeleteList(int id)
         {
-            List list = await db.List.FindAsync(id);
+            List list = _lr.GetSingle(1); //await _lr.List.FindAsync(id);
             if (list == null)
             {
                 return NotFound();
             }
 
-            db.List.Remove(list);
-            await db.SaveChangesAsync();
-
+            //_lr.List.Remove(list);
+            //await _lr.SaveChangesAsync();
+            _lr.Delete(list);
             return Ok(list);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            /*if (disposing)
             {
-                db.Dispose();
+                _lr.Dispose();
             }
-            base.Dispose(disposing);
+            base.Dispose(disposing);*/
         }
 
-        private bool ListExists(int id)
+       /* private bool ListExists(int id)
         {
-            return db.List.Count(e => e.ListId == id) > 0;
-        }
+            return _lr.List.Count(e => e.ListId == id) > 0;
+        }*/
     }
 }
