@@ -229,48 +229,53 @@ namespace TrelloModelTests
             Assert.AreEqual(card.CardId, ecard.CardId);
         }
 
-        /*TODO TestEditRangeCard*/
         [TestMethod]
         public void TestEditRangeCard()
         {
             var ecardlist = new List<Card>()
                          {
-                             new Card {CardId = 1, Name = "Card Edited1", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)},
-                             new Card {CardId = 2, Name = "Card Edited2", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)},
-                             new Card {CardId = 3, Name = "Card Edited3", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)}
+                             new Card {CardId = 1, ListId = 1, BoardId = 1, Cix = 3, Name = "Card Edited1", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)},
+                             new Card {CardId = 2, ListId = 1, BoardId = 1, Cix = 2, Name = "Card Edited2", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)},
+                             new Card {CardId = 3, ListId = 1, BoardId = 1, Cix = 1, Name = "Card Edited3", Discription = "Card usado para editar", DueDate = DateTime.Now.AddDays(1)}
                          };
             _cr.EditRange(ecardlist);
             var list = _cr.GetSingle(1);
             Assert.AreEqual(list.CardId, 1);
             Assert.AreEqual(list.Name, "Card Edited1");
             Assert.AreEqual(list.Discription, "Card usado para editar");
+            Assert.AreEqual(list.Cix, 3);
             list = _cr.GetSingle(2);
             Assert.AreEqual(list.CardId, 2);
             Assert.AreEqual(list.Name, "Card Edited2");
             Assert.AreEqual(list.Discription, "Card usado para editar");
+            Assert.AreEqual(list.Cix, 2);
             list = _cr.GetSingle(3);
             Assert.AreEqual(list.CardId, 3);
             Assert.AreEqual(list.Name, "Card Edited3");
             Assert.AreEqual(list.Discription, "Card usado para editar");
+            Assert.AreEqual(list.Cix, 1);
             ecardlist = new List<Card>()
                          {
-                             new Card {CardId = 1, Name = "Etapa1", Discription = "Primeira etapa de LS", DueDate = DateTime.Now.AddDays(1)},
-                             new Card {CardId = 2, Name = "Etapa2", Discription = "Segunda etapa de LS", DueDate = DateTime.Now.AddDays(1)},
-                             new Card {CardId = 3, Name = "Etapa3", Discription = "Terceira etapa de LS", DueDate = DateTime.Now.AddDays(1)}
+                             new Card {CardId = 1, Cix = 1, ListId = 1, BoardId = 1, Name = "Etapa1", Discription = "Primeira etapa de LS", DueDate = DateTime.Now.AddDays(1)},
+                             new Card {CardId = 2, Cix = 2, ListId = 1, BoardId = 1, Name = "Etapa2", Discription = "Segunda etapa de LS", DueDate = DateTime.Now.AddDays(1)},
+                             new Card {CardId = 3, Cix = 3, ListId = 1, BoardId = 1, Name = "Etapa3", Discription = "Terceira etapa de LS", DueDate = DateTime.Now.AddDays(1)}
                          };
             _cr.EditRange(ecardlist);
             list = _cr.GetSingle(1);
             Assert.AreEqual(list.CardId, 1);
             Assert.AreEqual(list.Name, "Etapa1");
             Assert.AreEqual(list.Discription, "Primeira etapa de LS");
+            Assert.AreEqual(list.Cix, 1);
             list = _cr.GetSingle(2);
             Assert.AreEqual(list.CardId, 2);
             Assert.AreEqual(list.Name, "Etapa2");
             Assert.AreEqual(list.Discription, "Segunda etapa de LS");
+            Assert.AreEqual(list.Cix, 2);
             list = _cr.GetSingle(3);
             Assert.AreEqual(list.CardId, 3);
             Assert.AreEqual(list.Name, "Etapa3");
             Assert.AreEqual(list.Discription, "Terceira etapa de LS");
+            Assert.AreEqual(list.Cix, 3);
         }
        
         [TestMethod]
