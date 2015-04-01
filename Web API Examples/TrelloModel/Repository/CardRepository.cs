@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
+using TrelloModel.Business;
+using TrelloModel.Business.Enumerators;
 using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
@@ -55,7 +58,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                card.Cix = db.List.Count(l => l.ListId == card.ListId) + 1;
+                card.Cix = db.Card.Count(ca => ca.ListId == card.ListId) + 1;
                 card.CreationDate = DateTime.Now;
                 db.Card.Add(card);
                 db.SaveChanges();
@@ -66,11 +69,13 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
+                var i = 1;
                 foreach (var c in cards)
                 {
-                    c.Cix = db.List.Count(l => l.ListId == c.ListId) + 1;
+                    c.Cix = db.Card.Count(ca => ca.ListId == c.ListId) + i;
                     c.CreationDate = DateTime.Now;
                     db.Card.Add(c);
+                    i++;
                 }
                 db.SaveChanges();
             }
@@ -96,7 +101,15 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
+                List<KeyValuePair<CardValidationCodes, KeyValuePair<string, string>>> errorMsgDic;
+                if (CardBusiness.ValidateCard(card, out errorMsgDic))
+                {
+                    db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
+                }
+                else
+                {
+                    throw new DbEntityValidationException("Card validation error");
+                }
             }
         }
 

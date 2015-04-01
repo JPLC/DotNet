@@ -10,6 +10,9 @@ namespace TrelloModel
     //TODO aplicar e melhorar expection handling
     public partial class TrelloModelDBContainer
     {
+        /* Por no construtor se desaparecer
+         * base.Configuration.ProxyCreationEnabled = false; 
+         * */
         public override int SaveChanges()
         {
             try

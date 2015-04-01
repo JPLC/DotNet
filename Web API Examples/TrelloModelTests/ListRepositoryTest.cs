@@ -15,7 +15,6 @@ namespace TrelloModelTests
     public class ListRepositoryTest
     {
         #region Variables and Properties
-        private static BoardRepository _br;
         private static ListRepository _lr;
         #endregion
 
@@ -23,16 +22,15 @@ namespace TrelloModelTests
         [ClassInitialize]
         public static void ClassInitializeListRepositoryTests(TestContext context)
         {
-            _br = (BoardRepository)new RepositoryConcreteFactory().GetBoardFactory().GetBoardRepository();
             _lr = (ListRepository)new RepositoryConcreteFactory().GetListFactory().GetListRepository();
         }
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios and add EditInvalid cases
+        //TODO Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
-        public void TestAddInvalidBoardNull()
+        public void TestAddInvalidListNull()
         {
             var list = new List { Name = null};
             try
@@ -46,7 +44,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidBoardEmpty()
+        public void TestAddInvalidListEmpty()
         {
             var list = new List { Name = string.Empty};
             try
@@ -60,7 +58,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidBoardBiggerThanMaxValue()
+        public void TestAddInvalidListBiggerThanMaxValue()
         {
             var list = new List { Name = new String('a', TSC.ListNameSize + 1)};
             try
@@ -74,7 +72,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidBoardInvalidChars()
+        public void TestAddInvalidListInvalidChars()
         {
             var list = new List { Name = "#$%@£@erfnerio"};
             try
@@ -86,9 +84,67 @@ namespace TrelloModelTests
                 Assert.IsTrue(ex is DbEntityValidationException);
             }
         }
+
+        public void TestEditInvalidListNull()
+        {
+            var list = _lr.GetSingle(1);
+            list.Name = null;
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidListEmpty()
+        {
+            var list = _lr.GetSingle(1);
+            list.Name = string.Empty;
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidListBiggerThanMaxValue()
+        {
+            var list = _lr.GetSingle(1);
+            list.Name = new String('a', TSC.ListNameSize + 1);
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidListInvalidChars()
+        {
+            var list = _lr.GetSingle(1);           
+            list.Name = "#$%@£@erfnerio";
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
         #endregion
 
-        //TODO EditRange Tests
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllLists()
@@ -159,14 +215,44 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestEditRangeList()
         {
-            /*var list = new List { Name = "List PI Teste", BoardId = 1 };
-            _lr.Add(list);
-            var elist = new List { ListId = list.ListId, Name = "List PI Teste2", Lix = list.Lix + 1, BoardId = list.BoardId };
-            _lr.Edit(elist);
-            list = _lr.GetSingle(elist.ListId);
-            Assert.AreEqual(list.Name, elist.Name);
-            Assert.AreEqual(list.ListId, elist.ListId);
-            _lr.Delete(elist);*/
+            var elistlist = new List<List>()
+                         {
+                             new List {ListId = 1, Name = "List Edited1",  BoardId = 1, Lix = 3},
+                             new List {ListId = 2, Name = "List Edited2",  BoardId = 1, Lix = 2},
+                             new List {ListId = 3, Name = "List Edited3",  BoardId = 1, Lix = 1}
+                         };
+            _lr.EditRange(elistlist);
+            var list = _lr.GetSingle(1);
+            Assert.AreEqual(list.ListId, 1);
+            Assert.AreEqual(list.Name, "List Edited1");
+            Assert.AreEqual(list.Lix, 3);
+            list = _lr.GetSingle(2);
+            Assert.AreEqual(list.ListId, 2);
+            Assert.AreEqual(list.Name, "List Edited2");
+            Assert.AreEqual(list.Lix, 2);
+            list = _lr.GetSingle(3);
+            Assert.AreEqual(list.ListId, 3);
+            Assert.AreEqual(list.Name, "List Edited3");
+            Assert.AreEqual(list.Lix, 1);
+            elistlist = new List<List>()
+                         {
+                             new List {ListId = 1, Name = "LS", BoardId = 1, Lix = 1},
+                             new List {ListId = 2, Name = "AVE", BoardId = 1, Lix = 2},
+                             new List {ListId = 3, Name = "PSC", BoardId = 1, Lix = 3}
+                         };
+            _lr.EditRange(elistlist);
+            list = _lr.GetSingle(1);
+            Assert.AreEqual(list.ListId, 1);
+            Assert.AreEqual(list.Name, "LS");
+            Assert.AreEqual(list.Lix, 1);
+            list = _lr.GetSingle(2);
+            Assert.AreEqual(list.ListId, 2);
+            Assert.AreEqual(list.Name, "AVE");
+            Assert.AreEqual(list.Lix, 2);
+            list = _lr.GetSingle(3);
+            Assert.AreEqual(list.ListId, 3);
+            Assert.AreEqual(list.Name, "PSC");
+            Assert.AreEqual(list.Lix, 3);
         }
 
         [TestMethod]

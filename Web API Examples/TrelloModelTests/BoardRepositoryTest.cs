@@ -26,7 +26,7 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios and add EditInvalid cases
+        //TODO Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
         public void TestAddInvalidBoardNull()
@@ -99,6 +99,81 @@ namespace TrelloModelTests
             }
         }
 
+        [TestMethod]
+        public void TestEditInvalidBoardNull()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = null; board.Discription = null;
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardEmpty()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = string.Empty; board.Discription = string.Empty;
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardBiggerThanMaxValue()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = new String('a', TSC.BoardNameSize + 1); board.Discription = new String('a', TSC.BoardDiscriptionSize + 1);
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardInvalidChars()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = "#$%@£@erfnerio"; board.Discription = "#$%@£@erfnerio";
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardSameName()
+        {
+            var uniqueboard = _br.GetSingle(2);
+            var board = _br.GetSingle(1);
+            board.Name = uniqueboard.Name; board.Discription = "teste repeated board";
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
         #endregion
 
         #region  Valid Assert
@@ -148,24 +223,25 @@ namespace TrelloModelTests
             Assert.AreEqual(startNBoards, _br.Count());
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void TestAddDeleteRangeBoard()
         {
+            const string desc = "Board PI TestAddDeleteRangeBoard";
             var startNBoards = _br.Count();
             var boardlist = new List<Board>()
                             {
-                                new Board {Name = "Board PI TestAddDeleteRange1", Discription = "Board Programacao na Internet Teste"},
-                                new Board {Name = "Board PI TestAddDeleteRange2", Discription = "Board Programacao na Internet Teste"},
-                                new Board {Name = "Board PI TestAddDeleteRange3", Discription = "Board Programacao na Internet Teste"}
+                                new Board {Name = "Board PI TestAddDeleteRange1", Discription = desc},
+                                new Board {Name = "Board PI TestAddDeleteRange2", Discription = desc},
+                                new Board {Name = "Board PI TestAddDeleteRange3", Discription = desc}
                             };
             _br.AddRange(boardlist);
             Assert.AreEqual(startNBoards + 3, _br.Count());
-            var addedboards = _br.FindAllBy(b => b.Discription == "Board Programacao na Internet Teste");
+            var addedboards = _br.FindAllBy(b => b.Discription == desc);
             Assert.AreEqual(3,addedboards.Count());
             _br.DeleteRange(addedboards);
-            Assert.AreEqual(0, _br.FindAllBy(b => b.Discription == "Board Programacao na Internet Teste").Count());
+            Assert.AreEqual(0, _br.FindAllBy(b => b.Discription == desc).Count());
             Assert.AreEqual(startNBoards, _br.Count());
-        }*/
+        }
 
         [TestMethod]
         public void TestEditBoard()

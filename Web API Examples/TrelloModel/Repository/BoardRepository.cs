@@ -84,13 +84,13 @@ namespace TrelloModel.Repository
             }
         }
 
-        //TODO Acabar o problema na condição que da exception
         public void DeleteRange(IEnumerable<Board> boards)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                var aux = db.Board.Where(p => boards.All(p2 => p2.BoardId == p.BoardId));
-                db.Board.RemoveRange(aux);
+                var aux = boards.Select(b => b.BoardId).ToList();
+                db.Board.Where(p => aux.Contains(p.BoardId)).Delete();
+                db.SaveChanges();
             }
         }
 
