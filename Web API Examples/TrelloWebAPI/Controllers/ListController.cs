@@ -25,7 +25,7 @@ namespace TrelloWebAPI.Controllers
 
         // GET: api/List/5
         [ResponseType(typeof(List))]
-        public async Task<IHttpActionResult> GetList(int id)
+        public /*async Task<*/IHttpActionResult/*>*/ GetList(int id)
         {
             List list = _lr.GetSingle(id);// await _lr.List.FindAsync(id);
             if (list == null)
@@ -38,7 +38,7 @@ namespace TrelloWebAPI.Controllers
 
         // PUT: api/List/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutList(int id, List list)
+        public /*async Task<*/IHttpActionResult/*>*/ PutList(int id, List list)
         {
             if (!ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace TrelloWebAPI.Controllers
 
         // POST: api/List
         [ResponseType(typeof(List))]
-        public async Task<IHttpActionResult> PostList(List list)
+        public /*async Task<*/IHttpActionResult/*>*/ PostList(List list)
         {
             if (!ModelState.IsValid)
             {
@@ -88,9 +88,9 @@ namespace TrelloWebAPI.Controllers
 
         // DELETE: api/List/5
         [ResponseType(typeof(List))]
-        public async Task<IHttpActionResult> DeleteList(int id)
+        public /*async Task<*/IHttpActionResult/*>*/ DeleteList(int id)
         {
-            List list = _lr.GetSingle(1); //await _lr.List.FindAsync(id);
+            List list = _lr.GetSingle(id); //await _lr.List.FindAsync(id);
             if (list == null)
             {
                 return NotFound();
