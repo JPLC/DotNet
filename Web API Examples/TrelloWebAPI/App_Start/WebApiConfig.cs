@@ -17,14 +17,21 @@ namespace TrelloWebAPI
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
+            /*config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                routeTemplate: "api/{action}/{id}",
+                defaults: new {id = RouteParameter.Optional}
+                );*/
+
+            config.Routes.MapHttpRoute(
+               name: "GetAllBoards",
+               routeTemplate: "api/Boards/",
+               defaults: new { controller = "Board", action = "Get" }
+               );
         }
     }
 }
