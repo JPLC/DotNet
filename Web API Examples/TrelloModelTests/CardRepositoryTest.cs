@@ -34,8 +34,7 @@ namespace TrelloModelTests
         #region Invalid Assert
         #endregion
 
-        //TODO DeleteRange and EditRange Tests
-        //TODO Add Tests: EditCard inferior and superior Index, and DeleteCard to see if index of other changes
+        //TODO EditRange Tests
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllCards()
@@ -128,50 +127,50 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestEditCardFromSuperiorIndex()
         {
-            var countinit = _lr.Count();
-            var lindex = _lr.GetListsOfBoard(1).Count();
-            var list = new List<List>
+            var countinit = _cr.Count();
+            var lindex = _cr.GetCardsOfList(1).Count();
+            var cards = new List<Card>
             {
-                new List{Name = "List PI Teste1", BoardId = 1, Lix = lindex+1},
-                new List{Name = "List PI Teste2", BoardId = 1, Lix = lindex+2},
-                new List{Name = "List PI Teste3", BoardId = 1, Lix = lindex+3},
-                new List{Name = "List PI Teste4", BoardId = 1, Lix = lindex+4}
+                new Card{Name = "Card PI Teste1", BoardId = 1, ListId = 1, Cix = lindex+1, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)},
+                new Card{Name = "Card PI Teste2", BoardId = 1, ListId = 1, Cix = lindex+2, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)},
+                new Card{Name = "Card PI Teste3", BoardId = 1, ListId = 1, Cix = lindex+3, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)},
+                new Card{Name = "Card PI Teste4", BoardId = 1, ListId = 1, Cix = lindex+4, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)}
             };
-            _lr.AddRange(list);
-            _lr.Count().Should().Be(countinit + list.Count);
-            var listtoedit = _lr.FindBy(l => l.Name == "List PI Teste4");
-            listtoedit.Lix = lindex + 2;
-            _lr.Edit(listtoedit);
-            _lr.FindBy(l => l.Name == "List PI Teste1").Lix.Should().Be(lindex + 1);
-            _lr.FindBy(l => l.Name == "List PI Teste2").Lix.Should().Be(lindex + 3);
-            _lr.FindBy(l => l.Name == "List PI Teste3").Lix.Should().Be(lindex + 4);
-            _lr.DeleteRange(list);
-            _lr.Count().Should().Be(countinit);
+            _cr.AddRange(cards);
+            _cr.Count().Should().Be(countinit + cards.Count);
+            var listtoedit = _cr.FindBy(l => l.Name == "Card PI Teste4");
+            listtoedit.Cix = lindex + 2;
+            _cr.Edit(listtoedit);
+            _cr.FindBy(c => c.Name == "Card PI Teste1").Cix.Should().Be(lindex + 1);
+            _cr.FindBy(c => c.Name == "Card PI Teste2").Cix.Should().Be(lindex + 3);
+            _cr.FindBy(c => c.Name == "Card PI Teste3").Cix.Should().Be(lindex + 4);
+            _cr.DeleteRange(cards);
+            _cr.Count().Should().Be(countinit);
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void TestEditCardFromInferiorIndex()
         {
             var countinit = _cr.Count();
-            var lindex = _cr.GetListsOfBoard(1).Count();
-            var list = new List<List>
+            var lindex = _cr.GetCardsOfList(1).Count();
+            var cards = new List<Card>
             {
-                new List{Name = "List PI Teste1", BoardId = 1, Lix = lindex+1},
-                new List{Name = "List PI Teste2", BoardId = 1, Lix = lindex+2},
-                new List{Name = "List PI Teste3", BoardId = 1, Lix = lindex+3},
-                new List{Name = "List PI Teste4", BoardId = 1, Lix = lindex+4}
+                new Card{Name = "Card PI Teste1", BoardId = 1, ListId = 1, Cix = lindex+1, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)},
+                new Card{Name = "Card PI Teste2", BoardId = 1, ListId = 1, Cix = lindex+2, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)},
+                new Card{Name = "Card PI Teste3", BoardId = 1, ListId = 1, Cix = lindex+3, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)},
+                new Card{Name = "Card PI Teste4", BoardId = 1, ListId = 1, Cix = lindex+4, Discription = "Teste", DueDate = DateTime.Now.AddDays(1)}
             };
-            _cr.AddRange(list);
-            _cr.Count().Should().Be(countinit + list.Count);
-            var listtoedit = _lr.FindBy(l => l.Name == "List PI Teste1");
-            listtoedit.Lix = lindex + 4;
+            _cr.AddRange(cards);
+            _cr.Count().Should().Be(countinit + cards.Count);
+            var listtoedit = _cr.FindBy(l => l.Name == "Card PI Teste1");
+            listtoedit.Cix = lindex + 4;
             _cr.Edit(listtoedit);
-            _cr.FindBy(l => l.Name == "List PI Teste2").Cix.Should().Be(lindex + 1);
-            _cr.FindBy(l => l.Name == "List PI Teste3").Cix.Should().Be(lindex + 2);
-            _cr.FindBy(l => l.Name == "List PI Teste4").Cix.Should().Be(lindex + 3);
-            _cr.DeleteRange(list);
+            _cr.FindBy(l => l.Name == "Card PI Teste2").Cix.Should().Be(lindex + 1);
+            _cr.FindBy(l => l.Name == "Card PI Teste3").Cix.Should().Be(lindex + 2);
+            _cr.FindBy(l => l.Name == "Card PI Teste4").Cix.Should().Be(lindex + 3);
+            _cr.DeleteRange(cards);
             _cr.Count().Should().Be(countinit);
-        }*/
+        }
 
         [TestMethod]
         public void TestRemoveCardIndex()

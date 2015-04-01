@@ -66,11 +66,13 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
+                int i = 1;
                 foreach (var c in cards)
                 {
-                    c.Cix = db.Card.Count(ca => ca.ListId == c.ListId) + 1;
+                    c.Cix = db.Card.Count(ca => ca.ListId == c.ListId) + i;
                     c.CreationDate = DateTime.Now;
                     db.Card.Add(c);
+                    i++;
                 }
                 db.SaveChanges();
             }
