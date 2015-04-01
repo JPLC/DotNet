@@ -30,9 +30,9 @@ namespace TrelloWebAPI.Controllers
         // GET: TrelloAPI/Board
         [Route("TrelloAPI/Boards")]
         [HttpGet]
-        public IHttpActionResult GetAllBoards()
+        public HttpResponseMessage GetAllBoards()
         {
-            return Ok(_br.GetAll());
+            return Request.CreateResponse(_br.GetAll());
         }
 
         // GET: TrelloAPI/Board/5

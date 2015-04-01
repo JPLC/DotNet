@@ -121,6 +121,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TrelloModel\TrelloModel.csproj">
+      <Project>{6350a9ac-917b-4a5d-8f81-dc4bedbbc3d6}</Project>
+      <Name>TrelloModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TrelloWebAPI\TrelloWebAPI.csproj">
       <Project>{2EFA665D-A697-4BEC-AFD2-54358E8E81BD}</Project>
       <Name>TrelloWebAPI</Name>
