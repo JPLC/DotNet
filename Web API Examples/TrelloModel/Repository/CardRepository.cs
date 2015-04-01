@@ -98,6 +98,7 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
+                //TODO Antes de chamar o stored procedure não corre a validação
                 db.EditCard(card.CardId, card.Cix, card.Name, card.Discription, card.DueDate, card.ListId);
             }
         }

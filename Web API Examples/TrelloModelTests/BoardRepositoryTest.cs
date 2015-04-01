@@ -26,7 +26,7 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios and add EditInvalid cases
+        //TODO Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
         public void TestAddInvalidBoardNull()
@@ -99,6 +99,81 @@ namespace TrelloModelTests
             }
         }
 
+        [TestMethod]
+        public void TestEditInvalidBoardNull()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = null; board.Discription = null;
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardEmpty()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = string.Empty; board.Discription = string.Empty;
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardBiggerThanMaxValue()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = new String('a', TSC.BoardNameSize + 1); board.Discription = new String('a', TSC.BoardDiscriptionSize + 1);
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardInvalidChars()
+        {
+            var board = _br.GetSingle(1);
+            board.Name = "#$%@£@erfnerio"; board.Discription = "#$%@£@erfnerio";
+            try
+            {
+                _br.Edit(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidBoardSameName()
+        {
+            var uniqueboard = _br.GetSingle(2);
+            var board = _br.GetSingle(1);
+            board.Name = uniqueboard.Name; board.Discription = "teste repeated board";
+            try
+            {
+                _br.Add(board);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
         #endregion
 
         #region  Valid Assert

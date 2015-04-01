@@ -32,15 +32,15 @@ namespace TrelloModel.Business
                 errorMsgDic.Add(new KeyValuePair<CardValidationCodes, KeyValuePair<string, string>>(CardValidationCodes.CardNameSpecialChars, new KeyValuePair<string, string>("Name", Resx.CardResources.CardNameSpecialChars)));
             }
 
-            if (card.Discription == string.Empty)
-            {
-                isValid = false;
-                errorMsgDic.Add(new KeyValuePair<CardValidationCodes, KeyValuePair<string, string>>(CardValidationCodes.CardDiscriptionIsEmpty, new KeyValuePair<string, string>("Discription", Resx.CardResources.CardDiscriptionIsEmpty)));
-            }
-            else if (card.Discription == null)
+            if (card.Discription == null)
             {
                 isValid = false;
                 errorMsgDic.Add(new KeyValuePair<CardValidationCodes, KeyValuePair<string, string>>(CardValidationCodes.CardDiscpriptionIsNull, new KeyValuePair<string, string>("Discription", Resx.CardResources.CardDiscpriptionIsNull)));
+            }
+            else if (card.Discription == string.Empty)
+            {
+                isValid = false;
+                errorMsgDic.Add(new KeyValuePair<CardValidationCodes, KeyValuePair<string, string>>(CardValidationCodes.CardDiscriptionIsEmpty, new KeyValuePair<string, string>("Discription", Resx.CardResources.CardDiscriptionIsEmpty)));
             }
             else if (card.Discription.Length > TrelloSizeConstants.CardNameSize)
             {

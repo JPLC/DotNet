@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -26,8 +27,123 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios and add EditInvalid cases
+        //TODO Improve Failed Scenarios
         #region Invalid Assert
+        [TestMethod]
+        public void TestAddInvalidCardNull()
+        {
+            var card = new Card { Name = null, Discription = null };
+            try
+            {
+                _cr.Add(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddInvalidCardEmpty()
+        {
+            var card = new Card { Name = string.Empty, Discription = string.Empty };
+            try
+            {
+                _cr.Add(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddInvalidCardBiggerThanMaxValue()
+        {
+            var card = new Card { Name = new String('a', TSC.CardNameSize + 1), Discription = new String('a', TSC.CardDiscriptionSize + 1) };
+            try
+            {
+                _cr.Add(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestAddInvalidCardInvalidChars()
+        {
+            var card = new Card { Name = "#$%@£@erfnerio", Discription = "#$%@£@erfnerio" };
+            try
+            {
+                _cr.Add(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidCardNull()
+        {
+            var card = _cr.GetSingle(1);
+            card.Name = null; card.Discription = null;
+            try
+            {
+                _cr.Edit(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex != null);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidCardEmpty()
+        {
+            var card = _cr.GetSingle(1);
+            card.Name = string.Empty; card.Discription = string.Empty;
+            try
+            {
+                _cr.Edit(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidCardBiggerThanMaxValue()
+        {
+            var card = _cr.GetSingle(1);
+            card.Name = new String('a', TSC.CardNameSize + 1); card.Discription = new String('a', TSC.CardDiscriptionSize + 1);
+            try
+            {
+                _cr.Edit(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidCardInvalidChars()
+        {
+            var card = _cr.GetSingle(1);
+            card.Name = "#$%@£@erfnerio"; card.Discription = "#$%@£@erfnerio";
+            try
+            {
+                _cr.Edit(card);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
         #endregion
 
         #region  Valid Assert
