@@ -27,10 +27,10 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios and add EditInvalid cases
+        //TODO Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
-        public void TestAddInvalidBoardNull()
+        public void TestAddInvalidListNull()
         {
             var list = new List { Name = null};
             try
@@ -44,7 +44,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidBoardEmpty()
+        public void TestAddInvalidListEmpty()
         {
             var list = new List { Name = string.Empty};
             try
@@ -58,7 +58,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidBoardBiggerThanMaxValue()
+        public void TestAddInvalidListBiggerThanMaxValue()
         {
             var list = new List { Name = new String('a', TSC.ListNameSize + 1)};
             try
@@ -72,7 +72,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidBoardInvalidChars()
+        public void TestAddInvalidListInvalidChars()
         {
             var list = new List { Name = "#$%@£@erfnerio"};
             try
@@ -84,9 +84,67 @@ namespace TrelloModelTests
                 Assert.IsTrue(ex is DbEntityValidationException);
             }
         }
+
+        public void TestEditInvalidListNull()
+        {
+            var list = _lr.GetSingle(1);
+            list.Name = null;
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidListEmpty()
+        {
+            var list = _lr.GetSingle(1);
+            list.Name = string.Empty;
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidListBiggerThanMaxValue()
+        {
+            var list = _lr.GetSingle(1);
+            list.Name = new String('a', TSC.ListNameSize + 1);
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
+
+        [TestMethod]
+        public void TestEditInvalidListInvalidChars()
+        {
+            var list = _lr.GetSingle(1);           
+            list.Name = "#$%@£@erfnerio";
+            try
+            {
+                _lr.Edit(list);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(ex is DbEntityValidationException);
+            }
+        }
         #endregion
 
-        //TODO EditRange Tests
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllLists()

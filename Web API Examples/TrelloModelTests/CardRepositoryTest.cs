@@ -30,7 +30,6 @@ namespace TrelloModelTests
         #region Invalid Assert
         #endregion
 
-        //TODO EditRange Tests
         #region  Valid Assert
         [TestMethod]
         public void TestGetAllCards()
@@ -119,8 +118,7 @@ namespace TrelloModelTests
         public void TestEditRangeCard()
         {
         }
-
-        
+       
         [TestMethod]
         public void TestEditCardFromSuperiorIndex()
         {
@@ -144,8 +142,7 @@ namespace TrelloModelTests
             _cr.DeleteRange(cards);
             _cr.Count().Should().Be(countinit);
         }
-        
-        
+              
         [TestMethod]
         public void TestEditCardFromInferiorIndex()
         {
