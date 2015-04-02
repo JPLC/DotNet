@@ -1,9 +1,9 @@
-use [TrelloDB]
+--use [TrelloDB]
 set dateformat dmy
 
-delete from [TrelloDB].dbo.[Card]
-delete from [TrelloDB].dbo.List
-delete from [TrelloDB].dbo.Board
+delete from dbo.[Card]
+delete from dbo.List
+delete from dbo.Board
 
 DBCC CHECKIDENT (Board, reseed, 0)
 DBCC CHECKIDENT (List, reseed, 0)
