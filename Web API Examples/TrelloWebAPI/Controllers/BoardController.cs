@@ -14,6 +14,8 @@ using TrelloModel.Repository;
 using HalJsonNet;
 using HalJsonNet.Serialization;
 using Newtonsoft.Json;
+using TrelloModel.Business;
+using TrelloModel.Business.Enumerators;
 
 namespace TrelloWebAPI.Controllers
 {
@@ -58,6 +60,8 @@ namespace TrelloWebAPI.Controllers
         [HttpPost]
         public IHttpActionResult Post(Board board)
         {
+            //List<KeyValuePair<BoardValidationCodes, KeyValuePair<string, string>>> errorMsgDic;
+            //BoardBusiness.ValidateBoard(board,null,out errorMsgDic);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

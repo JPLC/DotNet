@@ -13,6 +13,12 @@ namespace TrelloModel
         /* Por no construtor se desaparecer
          * base.Configuration.ProxyCreationEnabled = false; 
          * */
+        internal TrelloModelDBContainer()
+            : base("name=TrelloModelDBContainer")
+        {
+            base.Configuration.ProxyCreationEnabled = false;
+        }
+
         public override int SaveChanges()
         {
             try

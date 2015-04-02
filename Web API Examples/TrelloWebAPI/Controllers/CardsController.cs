@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -15,7 +11,7 @@ namespace TrelloWebAPI.Controllers
 {
     public class CardsController : ApiController
     {
-        private TrelloModelDBContainer db = new TrelloModelDBContainer();
+        private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
 
         // GET: api/Cards
         public IQueryable<Card> GetCard()
