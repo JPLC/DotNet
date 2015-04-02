@@ -7,9 +7,15 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
 using TrelloModel;
 using TrelloModel.Interfaces;
 using TrelloModel.Repository;
+using HalJsonNet;
+using HalJsonNet.Serialization;
+using Newtonsoft.Json;
+using TrelloModel.Business;
+using TrelloModel.Business.Enumerators;
 
 namespace TrelloWebAPI.Controllers
 {
@@ -30,9 +36,9 @@ namespace TrelloWebAPI.Controllers
         // GET: TrelloAPI/Board
         [Route("TrelloAPI/Boards")]
         [HttpGet]
-        public HttpResponseMessage GetAllBoards()
+        public IHttpActionResult GetAllBoards()
         {
-            return Request.CreateResponse(_br.GetAll());
+            return Ok(_br.GetAll());
         }
 
         // GET: TrelloAPI/Board/5
@@ -52,14 +58,17 @@ namespace TrelloWebAPI.Controllers
         // POST: TrelloAPI/Board
         [Route("TrelloAPI/Board")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody]Board board)
+        public IHttpActionResult Post(Board board)
         {
+            //List<KeyValuePair<BoardValidationCodes, KeyValuePair<string, string>>> errorMsgDic;
+            //BoardBusiness.ValidateBoard(board,null,out errorMsgDic);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             _br.Add(board);
-            return CreatedAtRoute("GetOneBoard", new { id = board.BoardId }, board);
+            return StatusCode(HttpStatusCode.Created);
+                
         }
 
         // PUT: TrelloAPI/Board/5
@@ -106,7 +115,7 @@ namespace TrelloWebAPI.Controllers
                 return NotFound();
             }
             _br.Delete(board);
-            return Ok(board);
+            return StatusCode(HttpStatusCode.OK);
         }
         #endregion
     }
