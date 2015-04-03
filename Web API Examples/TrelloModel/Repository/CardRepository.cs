@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TrelloModel.Business;
 using TrelloModel.Business.Enumerators;
 using TrelloModel.Interfaces;
@@ -30,6 +32,11 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task<IEnumerable<Card>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public Card GetSingle(int id)
         {
             using (var db = new TrelloModelDBContainer())
@@ -38,7 +45,12 @@ namespace TrelloModel.Repository
             }
         }
 
-        public Card FindBy(Func<Card, bool> predicate)
+        public Task<Card> GetSingleAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Card FindBy(Expression<Func<Card, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -46,12 +58,22 @@ namespace TrelloModel.Repository
             }
         }
 
-        public IEnumerable<Card> FindAllBy(Func<Card, bool> predicate)
+        public Task<Card> FindByAsync(Expression<Func<Card, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Card> FindAllBy(Expression<Func<Card, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return db.Card.Where(predicate).ToList();
             }
+        }
+
+        public Task<IEnumerable<Card>> FindAllByAsync(Expression<Func<Card, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public void Add(Card card)
@@ -63,6 +85,11 @@ namespace TrelloModel.Repository
                 db.Card.Add(card);
                 db.SaveChanges();
             }
+        }
+
+        public Task AddAsync(Card t)
+        {
+            throw new NotImplementedException();
         }
 
         public void AddRange(IEnumerable<Card> cards)
@@ -81,6 +108,11 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task AddRangeAsync(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(Card card)
         {
             using (var db = new TrelloModelDBContainer())
@@ -89,12 +121,22 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task DeleteAsync(Card t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteRange(IEnumerable<Card> cards)
         {
             foreach (var c in cards)
             {
                 Delete(c);
             }
+        }
+
+        public Task DeleteRangeAsync(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
         }
 
         public void Edit(Card card)
@@ -113,12 +155,22 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task EditAsync(Card t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void EditRange(IEnumerable<Card> cards)
         {
             foreach (var card in cards)
             {
                 Edit(card);
             }
+        }
+
+        public Task EditRangeAsync(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Card> GetCardsOfBoard(int boardId)
@@ -129,12 +181,22 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task<IEnumerable<Card>> GetCardsOfBoardAsync(int boardId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Card> GetCardsOfList(int listId)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return db.Card.Where(c => c.ListId == listId).ToList();
             }
+        }
+
+        public Task<IEnumerable<Card>> GetCardsOfListAsync(int listId)
+        {
+            throw new NotImplementedException();
         }
 
         public int Count()
@@ -145,6 +207,12 @@ namespace TrelloModel.Repository
                 return db.Card.Count();
             }
         }
+
+        public Task<int> CountAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

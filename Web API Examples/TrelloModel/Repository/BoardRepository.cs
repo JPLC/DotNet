@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Dynamic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using EntityFramework.Extensions;
 using TrelloModel.Interfaces;
 
@@ -20,13 +23,21 @@ namespace TrelloModel.Repository
         #endregion
 
         //TODO aplicar e melhorar expection handling
+        // db.Database.Log = (msg) => { Console.WriteLine(msg ); };
         #region Methods
         public IEnumerable<Board> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
                 return db.Board.ToList();
+            }
+        }
+
+        public async Task<IEnumerable<Board>> GetAllAsync()
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.ToListAsync();
             }
         }
 
@@ -34,26 +45,47 @@ namespace TrelloModel.Repository
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
                 return db.Board.FirstOrDefault(b => b.BoardId == id);
             }
         }
 
-        public Board FindBy(Func<Board, bool> predicate)
+        public async Task<Board> GetSingleAsync(int id)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
+                return await db.Board.FirstOrDefaultAsync(b => b.BoardId == id);
+            }
+        }
+
+        public Board FindBy(Expression<Func<Board, bool>> predicate)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
                 return db.Board.FirstOrDefault(predicate);
             }
         }
 
-        public IEnumerable<Board> FindAllBy(Func<Board, bool> predicate)
+        public async Task<Board> FindByAsync(Expression<Func<Board, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
+                return await db.Board.FirstOrDefaultAsync(predicate);
+            }
+        }
+
+        public IEnumerable<Board> FindAllBy(Expression<Func<Board, bool>> predicate)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
                 return db.Board.Where(predicate).ToList();
+            }
+        }
+
+        public async Task<IEnumerable<Board>> FindAllByAsync(Expression<Func<Board, bool>> predicate)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.Where(predicate).ToListAsync();
             }
         }
 
@@ -66,6 +98,15 @@ namespace TrelloModel.Repository
             }
         }
 
+        public async Task AddAsync(Board board)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                db.Board.Add(board);
+                await db.SaveChangesAsync();
+            }
+        }
+
         public void AddRange(IEnumerable<Board> boards)
         {
             using (var db = new TrelloModelDBContainer())
@@ -75,12 +116,30 @@ namespace TrelloModel.Repository
             }
         }
 
+        public async Task AddRangeAsync(IEnumerable<Board> boards)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                db.Board.AddRange(boards);
+                await db.SaveChangesAsync();
+            }
+        }
+
         public void Delete(Board board)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 db.Board.Where(b => b.BoardId == board.BoardId).Delete();
                 db.SaveChanges();
+            }
+        }
+
+        public async Task DeleteAsync(Board board)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                db.Board.Where(b => b.BoardId == board.BoardId).Delete();
+                await db.SaveChangesAsync();
             }
         }
 
@@ -94,12 +153,31 @@ namespace TrelloModel.Repository
             }
         }
 
+        public async Task DeleteRangeAsync(IEnumerable<Board> boards)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                var aux = boards.Select(b => b.BoardId).ToList();
+                db.Board.Where(p => aux.Contains(p.BoardId)).Delete();
+                await db.SaveChangesAsync();
+            }
+        }
+
         public void Edit(Board board)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 db.Entry(board).State = EntityState.Modified;
                 db.SaveChanges();
+            }
+        }
+
+        public async Task EditAsync(Board board)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                db.Entry(board).State = EntityState.Modified;
+                await db.SaveChangesAsync();
             }
         }
 
@@ -111,14 +189,30 @@ namespace TrelloModel.Repository
             }
         }
 
+        public async Task EditRangeAsync(IEnumerable<Board> boards)
+        {
+            foreach (var board in boards)
+            {
+               await EditAsync(board);
+            }
+        }
+
         public int Count()
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
                 return db.Board.Count();
             }
         }
+
+        public async Task<int> CountAsync()
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.CountAsync();
+            }
+        }
+
         #endregion
     }
 }

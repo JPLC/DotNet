@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TrelloModel.Interfaces;
 
 namespace TrelloModel.Repository
@@ -28,6 +30,11 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task<IEnumerable<List>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public List GetSingle(int id)
         {
             using (var db = new TrelloModelDBContainer())
@@ -37,7 +44,12 @@ namespace TrelloModel.Repository
             }
         }
 
-        public List FindBy(Func<List, bool> predicate)
+        public Task<List> GetSingleAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List FindBy(Expression<Func<List, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -46,13 +58,22 @@ namespace TrelloModel.Repository
             }
         }
 
-        public IEnumerable<List> FindAllBy(Func<List, bool> predicate)
+        public Task<List> FindByAsync(Expression<Func<List, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<List> FindAllBy(Expression<Func<List, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
                 return db.List.Where(predicate).ToList();
             }
+        }
+
+        public Task<IEnumerable<List>> FindAllByAsync(Expression<Func<List, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public void Add(List list)
@@ -63,6 +84,11 @@ namespace TrelloModel.Repository
                 db.List.Add(list);
                 db.SaveChanges();
             }
+        }
+
+        public Task AddAsync(List t)
+        {
+            throw new NotImplementedException();
         }
 
         public void AddRange(IEnumerable<List> lists)
@@ -80,12 +106,22 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task AddRangeAsync(IEnumerable<List> t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(List list)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 db.DeleteList(list.ListId, list.Lix, list.BoardId);
             }
+        }
+
+        public Task DeleteAsync(List t)
+        {
+            throw new NotImplementedException();
         }
 
         public void DeleteRange(IEnumerable<List> lists)
@@ -96,12 +132,22 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task DeleteRangeAsync(IEnumerable<List> t)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Edit(List list)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 db.EditList(list.ListId, list.Lix, list.BoardId, list.Name);
             }
+        }
+
+        public Task EditAsync(List t)
+        {
+            throw new NotImplementedException();
         }
 
         public void EditRange(IEnumerable<List> lists)
@@ -112,12 +158,22 @@ namespace TrelloModel.Repository
             }
         }
 
+        public Task EditRangeAsync(IEnumerable<List> t)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<List> GetListsOfBoard(int boardId)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return db.List.Where(l => l.BoardId == boardId).ToList();
             }
+        }
+
+        public Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId)
+        {
+            throw new NotImplementedException();
         }
 
         public int Count()
@@ -128,6 +184,12 @@ namespace TrelloModel.Repository
                 return db.List.Count();
             }
         }
+
+        public Task<int> CountAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }
