@@ -212,10 +212,10 @@ namespace TrelloModelTests
         [TestMethod]
         public void TestAddDeleteBoardAsync()
         {
-            var startNBoards = _br.CountAsync();
+            var startNBoards = _br.CountAsync().Result;
             var board = new Board { Name = "Board PI Teste", Discription = "Board Programacao na Internet Teste" };
             _br.AddAsync(board);
-            Assert.AreEqual(startNBoards.Result + 1, _br.CountAsync().Result);
+            Assert.AreEqual(startNBoards + 1, _br.CountAsync().Result);
             var addedboard = _br.FindAllByAsync(b => b.Name == board.Name).Result.FirstOrDefault();
             Assert.IsNotNull(addedboard);
             _br.Delete(addedboard);
@@ -227,7 +227,7 @@ namespace TrelloModelTests
         public void TestAddDeleteRangeBoardAsync()
         {
             const string desc = "Board PI TestAddDeleteRangeBoard";
-            var startNBoards = _br.CountAsync();
+            var startNBoards = _br.CountAsync().Result;
             var boardlist = new List<Board>()
                             {
                                 new Board {Name = "Board PI TestAddDeleteRange1", Discription = desc},
@@ -235,7 +235,7 @@ namespace TrelloModelTests
                                 new Board {Name = "Board PI TestAddDeleteRange3", Discription = desc}
                             };
             _br.AddRangeAsync(boardlist);
-            Assert.AreEqual(startNBoards.Result + 3, _br.CountAsync().Result);
+            Assert.AreEqual(startNBoards + 3, _br.CountAsync().Result);
             var addedboards = _br.FindAllByAsync(b => b.Discription == desc).Result;
             Assert.AreEqual(3, addedboards.Count());
             _br.DeleteRange(addedboards);
@@ -260,7 +260,7 @@ namespace TrelloModelTests
             Assert.AreEqual(board.Discription, eboard.Discription);
             Assert.AreEqual(board.BoardId, eboard.BoardId);
         }
-
+        /*
         [TestMethod]
         public void TestEditRangeBoardAsync()
         {
@@ -303,6 +303,7 @@ namespace TrelloModelTests
             Assert.AreEqual(board.Name, "Joao");
             Assert.AreEqual(board.Discription, "Quadro do Joao");
         }
+        */
         #endregion
         #endregion
     }
