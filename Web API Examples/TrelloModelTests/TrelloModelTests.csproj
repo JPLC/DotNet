@@ -70,8 +70,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="BoardRepositoryAsyncTest.cs" />
     <Compile Include="BoardRepositoryTest.cs" />
+    <Compile Include="CardRepositoryAsyncTest.cs" />
     <Compile Include="CardRepositoryTest.cs" />
+    <Compile Include="ListRepositoryAsyncTest.cs" />
     <Compile Include="ListRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
