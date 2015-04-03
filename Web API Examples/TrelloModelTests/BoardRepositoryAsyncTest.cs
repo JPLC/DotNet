@@ -260,50 +260,48 @@ namespace TrelloModelTests
             Assert.AreEqual(board.Discription, eboard.Discription);
             Assert.AreEqual(board.BoardId, eboard.BoardId);
         }
-        /*
+        
         [TestMethod]
         public void TestEditRangeBoardAsync()
         {
+            var initcount = _br.CountAsync().Result;
             var eboardlist = new List<Board>
                          {
-                             new Board {BoardId = 1, Name = "Board Edited1", Discription = "Board usado para editar"},
-                             new Board {BoardId = 2, Name = "Board Edited2", Discription = "Board usado para editar"},
-                             new Board {BoardId = 3, Name = "Board Edited3", Discription = "Board usado para editar"}
+                             new Board {Name = "Board EditedAsync1", Discription = "Board usado para EditRangeBoardAsync"},
+                             new Board {Name = "Board EditedAsync2", Discription = "Board usado para EditRangeBoardAsync"},
+                             new Board {Name = "Board EditedAsync3", Discription = "Board usado para EditRangeBoardAsync"}
                          };
-            _br.EditRangeAsync(eboardlist);
-            var board = _br.GetSingleAsync(1).Result;
-            Assert.AreEqual(board.BoardId, 1);
-            Assert.AreEqual(board.Name, "Board Edited1");
-            Assert.AreEqual(board.Discription, "Board usado para editar");
-            board = _br.GetSingleAsync(2).Result;
-            Assert.AreEqual(board.BoardId, 2);
-            Assert.AreEqual(board.Name, "Board Edited2");
-            Assert.AreEqual(board.Discription, "Board usado para editar");
-            board = _br.GetSingleAsync(3).Result;
-            Assert.AreEqual(board.BoardId, 3);
-            Assert.AreEqual(board.Name, "Board Edited3");
-            Assert.AreEqual(board.Discription, "Board usado para editar");
-            eboardlist = new List<Board>()
+            _br.AddRangeAsync(eboardlist);
+            Assert.AreEqual(initcount + eboardlist.Count, _br.CountAsync().Result);
+            var board1 = _br.FindByAsync(b=>b.Name=="Board EditedAsync1").Result;
+            Assert.AreEqual(board1.Name, "Board EditedAsync1");
+            Assert.AreEqual(board1.Discription, "Board usado para EditRangeBoardAsync");
+            var board2 = _br.FindByAsync(b=>b.Name=="Board EditedAsync2").Result;
+            Assert.AreEqual(board2.Name, "Board EditedAsync2");
+            Assert.AreEqual(board2.Discription, "Board usado para EditRangeBoardAsync");
+            var board3 = _br.FindByAsync(b=>b.Name=="Board EditedAsync3").Result;
+            Assert.AreEqual(board3.Name, "Board EditedAsync3");
+            Assert.AreEqual(board3.Discription, "Board usado para EditRangeBoardAsync");
+            eboardlist = new List<Board>
                          {
-                             new Board {BoardId = 1, Name = "Caetano", Discription = "Quadro do Caetano"},
-                             new Board {BoardId = 2, Name = "Pedro", Discription = "Quadro do Pedro"},
-                             new Board {BoardId = 3, Name = "Joao", Discription = "Quadro do Joao"}
+                             new Board {BoardId = board1.BoardId, Name = "Board EditedAsync11", Discription = "Board usado para EditRangeBoardAsync1"},
+                             new Board {BoardId = board2.BoardId, Name = "Board EditedAsync22", Discription = "Board usado para EditRangeBoardAsync2"},
+                             new Board {BoardId = board3.BoardId, Name = "Board EditedAsync33", Discription = "Board usado para EditRangeBoardAsync3"}
                          };
             _br.EditRangeAsync(eboardlist);
-            board = _br.GetSingleAsync(1).Result;
-            Assert.AreEqual(board.BoardId, 1);
-            Assert.AreEqual(board.Name, "Caetano");
-            Assert.AreEqual(board.Discription, "Quadro do Caetano");
-            board = _br.GetSingleAsync(2).Result;
-            Assert.AreEqual(board.BoardId, 2);
-            Assert.AreEqual(board.Name, "Pedro");
-            Assert.AreEqual(board.Discription, "Quadro do Pedro");
-            board = _br.GetSingleAsync(3).Result;
-            Assert.AreEqual(board.BoardId, 3);
-            Assert.AreEqual(board.Name, "Joao");
-            Assert.AreEqual(board.Discription, "Quadro do Joao");
+            board1 = _br.GetSingleAsync(board1.BoardId).Result;
+            Assert.AreEqual(board1.Name, "Board EditedAsync11");
+            Assert.AreEqual(board1.Discription, "Board usado para EditRangeBoardAsync1");
+            board2 = _br.GetSingleAsync(board2.BoardId).Result;
+            Assert.AreEqual(board2.Name, "Board EditedAsync22");
+            Assert.AreEqual(board2.Discription, "Board usado para EditRangeBoardAsync2");
+            board3 = _br.GetSingleAsync(board3.BoardId).Result;
+            Assert.AreEqual(board3.Name, "Board EditedAsync33");
+            Assert.AreEqual(board3.Discription, "Board usado para EditRangeBoardAsync3");
+            _br.DeleteRangeAsync(eboardlist);
+            Assert.AreEqual(initcount ,_br.CountAsync().Result);
         }
-        */
+        
         #endregion
         #endregion
     }

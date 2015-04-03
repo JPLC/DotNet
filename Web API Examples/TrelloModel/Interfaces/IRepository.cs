@@ -25,7 +25,7 @@ namespace TrelloModel.Interfaces
 
         void Add(T t);
 
-        Task AddAsync(T t);
+        Task<T> AddAsync(T t);
 
         void AddRange(IEnumerable<T> t);
 
