@@ -6,7 +6,6 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
-using TrelloModel.Repository;
 using TrelloModel.Repository.SQL;
 using TSC = TrelloModel.Business.Constants.TrelloSizeConstants;
 
