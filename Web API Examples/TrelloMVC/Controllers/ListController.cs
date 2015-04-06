@@ -35,6 +35,16 @@ namespace TrelloMVC.Controllers
             return View(list);
         }
 
+        public ActionResult ListsOfBoard(int? boardid)
+        {
+            if (boardid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var list = _lr.FindAllBy(l => l.BoardId == boardid);
+            return View("Index", list);
+        }
+
         // GET: List/Details/5
         public ActionResult Details(int? id)
         {
