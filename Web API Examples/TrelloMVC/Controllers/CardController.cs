@@ -13,7 +13,7 @@ namespace TrelloMVC.Controllers
 {
     public class CardController : Controller
     {
-        private TrelloModelDBContainer db = new TrelloModelDBContainer();
+        private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
 
         // GET: Card
         public async Task<ActionResult> Index()

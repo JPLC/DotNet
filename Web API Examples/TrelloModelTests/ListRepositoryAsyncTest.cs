@@ -27,10 +27,10 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios
+        //TODO MAae async tests and Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
-        public void TestAddInvalidListNull()
+        public void TestAddInvalidListNullAsync()
         {
             var list = new List { Name = null };
             try
@@ -44,7 +44,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidListEmpty()
+        public void TestAddInvalidListEmptyAsync()
         {
             var list = new List { Name = string.Empty };
             try
@@ -58,7 +58,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidListBiggerThanMaxValue()
+        public void TestAddInvalidListBiggerThanMaxValueAsync()
         {
             var list = new List { Name = new String('a', TSC.ListNameSize + 1) };
             try
@@ -72,7 +72,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidListInvalidChars()
+        public void TestAddInvalidListInvalidCharsAsync()
         {
             var list = new List { Name = "#$%@£@erfnerio" };
             try
@@ -85,7 +85,7 @@ namespace TrelloModelTests
             }
         }
 
-        public void TestEditInvalidListNull()
+        public void TestEditInvalidListNullAsync()
         {
             var list = _lr.GetSingle(1);
             list.Name = null;
@@ -100,7 +100,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidListEmpty()
+        public void TestEditInvalidListEmptyAsync()
         {
             var list = _lr.GetSingle(1);
             list.Name = string.Empty;
@@ -115,7 +115,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidListBiggerThanMaxValue()
+        public void TestEditInvalidListBiggerThanMaxValueAsync()
         {
             var list = _lr.GetSingle(1);
             list.Name = new String('a', TSC.ListNameSize + 1);
@@ -130,7 +130,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidListInvalidChars()
+        public void TestEditInvalidListInvalidCharsAsync()
         {
             var list = _lr.GetSingle(1);
             list.Name = "#$%@£@erfnerio";
@@ -147,32 +147,32 @@ namespace TrelloModelTests
 
         #region  Valid Assert
         [TestMethod]
-        public void TestGetAllLists()
+        public void TestGetAllListsAsync()
         {
             var l = _lr.GetAll();
             var count = l.Count();
             Assert.AreEqual(9, count);
         }
 
-        public void TestCountAllLists()
+        public void TestCountAllListsAsync()
         {
             Assert.AreEqual(9, _lr.Count());
         }
 
         [TestMethod]
-        public void TestGetSingleList()
+        public void TestGetSingleListAsync()
         {
             Assert.IsNotNull(_lr.GetSingle(1));
         }
 
         [TestMethod]
-        public void TestFindListBy()
+        public void TestFindListByAsync()
         {
             Assert.IsNotNull(_lr.FindAllBy(l => l.ListId == 1));
         }
 
         [TestMethod]
-        public void TestAddDeleteList()
+        public void TestAddDeleteListAsync()
         {
             var list = new List { Name = "List PI Teste", BoardId = 1 };
             _lr.Add(list);
@@ -184,7 +184,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddDeleteRangeList()
+        public void TestAddDeleteRangeListAsync()
         {
             var list = new List<List>
             {
@@ -200,7 +200,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditList()
+        public void TestEditListAsync()
         {
             var list = new List { Name = "List PI Teste", BoardId = 1 };
             _lr.Add(list);
@@ -213,7 +213,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditRangeList()
+        public void TestEditRangeListAsync()
         {
             var elistlist = new List<List>()
                          {
@@ -256,7 +256,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditListFromSuperiorIndex()
+        public void TestEditListFromSuperiorIndexAsync()
         {
             var countinit = _lr.Count();
             var lindex = _lr.GetListsOfBoard(1).Count();
@@ -280,7 +280,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditListFromInferiorIndex()
+        public void TestEditListFromInferiorIndexAsync()
         {
             var countinit = _lr.Count();
             var lindex = _lr.GetListsOfBoard(1).Count();
@@ -304,7 +304,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestRemoveListIndex()
+        public void TestRemoveListIndexAsync()
         {
             var countinit = _lr.Count();
             var lindex = _lr.GetListsOfBoard(1).Count();
@@ -326,7 +326,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestGetListsOfBoard()
+        public void TestGetListsOfBoardAsync()
         {
             Assert.AreEqual(3, _lr.GetListsOfBoard(1).Count());
         }

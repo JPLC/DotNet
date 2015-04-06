@@ -27,10 +27,10 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO Improve Failed Scenarios
+        //TODO Make async tests and Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
-        public void TestAddInvalidCardNull()
+        public void TestAddInvalidCardNullAsync()
         {
             var card = new Card { Name = null, Discription = null };
             try
@@ -42,9 +42,9 @@ namespace TrelloModelTests
                 Assert.IsTrue(ex is DbEntityValidationException);
             }
         }
-
+        
         [TestMethod]
-        public void TestAddInvalidCardEmpty()
+        public void TestAddInvalidCardEmptyAsync()
         {
             var card = new Card { Name = string.Empty, Discription = string.Empty };
             try
@@ -58,7 +58,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidCardBiggerThanMaxValue()
+        public void TestAddInvalidCardBiggerThanMaxValueAsync()
         {
             var card = new Card { Name = new String('a', TSC.CardNameSize + 1), Discription = new String('a', TSC.CardDiscriptionSize + 1) };
             try
@@ -72,7 +72,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddInvalidCardInvalidChars()
+        public void TestAddInvalidCardInvalidCharsAsync()
         {
             var card = new Card { Name = "#$%@£@erfnerio", Discription = "#$%@£@erfnerio" };
             try
@@ -86,7 +86,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidCardNull()
+        public void TestEditInvalidCardNullAsync()
         {
             var card = _cr.GetSingle(1);
             card.Name = null; card.Discription = null;
@@ -101,7 +101,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidCardEmpty()
+        public void TestEditInvalidCardEmptyAsync()
         {
             var card = _cr.GetSingle(1);
             card.Name = string.Empty; card.Discription = string.Empty;
@@ -116,7 +116,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidCardBiggerThanMaxValue()
+        public void TestEditInvalidCardBiggerThanMaxValueAsync()
         {
             var card = _cr.GetSingle(1);
             card.Name = new String('a', TSC.CardNameSize + 1); card.Discription = new String('a', TSC.CardDiscriptionSize + 1);
@@ -131,7 +131,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditInvalidCardInvalidChars()
+        public void TestEditInvalidCardInvalidCharsAsync()
         {
             var card = _cr.GetSingle(1);
             card.Name = "#$%@£@erfnerio"; card.Discription = "#$%@£@erfnerio";
@@ -148,7 +148,7 @@ namespace TrelloModelTests
 
         #region  Valid Assert
         [TestMethod]
-        public void TestGetAllCards()
+        public void TestGetAllCardsAsync()
         {
             var c = _cr.GetAll();
             var count = c.Count();
@@ -156,25 +156,25 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestCountAllCards()
+        public void TestCountAllCardsAsync()
         {
             Assert.AreEqual(27, _cr.Count());
         }
 
         [TestMethod]
-        public void TestGetSingleCard()
+        public void TestGetSingleCardAsync()
         {
             Assert.IsNotNull(_cr.GetSingle(1));
         }
 
         [TestMethod]
-        public void TestFindCardBy()
+        public void TestFindCardByAsync()
         {
             Assert.IsNotNull(_cr.FindAllBy(l => l.CardId == 1));
         }
 
         [TestMethod]
-        public void TestAddDeleteCard()
+        public void TestAddDeleteCardAsync()
         {
             var card = new Card
             {
@@ -194,7 +194,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestAddDeleteRangeCard()
+        public void TestAddDeleteRangeCardAsync()
         {
             var cards = new List<Card>
             {
@@ -210,7 +210,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditCard()
+        public void TestEditCardAsync()
         {
             var card = _cr.GetSingle(1);
             var ecard = new Card
@@ -230,7 +230,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditRangeCard()
+        public void TestEditRangeCardAsync()
         {
             var ecardlist = new List<Card>
             {
@@ -279,7 +279,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditCardFromSuperiorIndex()
+        public void TestEditCardFromSuperiorIndexAsync()
         {
             var countinit = _cr.Count();
             var lindex = _cr.GetCardsOfList(1).Count();
@@ -303,7 +303,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestEditCardFromInferiorIndex()
+        public void TestEditCardFromInferiorIndexAsync()
         {
             var countinit = _cr.Count();
             var lindex = _cr.GetCardsOfList(1).Count();
@@ -327,7 +327,7 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestRemoveCardIndex()
+        public void TestRemoveCardIndexAsync()
         {
             var countinit = _cr.Count();
             var lindex = _cr.GetCardsOfList(1).Count();
@@ -349,13 +349,13 @@ namespace TrelloModelTests
         }
 
         [TestMethod]
-        public void TestGetCardsOfBoard()
+        public void TestGetCardsOfBoardAsync()
         {
             Assert.AreEqual(9, _cr.GetCardsOfBoard(1).Count());
         }
 
         [TestMethod]
-        public void TestGetCardsOfList()
+        public void TestGetCardsOfListAsync()
         {
             Assert.AreEqual(3, _cr.GetCardsOfList(1).Count());
         }

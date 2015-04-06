@@ -12,7 +12,7 @@ namespace TrelloMVC.Controllers
 {
     public class ListController : Controller
     {
-        private TrelloModelDBContainer db = new TrelloModelDBContainer();
+        private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
 
         // GET: List
         public ActionResult Index()
