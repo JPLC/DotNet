@@ -8,13 +8,27 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrelloModel;
+using TrelloModel.Interfaces.Factories;
+using TrelloModel.Repository.SQL;
 
 namespace TrelloMVC.Controllers
 {
     public class CardController : Controller
     {
         private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
+        
+        #region Variables
+        private static CardRepositorySQL _cr;
+        #endregion
 
+        #region Action Methods
+        public CardController(ICardRepositoryFactory listRepository)
+        {
+            _cr = (CardRepositorySQL) listRepository.GetCardRepositorySQL();
+        }
+        #endregion
+
+        #region Action Methods
         // GET: Card
         public async Task<ActionResult> Index()
         {
@@ -133,5 +147,6 @@ namespace TrelloMVC.Controllers
             }
             base.Dispose(disposing);
         }
+        #endregion
     }
 }

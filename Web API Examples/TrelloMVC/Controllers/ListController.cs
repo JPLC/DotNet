@@ -26,7 +26,6 @@ namespace TrelloMVC.Controllers
         #endregion
 
         #region Action Methods
-
         // GET: List
         public ActionResult Index()
         {
