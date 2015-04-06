@@ -12,6 +12,7 @@ using TrelloModel.Factories;
 using TrelloModel.Interfaces;
 using TrelloWebAPI;
 using Ninject.Parameters;
+using TrelloModel.Interfaces.Factories;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]

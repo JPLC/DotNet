@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TrelloModel;
 using TrelloModel.Factories;
 using TrelloModel.Repository;
+using TrelloModel.Repository.SQL;
 using TSC = TrelloModel.Business.Constants.TrelloSizeConstants;
 
 namespace TrelloModelTests
@@ -15,14 +16,14 @@ namespace TrelloModelTests
     public class CardRepositoryAsyncTest
     {
         #region Variables and Properties
-        private static CardRepository _cr;
+        private static CardRepositorySQL _cr;
         #endregion
 
         #region Constructor
         [ClassInitialize]
         public static void ClassInitializeCardRepositoryTests(TestContext context)
         {
-            _cr = (CardRepository)new RepositoryConcreteFactory().GetCardFactory().GetCardRepository();
+            _cr = (CardRepositorySQL)new RepositoryConcreteFactory().GetCardFactory().GetCardRepositorySQL();
         }
         #endregion
 

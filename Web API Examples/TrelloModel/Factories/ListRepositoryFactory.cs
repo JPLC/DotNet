@@ -1,13 +1,19 @@
-﻿using TrelloModel.Interfaces;
-using TrelloModel.Repository;
+﻿using TrelloModel.Interfaces.Factories;
+using TrelloModel.Interfaces.Repositories;
+using TrelloModel.Repository.MongoDB;
+using TrelloModel.Repository.SQL;
 
 namespace TrelloModel.Factories
 {
     public class ListRepositoryFactory : IListRepositoryFactory
     {
-        public IRepository<List> GetListRepository()
+        public IRepository<List> GetListRepositorySQL()
         {
-            return ListRepository.Instance;
+            return ListRepositorySQL.Instance;
+        }
+        public IRepository<List> GetListRepositoryMongoDB()
+        {
+            return ListRepositoryMongoDB.Instance;
         }
     }
 }

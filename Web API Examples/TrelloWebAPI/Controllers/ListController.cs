@@ -4,16 +4,18 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using TrelloModel;
 using TrelloModel.Interfaces;
+using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository;
+using TrelloModel.Repository.SQL;
 
 namespace TrelloWebAPI.Controllers
 {
     public class ListController : ApiController
     {
-        private static ListRepository _lr;
+        private static ListRepositorySQL _lr;
         public ListController(IListRepositoryFactory listRepository)
         {
-            _lr = (ListRepository)listRepository.GetListRepository();
+            _lr = (ListRepositorySQL)listRepository.GetListRepositorySQL();
         }
 
 

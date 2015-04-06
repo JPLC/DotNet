@@ -16,19 +16,21 @@ using HalJsonNet.Serialization;
 using Newtonsoft.Json;
 using TrelloModel.Business;
 using TrelloModel.Business.Enumerators;
+using TrelloModel.Interfaces.Factories;
+using TrelloModel.Repository.SQL;
 
 namespace TrelloWebAPI.Controllers
 {
     public class BoardController : ApiController
     {
         #region Variables
-        private static BoardRepository _br;
+        private static BoardRepositorySQL _br;
         #endregion
 
         #region Constructor
         public BoardController(IBoardRepositoryFactory boardRepository)
         {
-            _br = (BoardRepository)boardRepository.GetBoardRepository();
+            _br = (BoardRepositorySQL)boardRepository.GetBoardRepositorySQL();
         }
         #endregion
 

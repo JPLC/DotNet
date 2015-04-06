@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using EntityFramework.Extensions;
-using TrelloModel.Interfaces;
+using TrelloModel.Interfaces.Repositories;
 
-namespace TrelloModel.Repository
+namespace TrelloModel.Repository.SQL
 {
-    public class BoardRepository : IRepository<Board>
+    public class BoardRepositorySQL : IRepositoryAsync<Board>
     {
         #region Variables and Properties
-        private static readonly Lazy<BoardRepository> BoardRepo = new Lazy<BoardRepository>(() => new BoardRepository());
+        private static readonly Lazy<BoardRepositorySQL> BoardRepo = new Lazy<BoardRepositorySQL>(() => new BoardRepositorySQL());
 
-        public static BoardRepository Instance { get { return BoardRepo.Value; } }
+        public static BoardRepositorySQL Instance { get { return BoardRepo.Value; } }
         #endregion
 
         #region Constructor
-        private BoardRepository() { }
+        private BoardRepositorySQL() { }
         #endregion
 
         //TODO aplicar e melhorar expection handling

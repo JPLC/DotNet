@@ -6,20 +6,20 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using TrelloModel.Business;
 using TrelloModel.Business.Enumerators;
-using TrelloModel.Interfaces;
+using TrelloModel.Interfaces.Repositories;
 
-namespace TrelloModel.Repository
+namespace TrelloModel.Repository.SQL
 {
-    public class CardRepository : ICardRepository
+    public class CardRepositorySQL : ICardRepositoryAsync
     {
         #region Variables and Properties
-        private static readonly Lazy<CardRepository> CardRepo = new Lazy<CardRepository>(() => new CardRepository());
+        private static readonly Lazy<CardRepositorySQL> CardRepo = new Lazy<CardRepositorySQL>(() => new CardRepositorySQL());
 
-        public static CardRepository Instance { get { return CardRepo.Value; } }
+        public static CardRepositorySQL Instance { get { return CardRepo.Value; } }
         #endregion
 
         #region Constructor
-        private CardRepository() { }
+        private CardRepositorySQL() { }
         #endregion
 
         //TODO aplicar e melhorar expection handling

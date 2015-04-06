@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TrelloModel.Interfaces
+namespace TrelloModel.Interfaces.Repositories
 {
-    public interface IListRepository : IRepository<List>
+    public interface IListRepositoryAsync : IListRepository
     {
-        IEnumerable<List> GetListsOfBoard(int boardId);
-
         Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId);
     }
 }

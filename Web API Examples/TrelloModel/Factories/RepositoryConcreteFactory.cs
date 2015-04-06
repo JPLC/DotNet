@@ -1,4 +1,5 @@
 ﻿using TrelloModel.Interfaces;
+using TrelloModel.Interfaces.Factories;
 
 namespace TrelloModel.Factories
 {

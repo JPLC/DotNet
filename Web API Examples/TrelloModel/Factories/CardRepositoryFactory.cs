@@ -1,13 +1,20 @@
-﻿using TrelloModel.Interfaces;
-using TrelloModel.Repository;
+﻿using TrelloModel.Interfaces.Factories;
+using TrelloModel.Interfaces.Repositories;
+using TrelloModel.Repository.MongoDB;
+using TrelloModel.Repository.SQL;
 
 namespace TrelloModel.Factories
 {
     public class CardRepositoryFactory : ICardRepositoryFactory
     {
-        public IRepository<Card> GetCardRepository()
+        public IRepository<Card> GetCardRepositorySQL()
         {
-            return CardRepository.Instance;
+            return CardRepositorySQL.Instance;
+        }
+
+        public IRepository<Card> GetCardRepositoryMongoDB()
+        {
+            return CardRepositoryMongoDB.Instance;
         }
     }
 }
