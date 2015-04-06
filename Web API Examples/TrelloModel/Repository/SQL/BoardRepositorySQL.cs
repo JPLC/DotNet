@@ -97,12 +97,13 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task AddAsync(Board board)
+        public async Task<Board> AddAsync(Board board)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 db.Board.Add(board);
                 await db.SaveChangesAsync();
+                return board;
             }
         }
 
