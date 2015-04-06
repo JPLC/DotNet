@@ -8,17 +8,30 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrelloModel;
+using TrelloModel.Interfaces.Factories;
+using TrelloModel.Repository.SQL;
 
 namespace TrelloMVC.Controllers
 {
     public class BoardController : Controller
     {
-        private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
+        #region Variables
+        private static BoardRepositorySQL _br;
+        #endregion
 
+        #region Action Methods
+        public BoardController(IBoardRepositoryFactory brf)
+        {
+            _br = (BoardRepositorySQL) brf.GetBoardRepositorySQL();
+        }
+        #endregion
+
+        #region Action Methods
         // GET: Board
         public async Task<ActionResult> Index()
         {
-            return View(await db.Board.ToListAsync());
+            return View(_br.GetAll());
+            //return View(await db.Board.ToListAsync());
         }
 
         // GET: Board/Details/5
@@ -28,7 +41,8 @@ namespace TrelloMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Board board = await db.Board.FindAsync(id);
+            //Board board = await db.Board.FindAsync(id);
+            Board board = _br.GetSingle(id.Value);
             if (board == null)
             {
                 return HttpNotFound();
@@ -51,8 +65,9 @@ namespace TrelloMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Board.Add(board);
-                await db.SaveChangesAsync();
+                //db.Board.Add(board);
+                //await db.SaveChangesAsync();
+                _br.Add(board);
                 return RedirectToAction("Index");
             }
 
@@ -66,7 +81,8 @@ namespace TrelloMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Board board = await db.Board.FindAsync(id);
+           // Board board = await db.Board.FindAsync(id);
+            var board = _br.GetSingle(id.Value);
             if (board == null)
             {
                 return HttpNotFound();
@@ -83,8 +99,9 @@ namespace TrelloMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(board).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                //db.Entry(board).State = EntityState.Modified;
+                //await db.SaveChangesAsync();
+                _br.Edit(board);
                 return RedirectToAction("Index");
             }
             return View(board);
@@ -97,7 +114,8 @@ namespace TrelloMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Board board = await db.Board.FindAsync(id);
+            //Board board = await db.Board.FindAsync(id);
+            var board = _br.GetSingle(id.Value);
             if (board == null)
             {
                 return HttpNotFound();
@@ -110,19 +128,13 @@ namespace TrelloMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Board board = await db.Board.FindAsync(id);
+           /* Board board = await db.Board.FindAsync(id);
             db.Board.Remove(board);
-            await db.SaveChangesAsync();
+            await db.SaveChangesAsync();*/         
+            _br.Delete(_br.GetSingle(id));
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        #endregion
     }
 }

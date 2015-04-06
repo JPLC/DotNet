@@ -1,3 +1,6 @@
+using TrelloModel.Factories;
+using TrelloModel.Interfaces.Factories;
+
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TrelloMVC.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(TrelloMVC.App_Start.NinjectWebCommon), "Stop")]
 
@@ -61,6 +64,9 @@ namespace TrelloMVC.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IBoardRepositoryFactory>().To<BoardRepositoryFactory>();
+            kernel.Bind<IListRepositoryFactory>().To<ListRepositoryFactory>();
+            kernel.Bind<ICardRepositoryFactory>().To<CardRepositoryFactory>();
         }        
     }
 }

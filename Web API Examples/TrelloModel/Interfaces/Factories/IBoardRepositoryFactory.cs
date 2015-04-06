@@ -5,5 +5,7 @@ namespace TrelloModel.Interfaces.Factories
     public interface IBoardRepositoryFactory
     {
         IRepository<Board> GetBoardRepositorySQL();
+
+        IRepository<Board> GetBoardRepositoryMongoDB();
     }
 }
