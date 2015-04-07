@@ -268,7 +268,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="ViewModels\BoardViewModels\" />
+    <Folder Include="ViewModels\CardViewModel\" />
+    <Folder Include="ViewModels\ListViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

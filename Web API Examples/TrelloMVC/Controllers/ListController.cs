@@ -21,7 +21,7 @@ namespace TrelloMVC.Controllers
         #region Action Methods
         public ListController(IListRepositoryFactory listRepository)
         {
-            _lr = (ListRepositorySQL) listRepository.GetListRepositorySQL();
+            _lr = (ListRepositorySQL)listRepository.GetListRepositorySQL();
         }
         #endregion
 
@@ -29,7 +29,6 @@ namespace TrelloMVC.Controllers
         // GET: List
         public ActionResult Index()
         {
-            //var list = db.List.Include(l => l.Board);
             var list = _lr.GetAll();
             return View(list);
         }
@@ -40,7 +39,8 @@ namespace TrelloMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var list = _lr.FindAllBy(l => l.BoardId == boardid);
+            var list = _lr.GetListsOfBoard(boardid.Value).OrderBy(l=>l.Lix);
+            ViewBag.BoardId = boardid;
             return View("Index", list);
         }
 
@@ -61,9 +61,13 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: List/Create
-        public ActionResult Create()
+        public ActionResult Create(int? boardid)
         {
-            //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name");
+            if (boardid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.BoardId = boardid;
             return View();
         }
 
@@ -76,14 +80,11 @@ namespace TrelloMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*db.List.Add(list);
-                db.SaveChanges();*/
                 _lr.Add(list);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = list.ListId });
             }
-            //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", list.BoardId);
-            ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
-            return View(list);
+            //ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
+            return RedirectToAction("Index");
         }
 
         // GET: List/Edit/5
@@ -100,7 +101,7 @@ namespace TrelloMVC.Controllers
                 return HttpNotFound();
             }
             //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", list.BoardId);
-            ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
+            ViewBag.BoardId = list.BoardId;
             return View(list);
         }
 
@@ -113,11 +114,9 @@ namespace TrelloMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*
-                db.Entry(list).State = EntityState.Modified;
-                db.SaveChanges();*/
+                list.BoardId = _lr.GetSingle(list.ListId).BoardId;
                 _lr.Edit(list);
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new {id = list.ListId});
             }
             //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", list.BoardId);
             ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
@@ -144,8 +143,9 @@ namespace TrelloMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _lr.Delete(_lr.GetSingle(id));
-            return RedirectToAction("Index");
+            var list = _lr.GetSingle(id);
+            _lr.Delete(list);
+            return RedirectToAction("ListsOfBoard", new {boardid=list.BoardId});
         }
         #endregion
     }

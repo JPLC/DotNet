@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", new{boardid = ViewBag.BoardId})
 </p>
 <table class="table">
     <tr>
@@ -43,3 +43,7 @@
 }
 
 </table>
+
+<p>
+    @Html.ActionLink("Back to Board", "Index", "Board", new { boardid = @ViewBag.BoardId }, null)
+</p>
