@@ -320,6 +320,12 @@ namespace TrelloMVC.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        public JsonResult CheckUserName(string username)
+        {
+            var result = UserManager.Users.Any(user=>user.UserName==username);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
