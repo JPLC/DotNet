@@ -144,4 +144,7 @@
   <data name="BoardNameSpecialChars" xml:space="preserve">
     <value>Name has special characters</value>
   </data>
+  <data name="DescriptionWordBiggerThanMaxValue" xml:space="preserve">
+    <value>The number of words is bigger than 10</value>
+  </data>
 </root>

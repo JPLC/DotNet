@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TrelloMVC.Validations.Resources {
+namespace TrelloMVC.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace TrelloMVC.Validations.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TrelloMVC.Validations.Resources.BoardResources", typeof(BoardResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TrelloMVC.Resources.BoardResources", typeof(BoardResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -138,6 +138,15 @@ namespace TrelloMVC.Validations.Resources {
         public static string BoardNameSpecialChars {
             get {
                 return ResourceManager.GetString("BoardNameSpecialChars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of words is bigger than 10.
+        /// </summary>
+        public static string DescriptionWordBiggerThanMaxValue {
+            get {
+                return ResourceManager.GetString("DescriptionWordBiggerThanMaxValue", resourceCulture);
             }
         }
     }

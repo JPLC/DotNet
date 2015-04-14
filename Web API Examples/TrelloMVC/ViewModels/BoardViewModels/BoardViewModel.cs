@@ -1,20 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using TrelloMVC.Validations.Attributes;
 using TrelloMVC.Validations.Constants;
-using Resx=TrelloMVC.Validations.Resources;
+using TrelloMVC.Resources;
 
 namespace TrelloMVC.ViewModels.BoardViewModels
 {
     public class BoardViewModel
     {
-        [Required(ErrorMessage = Resx.BoardResources.BoardNameIsEmpty)]
-        [RegularExpression(ModelRegexs.BoardNameRegex, ErrorMessage = Resx.BoardResources.BoardNameSpecialChars)]
-        [StringLength(ModelSizeConstants.BoardNameSize, MinimumLength = 4, ErrorMessage = ErrorMessage = Resx.BoardResources.BoardNameBiggerThanMaxValue)]
-        [Remote("CheckBoardName", "Board", ErrorMessage = Resx.BoardResources.BoardNameAlreadyExists)]
+        [Required(ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameIsEmpty")]
+        [RegularExpression(ModelRegexs.BoardNameRegex, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameSpecialChars")]
+        [StringLength(ModelSizeConstants.BoardNameSize, MinimumLength = 4, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameBiggerThanMaxValue")]
+        [Remote("CheckBoardName", "Board", ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameAlreadyExists")]
         public string Name { get; set; }
 
-        [RegularExpression(ModelRegexs.BoardDiscriptionRegex, ErrorMessage = Resx.BoardResources.BoardDiscriptionSpecialChars)]
-        [StringLength(ModelSizeConstants.BoardDiscriptionSize, ErrorMessage = Resx.BoardResources.BoardDiscriptionBiggerThanMaxValue)]
+        [RegularExpression(ModelRegexs.BoardDiscriptionRegex, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardDiscriptionSpecialChars")]
+        [StringLength(ModelSizeConstants.BoardDiscriptionSize, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardDiscriptionBiggerThanMaxValue")]
+        [MaxWords(10, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "DescriptionWordBiggerThanMaxValue")]
         public string Discription { get; set; }      
     }
 
