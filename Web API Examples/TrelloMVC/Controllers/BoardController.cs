@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
+﻿using System.Net;
 using System.Threading.Tasks;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using TrelloModel;
 using TrelloModel.Interfaces.Factories;
@@ -136,5 +130,11 @@ namespace TrelloMVC.Controllers
         }
 
         #endregion
+
+        public JsonResult CheckBoardName(string boardname)
+        {
+            var result = _br.HasRepeatedBoardName(boardname);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

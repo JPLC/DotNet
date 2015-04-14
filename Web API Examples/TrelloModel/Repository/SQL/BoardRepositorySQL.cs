@@ -9,7 +9,7 @@ using TrelloModel.Interfaces.Repositories;
 
 namespace TrelloModel.Repository.SQL
 {
-    public class BoardRepositorySQL : IRepositoryAsync<Board>
+    public class BoardRepositorySQL : IBoardRepositoryAsync
     {
         #region Variables and Properties
         private static readonly Lazy<BoardRepositorySQL> BoardRepo = new Lazy<BoardRepositorySQL>(() => new BoardRepositorySQL());
@@ -213,6 +213,21 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public bool HasRepeatedBoardName(string boardname)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Board.Any(b => b.Name == boardname);
+            }
+        }
+
+        public async Task<bool> HasRepeatedBoardNameAsync(string boardname)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.AnyAsync(b => b.Name == boardname);
+            }
+        }
         #endregion
     }
 }

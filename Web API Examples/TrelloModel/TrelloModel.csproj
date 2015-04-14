@@ -87,6 +87,8 @@
     <Compile Include="Factories\RepositoryAbstractFactory.cs" />
     <Compile Include="Factories\RepositoryConcreteFactory.cs" />
     <Compile Include="Interfaces\Factories\IBoardRepositoryFactory.cs" />
+    <Compile Include="Interfaces\Repositories\IBoardRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IBoardRepositoryAsync.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepository.cs" />
     <Compile Include="Interfaces\Factories\ICardRepositoryFactory.cs" />
     <Compile Include="Interfaces\Repositories\ICardRepositoryAsync.cs" />

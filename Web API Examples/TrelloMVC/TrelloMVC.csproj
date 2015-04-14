@@ -307,7 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Validations\Resources\BoardResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BoardResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Validations\Resources\CardResources.resx">

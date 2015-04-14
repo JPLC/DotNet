@@ -21,5 +21,11 @@ namespace TrelloMVC.ViewModels
 
         [System.ComponentModel.DataAnnotations.Compare("Email")]
         public string EmailConfirm { get; set; }
+
+        [Range(16, 100)]
+        public int Age { get; set; }
+
+        [Range(typeof(decimal), "1.40", "2.20")]
+        public decimal Height { get; set; }
     }
 }

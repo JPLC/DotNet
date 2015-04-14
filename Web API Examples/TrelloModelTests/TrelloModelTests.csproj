@@ -70,12 +70,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BoardRepositoryAsyncTest.cs" />
-    <Compile Include="BoardRepositoryTest.cs" />
-    <Compile Include="CardRepositoryAsyncTest.cs" />
-    <Compile Include="CardRepositoryTest.cs" />
-    <Compile Include="ListRepositoryAsyncTest.cs" />
-    <Compile Include="ListRepositoryTest.cs" />
+    <Compile Include="AsyncTests\BoardRepositoryAsyncTest.cs" />
+    <Compile Include="SyncTests\BoardRepositoryTest.cs" />
+    <Compile Include="AsyncTests\CardRepositoryAsyncTest.cs" />
+    <Compile Include="SyncTests\CardRepositoryTest.cs" />
+    <Compile Include="AsyncTests\ListRepositoryAsyncTest.cs" />
+    <Compile Include="SyncTests\ListRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
