@@ -211,6 +211,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="ViewModelsConverters\BoardViewModelConverter.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardsViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -289,7 +290,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModelsConverters\" />
     <Folder Include="ViewModels\CardViewModel\" />
     <Folder Include="ViewModels\ListViewModels\" />
   </ItemGroup>

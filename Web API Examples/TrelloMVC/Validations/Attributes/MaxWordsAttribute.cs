@@ -7,7 +7,7 @@ namespace TrelloMVC.Validations.Attributes
         private readonly int _maxWords;
 
         public MaxWordsAttribute(int maxWords)
-            : base("{0} has too many words.")
+            : base(@"{0} has too many words.")
         {
             _maxWords = maxWords;
         }

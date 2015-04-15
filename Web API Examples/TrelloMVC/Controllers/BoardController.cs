@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
+using TrelloMVC.ViewModelsConverters;
 
 namespace TrelloMVC.Controllers
 {
@@ -24,7 +25,7 @@ namespace TrelloMVC.Controllers
         // GET: Board
         public async Task<ActionResult> Index()
         {
-            return View(_br.GetAll());
+            return View(BoardViewModelConverter.ModelsToViewModels(_br.GetAll()));
             //return View(await db.Board.ToListAsync());
         }
 
