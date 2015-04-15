@@ -8,6 +8,7 @@ using TrelloMVC.ViewModelsConverters;
 
 namespace TrelloMVC.Controllers
 {
+    [RequireHttps]
     public class BoardController : Controller
     {
         #region Variables
@@ -23,9 +24,11 @@ namespace TrelloMVC.Controllers
 
         #region Action Methods
         // GET: Board
+        
+        [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
-            return View(BoardViewModelConverter.ModelsToViewModels(_br.GetAll()));
+            return View(VMConverters.ModelsToViewModels(_br.GetAll()));
             //return View(await db.Board.ToListAsync());
         }
 
@@ -130,12 +133,12 @@ namespace TrelloMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        #endregion
-
         public JsonResult CheckBoardName(string boardname)
         {
             var result = _br.HasRepeatedBoardName(boardname);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
     }
 }

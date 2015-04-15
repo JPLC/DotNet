@@ -211,7 +211,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="ViewModelsConverters\BoardViewModelConverter.cs" />
+    <Compile Include="ViewModelsConverters\VMConverters.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardsViewModel.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

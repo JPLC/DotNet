@@ -7,6 +7,7 @@ using TrelloMVC.Validations.Constants;
 
 namespace TrelloMVC.ViewModels.BoardViewModels
 {
+    [Bind(Include = "Name, Discription")]
     public class BoardsViewModel
     {
         [ScaffoldColumn(false)]
@@ -25,6 +26,6 @@ namespace TrelloMVC.ViewModels.BoardViewModels
         [RegularExpression(ModelRegexs.BoardDiscriptionRegex, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardDiscriptionSpecialChars")]
         [StringLength(ModelSizeConstants.BoardDiscriptionSize, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardDiscriptionBiggerThanMaxValue")]
         [MaxWords(10)]
-        public string Discription { get; set; }   
+        public string Discription { get; set; }
     }
 }
