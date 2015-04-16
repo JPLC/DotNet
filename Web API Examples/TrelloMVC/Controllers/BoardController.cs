@@ -8,7 +8,7 @@ using TrelloMVC.ViewModelsConverters;
 
 namespace TrelloMVC.Controllers
 {
-    [RequireHttps]
+    /*[RequireHttps]*/
     public class BoardController : Controller
     {
         #region Variables
