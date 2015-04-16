@@ -9,6 +9,7 @@ using TrelloMVC.ViewModelsConverters;
 namespace TrelloMVC.Controllers
 {
     /*[RequireHttps]*/
+    [Route("TrelloApp/Boards")]
     public class BoardController : Controller
     {
         #region Variables
@@ -24,7 +25,9 @@ namespace TrelloMVC.Controllers
 
         #region Action Methods
         // GET: Board
-        
+
+        [Route("GetBoards")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
@@ -33,6 +36,8 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: Board/Details/5
+        [Route("GetBoard/{id:int}")]
+        [HttpGet]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,6 +54,8 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: Board/Create
+        [HttpGet]
+        [Route("Board/Create")]
         public ActionResult Create()
         {
             return View();
@@ -58,6 +65,7 @@ namespace TrelloMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Board/Create")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "BoardId,Name,Discription")] Board board)
         {
@@ -73,6 +81,8 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: Board/Edit/5
+        [HttpGet]
+        [Route("Board/Edit/{id: int}")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +102,7 @@ namespace TrelloMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Board/Edit/{id: int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "BoardId,Name,Discription")] Board board)
         {
