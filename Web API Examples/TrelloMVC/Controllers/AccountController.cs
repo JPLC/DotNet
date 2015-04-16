@@ -13,30 +13,24 @@ using TrelloMVC.Models;
 namespace TrelloMVC.Controllers
 {
     [Authorize]
+    [Route("Account")]
     public class AccountController : Controller
     {
+        #region Variables
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        #endregion
 
-        public AccountController()
-        {
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
+        #region Properties
         public ApplicationSignInManager SignInManager
         {
             get
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -51,9 +45,25 @@ namespace TrelloMVC.Controllers
                 _userManager = value;
             }
         }
+        #endregion
 
+        #region Constructors
+        public AccountController()
+        {
+        }
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+        #endregion
+
+        #region ActionMethods
         //
         // GET: /Account/Login
+        [HttpGet]
+        [Route("Login")]   
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -64,6 +74,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
+        [Route("Login")]  
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
@@ -93,6 +104,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/VerifyCode
+        [HttpGet]
+        [Route("VerifyCode")] 
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
@@ -107,6 +120,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/VerifyCode
         [HttpPost]
+        [Route("VerifyCode")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
@@ -137,6 +151,8 @@ namespace TrelloMVC.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [HttpGet]
+        [Route("Register")] 
         public ActionResult Register()
         {
             return View();
@@ -145,6 +161,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
+        [Route("Register")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
@@ -174,6 +191,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/ConfirmEmail
+        [HttpGet]
+        [Route("ConfirmEmail")] 
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -187,6 +206,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/ForgotPassword
+        [HttpGet]
+        [Route("ForgotPassword")] 
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
@@ -196,6 +217,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
+        [Route("ForgotPassword")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
@@ -224,6 +246,8 @@ namespace TrelloMVC.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
+        [HttpGet]
+        [Route("ForgotPasswordConfirmation")] 
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -231,6 +255,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/ResetPassword
+        [HttpGet]
+        [Route("ResetPassword")] 
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
@@ -240,6 +266,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/ResetPassword
         [HttpPost]
+        [Route("ResetPassword")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
@@ -265,6 +292,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/ResetPasswordConfirmation
+        [HttpGet]
+        [Route("ResetPasswordConfirmation")] 
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
@@ -274,6 +303,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
+        [Route("ExternalLogin")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
@@ -284,6 +314,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/SendCode
+        [HttpGet]
+        [Route("SendCode")] 
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
@@ -300,6 +332,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/SendCode
         [HttpPost]
+        [Route("SendCode")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
@@ -319,6 +352,8 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/ExternalLoginCallback
+        [HttpGet]
+        [Route("ExternalLoginCallback")] 
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
@@ -350,6 +385,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
+        [Route("ExternalLoginCallback")] 
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
@@ -388,6 +424,7 @@ namespace TrelloMVC.Controllers
         //
         // POST: /Account/LogOff
         [HttpPost]
+        [Route("LogOff")] 
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
@@ -397,11 +434,14 @@ namespace TrelloMVC.Controllers
 
         //
         // GET: /Account/ExternalLoginFailure
+        [HttpGet]
+        [Route("ExternalLoginFailure")] 
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

@@ -16,7 +16,7 @@ namespace TrelloMVC.Controllers
         private static BoardRepositorySQL _br;
         #endregion
 
-        #region Action Methods
+        #region Constructors
         public BoardController(IBoardRepositoryFactory brf)
         {
             _br = (BoardRepositorySQL) brf.GetBoardRepositorySQL();
@@ -81,7 +81,7 @@ namespace TrelloMVC.Controllers
 
         // GET: Board/Edit/5
         [HttpGet]
-        [Route("Board/Edit/{id: int}")]
+        [Route("Board/Edit/{id:int}")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -101,7 +101,7 @@ namespace TrelloMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("Board/Edit/{id: int}")]
+        [Route("Board/Edit/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "BoardId,Name,Discription")] Board board)
         {
@@ -117,7 +117,7 @@ namespace TrelloMVC.Controllers
 
         // GET: Board/Delete/5
         [HttpGet]
-        [Route("Board/Delete/{id: int}")]
+        [Route("Board/Delete/{id:int}")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,7 +135,7 @@ namespace TrelloMVC.Controllers
 
         // POST: Board/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("Board/Delete/{id: int}")]
+        [Route("Board/Delete/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
