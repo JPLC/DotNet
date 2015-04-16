@@ -24,10 +24,9 @@ namespace TrelloMVC.Controllers
         #endregion
 
         #region Action Methods
-        // GET: Board
-
-        [Route("GetBoards")]
+        // GET: GetBoards
         [HttpGet]
+        [Route("GetBoards")]     
         [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
@@ -36,8 +35,8 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: Board/Details/5
-        [Route("GetBoard/{id:int}")]
         [HttpGet]
+        [Route("GetBoard/{id:int}")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -117,6 +116,8 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: Board/Delete/5
+        [HttpGet]
+        [Route("Board/Delete/{id: int}")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,6 +135,7 @@ namespace TrelloMVC.Controllers
 
         // POST: Board/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("Board/Delete/{id: int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
@@ -144,6 +146,8 @@ namespace TrelloMVC.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        [Route("CheckBoardName")]
         public JsonResult CheckBoardName(string boardname)
         {
             var result = _br.HasRepeatedBoardName(boardname);
