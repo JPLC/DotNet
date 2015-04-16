@@ -32,5 +32,6 @@ namespace TrelloMVC.Models
         {
             return new ApplicationDbContext();
         }
+
     }
 }
