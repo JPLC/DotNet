@@ -19,7 +19,7 @@ namespace TrelloMVC.ViewModels.BoardViewModels
         [Required(ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameIsEmpty")]
         [RegularExpression(ModelRegexs.BoardNameRegex, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameSpecialChars")]
         [StringLength(ModelSizeConstants.BoardNameSize, MinimumLength = 4, ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameBiggerThanMaxValue")]
-        [Remote("CheckBoardName", "Board", ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameAlreadyExists")]
+        [Remote("CheckBoardName", "Board",ErrorMessageResourceType = typeof(BoardResources), ErrorMessageResourceName = "BoardNameAlreadyExists")]
         public string Name { get; set; }
 
         [Display(Name = "Board Discription", Order = 15001)]

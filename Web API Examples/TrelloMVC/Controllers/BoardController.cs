@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
+using TrelloMVC.ViewModels.BoardViewModels;
 using TrelloMVC.ViewModelsConverters;
 
 namespace TrelloMVC.Controllers
@@ -66,17 +67,17 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Board/Create")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "BoardId,Name,Discription")] Board board)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Discription")] BoardsViewModel boardvm)
         {
             if (ModelState.IsValid)
             {
                 //db.Board.Add(board);
                 //await db.SaveChangesAsync();
-                _br.Add(board);
+                _br.Add(ViewModelsConverters.VMConverters.ViewModelToModel(boardvm));
                 return RedirectToAction("Index");
             }
 
-            return View(board);
+            return View(boardvm);
         }
 
         // GET: Board/Edit/5
@@ -148,9 +149,9 @@ namespace TrelloMVC.Controllers
 
         [HttpGet]
         [Route("CheckBoardName")]
-        public JsonResult CheckBoardName(string boardname)
+        public JsonResult CheckBoardName(string Name)
         {
-            var result = _br.HasRepeatedBoardName(boardname);
+            var result = _br.HasRepeatedBoardName(Name);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
