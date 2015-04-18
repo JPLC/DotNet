@@ -32,7 +32,7 @@ namespace TrelloModel.Business
                 isValid = false;
                 errorMsgDic.Add(new KeyValuePair<BoardValidationCodes, KeyValuePair<string, string>>(BoardValidationCodes.BoardNameSpecialChars, new KeyValuePair<string, string>("Name", Resx.BoardResources.BoardNameSpecialChars)));
             }
-            else if (boardNames.Any(b => b.BoardId!=board.BoardId && b.Name==board.Name))
+            else if (boardNames!=null && boardNames.Any(b => b.BoardId != board.BoardId && b.Name == board.Name))
             {
                 isValid = false;
                 errorMsgDic.Add(new KeyValuePair<BoardValidationCodes, KeyValuePair<string, string>>(BoardValidationCodes.BoardNameAlreadyExists, new KeyValuePair<string, string>("Name", Resx.BoardResources.BoardNameAlreadyExists)));

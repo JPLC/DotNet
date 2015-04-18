@@ -16,7 +16,18 @@ insert into Board (Name, Discription) values
  ('Caetano',	'Quadro do Caetano')
 ,('Pedro',		'Quadro do Pedro')
 ,('Joao',		'Quadro do Joao')
-
+/*
+ ('Ferreira',	'Quadro do Ferreira'),
+ ('Manuel',	'Quadro do Manuel'),
+ ('Manuela',	'Quadro da Manuela'),
+ ('Maria',	'Quadro da Maria'),
+ ('Rodrigues',	'Quadro do Rodrigues'),
+('Antonio',	'Quadro do Antonio'),
+('Relvas',	'Quadro do Relvas'),
+('Silvia',	'Quadro da Silvia'),
+('Luis',	'Quadro do Luis'),
+('Ines',	'Quadro da Ines'),
+('Joana',	'Quadro da Joana')*/
 --select * from Board
 
 ---------------------------------------------------------------------------------------------------------------------------------

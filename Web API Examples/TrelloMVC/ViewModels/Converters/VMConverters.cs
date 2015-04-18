@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using TrelloModel;
 using TrelloMVC.ViewModels.BoardViewModels;
 
-namespace TrelloMVC.ViewModelsConverters
+namespace TrelloMVC.ViewModels.Converters
 {
     public static class VMConverters
     {

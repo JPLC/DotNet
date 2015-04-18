@@ -1,5 +1,6 @@
-﻿@model IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>
-
+﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
 }
@@ -11,10 +12,10 @@
 </div>
 
 <div style="padding: 7px 0px 7px 0px">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Index", "Board", FormMethod.Get))
     {
         <p>
-            Find by Board Name: @Html.TextBox("SearchString")
+            Find by Board Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
             <input type="submit" value="Search" class="btn btn-info"/>
         </p>
     }
@@ -24,10 +25,10 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Discription)
+                @Html.ActionLink("Discription", "Index", new {sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
                 Operations
@@ -45,12 +46,18 @@
                 </td>
                 <td>
                     <div role="group" aria-label="...">
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning", @style = "margin: 5px;" })
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", @style = "margin: 5px;" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "margin: 5px;" })
+                        @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new {@class = "btn btn-warning", @style = "margin: 5px;"})
+                        @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-info", @style = "margin: 5px;"})
+                        @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger", @style = "margin: 5px;"})
                     </div>
                 </td>
             </tr>
         }
     </table>
+    <br/>
+</div>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
