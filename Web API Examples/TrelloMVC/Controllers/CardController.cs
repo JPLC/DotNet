@@ -21,7 +21,7 @@ namespace TrelloMVC.Controllers
         private static CardRepositorySQL _cr;
         #endregion
 
-        #region Action Methods
+        #region Constructor
         public CardController(ICardRepositoryFactory listRepository)
         {
             _cr = (CardRepositorySQL) listRepository.GetCardRepositorySQL();

@@ -4,6 +4,6 @@ namespace TrelloModel.Interfaces.Repositories
 {
     public interface IBoardRepositoryAsync : IBoardRepository
     {
-        Task<bool> HasRepeatedBoardNameAsync(string boardname);
+        Task<bool> HasRepeatedBoardNameAsync(int boardid, string boardname);
     }
 }

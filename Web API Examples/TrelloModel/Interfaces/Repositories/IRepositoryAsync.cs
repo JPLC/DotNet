@@ -28,5 +28,7 @@ namespace TrelloModel.Interfaces.Repositories
         Task EditRangeAsync(IEnumerable<T> t);
 
         Task<int> CountAsync();
+
+        Task<bool> ValidIdAsync(int id);
     }
 }

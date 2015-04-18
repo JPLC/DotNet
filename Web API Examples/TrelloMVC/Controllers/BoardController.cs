@@ -10,7 +10,10 @@ using TrelloMVC.ViewModelsConverters;
 namespace TrelloMVC.Controllers
 {
     /*[RequireHttps]*/
-    [Route("TrelloApp/Boards")]
+    [Route("Boards")]
+    /*TODO Controller ModelStateValidation 
+     * Search(Ajax Get), Paging Table(Paging Controls) and Sorting Table (Jquery) 
+      on Index View*/
     public class BoardController : Controller
     {
         #region Variables
@@ -20,14 +23,14 @@ namespace TrelloMVC.Controllers
         #region Constructors
         public BoardController(IBoardRepositoryFactory brf)
         {
-            _br = (BoardRepositorySQL) brf.GetBoardRepositorySQL();
+            _br = (BoardRepositorySQL)brf.GetBoardRepositorySQL();
         }
         #endregion
 
         #region Action Methods
         // GET: GetBoards
         [HttpGet]
-        [Route("GetBoards")]     
+        [Route("All")]
         [AllowAnonymous]
         public async Task<ActionResult> Index()
         {
@@ -35,9 +38,9 @@ namespace TrelloMVC.Controllers
             //return View(await db.Board.ToListAsync());
         }
 
-        // GET: Board/Details/5
+        // GET: Board/5
         [HttpGet]
-        [Route("GetBoard/{id:int}")]
+        [Route("Board/{id:int}")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -50,7 +53,7 @@ namespace TrelloMVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(board);
+            return View(VMConverters.ModelToViewModel(board));
         }
 
         // GET: Board/Create
@@ -67,16 +70,19 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Board/Create")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Name,Discription")] BoardsViewModel boardvm)
+        public async Task<ActionResult> Create([Bind(Include = "Name,Discription")] BoardViewModel boardvm)
         {
+            if (_br.HasRepeatedBoardName(boardvm.Id, boardvm.Name))
+            {
+                ModelState.AddModelError("Name", "Already exists a Board with the same name");
+            }
             if (ModelState.IsValid)
             {
                 //db.Board.Add(board);
                 //await db.SaveChangesAsync();
-                _br.Add(ViewModelsConverters.VMConverters.ViewModelToModel(boardvm));
+                _br.Add(VMConverters.ViewModelToModel(boardvm));
                 return RedirectToAction("Index");
             }
-
             return View(boardvm);
         }
 
@@ -89,13 +95,13 @@ namespace TrelloMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           // Board board = await db.Board.FindAsync(id);
+            // Board board = await db.Board.FindAsync(id);
             var board = _br.GetSingle(id.Value);
             if (board == null)
             {
                 return HttpNotFound();
             }
-            return View(board);
+            return View(VMConverters.ModelToViewModel(board));
         }
 
         // POST: Board/Edit/5
@@ -104,16 +110,25 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Board/Edit/{id:int}")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "BoardId,Name,Discription")] Board board)
+        public async Task<ActionResult> Edit(int id, [Bind(Include = "Name,Discription")] BoardViewModel boardvm)
         {
+            if (!_br.ValidId(id))
+            {
+                return HttpNotFound();
+            }
+            boardvm.Id = id;
+            if (_br.HasRepeatedBoardName(boardvm.Id, boardvm.Name))
+            {
+                ModelState.AddModelError("Name", "Already exists a Board with the same name");
+            }
             if (ModelState.IsValid)
             {
                 //db.Entry(board).State = EntityState.Modified;
                 //await db.SaveChangesAsync();
-                _br.Edit(board);
+                _br.Edit(VMConverters.ViewModelToModel(boardvm));
                 return RedirectToAction("Index");
             }
-            return View(board);
+            return View(boardvm);
         }
 
         // GET: Board/Delete/5
@@ -131,7 +146,7 @@ namespace TrelloMVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(board);
+            return View(VMConverters.ModelToViewModel(board));
         }
 
         // POST: Board/Delete/5
@@ -140,21 +155,21 @@ namespace TrelloMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-           /* Board board = await db.Board.FindAsync(id);
-            db.Board.Remove(board);
-            await db.SaveChangesAsync();*/         
+            /* Board board = await db.Board.FindAsync(id);
+             db.Board.Remove(board);
+             await db.SaveChangesAsync();*/
             _br.Delete(_br.GetSingle(id));
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("CheckBoardName")]
         public JsonResult CheckBoardName(string Name)
         {
-            var result = _br.HasRepeatedBoardName(Name);
+            var result = _br.HasRepeatedBoardName(id, Name);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        */
         #endregion
     }
 }

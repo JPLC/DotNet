@@ -1,4 +1,4 @@
-﻿@model TrelloModel.Board
+﻿@model  TrelloMVC.ViewModels.BoardViewModels.BoardViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -28,7 +28,7 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Board's Lists", "ListsOfBoard", "List", new { boardid = Model.BoardId }, new {@class = "btn btn-primary"})
-    @Html.ActionLink("Edit", "Edit", new {id = Model.BoardId}, new {@class = "btn btn-warning"})
+    @Html.ActionLink("Board's Lists", "ListsOfBoard", "List", new { boardid = Model.Id }, new {@class = "btn btn-primary"})
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
     @Html.ActionLink("Back to AllBoards", "Index", null, new {@class = "btn btn-primary"})
 </p>

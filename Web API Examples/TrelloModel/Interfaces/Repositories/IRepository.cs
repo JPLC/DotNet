@@ -27,5 +27,7 @@ namespace TrelloModel.Interfaces.Repositories
         void EditRange(IEnumerable<T> t);
 
         int Count();
+
+        bool ValidId(int id);
     }
 }

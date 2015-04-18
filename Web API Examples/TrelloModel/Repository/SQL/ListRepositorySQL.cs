@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -184,11 +185,29 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<int> CountAsync()
+        public async Task<int> CountAsync()
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.CountAsync();
+            }
         }
 
+        public bool ValidId(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.List.Any(l => l.ListId == id);
+            }
+        }
+
+        public async Task<bool> ValidIdAsync(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.AnyAsync(l => l.ListId == id);
+            }
+        }
         #endregion
     }
 }

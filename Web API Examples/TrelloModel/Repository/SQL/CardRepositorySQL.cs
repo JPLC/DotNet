@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
@@ -213,6 +214,21 @@ namespace TrelloModel.Repository.SQL
             throw new NotImplementedException();
         }
 
+        public bool ValidId(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Any(c => c.CardId == id);
+            }
+        }
+
+        public async Task<bool> ValidIdAsync(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Card.AnyAsync(c =>c.CardId  == id);
+            }
+        }
         #endregion
     }
 }

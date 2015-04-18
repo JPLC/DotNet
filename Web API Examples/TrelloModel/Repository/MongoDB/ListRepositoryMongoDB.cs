@@ -69,6 +69,11 @@ namespace TrelloModel.Repository.MongoDB
             throw new NotImplementedException();
         }
 
+        public bool ValidId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<List> GetListsOfBoard(int boardId)
         {
             throw new NotImplementedException();

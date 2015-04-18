@@ -9,23 +9,23 @@ namespace TrelloMVC.ViewModelsConverters
 {
     public static class VMConverters
     {
-        #region BoardsViewModel
-        public static BoardsViewModel ModelToViewModel(Board board)
+        #region BoardViewModel
+        public static BoardViewModel ModelToViewModel(Board board)
         {
-            return new BoardsViewModel {Id = board.BoardId, Name = board.Name, Discription = board.Discription};
+            return new BoardViewModel {Id = board.BoardId, Name = board.Name, Discription = board.Discription};
         }
 
-        public static IEnumerable<BoardsViewModel> ModelsToViewModels(IEnumerable<Board> boards)
+        public static IEnumerable<BoardViewModel> ModelsToViewModels(IEnumerable<Board> boards)
         {
             return boards.Select(board => ModelToViewModel(board)).ToList();
         }
         
-        public static Board ViewModelToModel(BoardsViewModel boardvm)
+        public static Board ViewModelToModel(BoardViewModel boardvm)
         {
             return new Board { BoardId = boardvm.Id, Name = boardvm.Name, Discription = boardvm.Discription };
         }
 
-        public static IEnumerable<Board> ViewModelsToModels(IEnumerable<BoardsViewModel> boardsvms)
+        public static IEnumerable<Board> ViewModelsToModels(IEnumerable<BoardViewModel> boardsvms)
         {
             return boardsvms.Select(boardvm => ViewModelToModel(boardvm)).ToList();
         }

@@ -2,6 +2,6 @@
 {
     public interface IBoardRepository : IRepository<Board>
     {
-        bool HasRepeatedBoardName(string boardname);
+        bool HasRepeatedBoardName(int boardid, string boardname);
     }
 }

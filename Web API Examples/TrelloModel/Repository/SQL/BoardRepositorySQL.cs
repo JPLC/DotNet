@@ -213,19 +213,35 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public bool HasRepeatedBoardName(string boardname)
+        public bool HasRepeatedBoardName(int boardid, string boardname)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                return db.Board.Any(b => b.Name == boardname);
+                return db.Board.Any(b => b.Name == boardname && b.BoardId!=boardid);
             }
         }
 
-        public async Task<bool> HasRepeatedBoardNameAsync(string boardname)
+        public async Task<bool> HasRepeatedBoardNameAsync(int boardid, string boardname)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                return await db.Board.AnyAsync(b => b.Name == boardname);
+                return await db.Board.AnyAsync(b => b.Name == boardname && b.BoardId != boardid);
+            }
+        }
+
+        public bool ValidId(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Board.Any(b => b.BoardId == id);
+            }
+        }
+
+        public async Task<bool> ValidIdAsync(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.AnyAsync(b => b.BoardId == id);
             }
         }
         #endregion
