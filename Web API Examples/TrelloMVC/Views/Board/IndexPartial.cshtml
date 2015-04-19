@@ -1,0 +1,48 @@
+﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>
+@using PagedList.Mvc;
+@{
+    Layout = null;
+}
+<div class="panel panel-default">
+    <div class="panel-heading">All Boards</div>
+    <table class="table" id="BoardsTable">
+        <tr>
+            <th>
+                @Ajax.ActionLink("Name", "IndexPartial", new {isAjax = true, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }
+                                                    , new AjaxOptions { UpdateTargetId = "IndexPartialView", Url = Url.Action("IndexPartial", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }) })
+            </th>
+            <th>
+                @Html.ActionLink("Discription", "Index", new { isAjax = true, sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }
+                                  /*,new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "IndexPartialView", InsertionMode = InsertionMode.Replace }*/)
+            </th>
+            <th>
+                Operations
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Discription)
+                </td>
+                <td>
+                    <div role="group" aria-label="...">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning", @style = "margin: 5px;" })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", @style = "margin: 5px;" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "margin: 5px;" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+    <br />
+</div>
+
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("IndexPartial", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>

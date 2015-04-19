@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
@@ -21,7 +22,7 @@ namespace TrelloMVC.Controllers
         #region Variables and Properties
         private static BoardRepositorySQL _br;
         private const int PageSize = 5;
-        public IEnumerable<BoardViewModel> Boards { get; set; }
+        public static IEnumerable<BoardViewModel> Boards { get; set; }
         #endregion
 
         #region Constructors
@@ -36,7 +37,60 @@ namespace TrelloMVC.Controllers
         [HttpGet]
         [Route("All")]
         [AllowAnonymous]
-        public async Task<ActionResult> Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,bool isAjax=false)
+        {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Discription" ? "discription" : "Discription";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            IEnumerable<BoardViewModel> boards;
+            if (isAjax/*Request.IsAjaxRequest()*/)
+            {
+                boards = Boards;
+            }
+            else
+            {
+                boards = VMConverters.ModelsToViewModels(_br.GetAll());
+                Boards = boards;
+            }
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                boards = boards.Where(b => b.Name.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    boards = boards.OrderByDescending(b => b.Name);
+                    break;
+                case "Discription":
+                    boards = boards.OrderBy(b => b.Discription);
+                    break;
+                default: // Name ascending 
+                    boards = boards.OrderBy(b => b.Name);
+                    break;
+            }
+            int pageNumber = (page ?? 1);
+            if (isAjax/*Request.IsAjaxRequest()*/)
+            {
+                return PartialView("IndexPartial",boards.ToPagedList(pageNumber, PageSize));
+            }
+            return View(boards.ToPagedList(pageNumber, PageSize));
+        }
+
+        [HttpGet]
+        [Route("AllPartial")]
+        [AllowAnonymous]
+        public ActionResult IndexPartial(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
@@ -53,11 +107,10 @@ namespace TrelloMVC.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var boards = VMConverters.ModelsToViewModels(_br.GetAll());
-            Boards = boards;
+            var boards = Boards;
             if (!String.IsNullOrEmpty(searchString))
             {
-                boards = boards.Where(b =>b.Name.Contains(searchString));
+                boards = boards.Where(b => b.Name.Contains(searchString));
             }
             switch (sortOrder)
             {
@@ -70,9 +123,9 @@ namespace TrelloMVC.Controllers
                 default:  // Name ascending 
                     boards = boards.OrderBy(b => b.Name);
                     break;
-            }       
-            int pageNumber = (page ?? 1);
-            return View(boards.ToPagedList(pageNumber, PageSize));
+            }
+            var pageNumber = (page ?? 1);
+            return PartialView("IndexPartial", boards.ToPagedList(pageNumber, PageSize));
         }
 
         // GET: Board/Details/5
@@ -151,7 +204,7 @@ namespace TrelloMVC.Controllers
             {
                 ModelState.AddModelError("Name", BoardResources.BoardNameAlreadyExists);
             }
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
                 return View(boardvm);
             _br.Edit(VMConverters.ViewModelToModel(boardvm));
             return RedirectToAction("Index");

@@ -9,3 +9,4 @@
 /// <reference path="TwitterBootstrapMvcJs.js" />
 /// <reference path="jquery.tablesorter.pager.js" />
 /// <reference path="jquery.tablesorter.min.js" />
+/// <reference path="jquery.unobtrusive-ajax.min.js" />
