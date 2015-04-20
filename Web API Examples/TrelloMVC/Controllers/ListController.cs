@@ -27,13 +27,13 @@ namespace TrelloMVC.Controllers
 
         #region Action Methods
         // GET: List
-       /* public ActionResult Index()
-        {
-            var list = _lr.GetAll();
-            return View(list);
-        }*/
+        /* public ActionResult Index()
+         {
+             var list = _lr.GetAll();
+             return View(list);
+         }*/
         [Route("All")]
-        public ActionResult ListsOfBoard(int ? boardid ,string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult ListsOfBoard(int? boardid, string sortOrder, string currentFilter, string searchString, int? page)
         {
             if (boardid == null)
             {
@@ -79,12 +79,12 @@ namespace TrelloMVC.Controllers
             }
             int pageNumber = (page ?? 1);
 
-            return View("Index",(lists.ToPagedList(pageNumber, PageSize)));
+            return View("Index", (lists.ToPagedList(pageNumber, PageSize)));
         }
 
         // GET: List/Details/5
         [Route("Details/{id:int}")]
-        public ActionResult Details(int ? boardid, int? id)
+        public ActionResult Details(int? boardid, int? id)
         {
             if (boardid == null || id == null)
             {
@@ -132,7 +132,7 @@ namespace TrelloMVC.Controllers
         [Route("Edit/{id:int}")]
         public ActionResult Edit(int? boardid, int? id)
         {
-            if (boardid==null ||id == null)
+            if (boardid == null || id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -159,7 +159,7 @@ namespace TrelloMVC.Controllers
             {
                 list.BoardId = _lr.GetSingle(list.ListId).BoardId;
                 _lr.Edit(list);
-                return RedirectToAction("Details", new {id = list.ListId});
+                return RedirectToAction("Details", new { id = list.ListId });
             }
             //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", list.BoardId);
             ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
@@ -190,7 +190,7 @@ namespace TrelloMVC.Controllers
         {
             var list = _lr.GetSingle(id);
             _lr.Delete(list);
-            return RedirectToAction("ListsOfBoard", new {boardid=list.BoardId});
+            return RedirectToAction("ListsOfBoard", new { boardid = list.BoardId });
         }
         #endregion
     }
