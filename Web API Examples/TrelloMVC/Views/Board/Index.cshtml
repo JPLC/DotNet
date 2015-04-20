@@ -12,7 +12,7 @@
 </div>
 
 <div style="padding: 7px 0px 7px 0px">
-    @using (@Ajax.BeginForm("IndexPartial", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter, searchString="" }, new AjaxOptions { UpdateTargetId = "IndexPartialView" }))
+    @using (@Html.BeginForm("Index", "Board", FormMethod.Get))
     {
         <p>
             Find by Board Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TrelloModel.List>
+﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.ListViewModels.ListViewModel>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -16,13 +18,13 @@
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Lix)
+                 @Html.ActionLink("Index", "ListsOfBoard", new {boardid=@ViewBag.BoardId, sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                 @Html.ActionLink("Name", "ListsOfBoard", new {boardid=@ViewBag.BoardId, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Board.Name)
+                Board Name
             </th>
             <th>
                 Operations
@@ -40,13 +42,13 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Board.Name)
+                        @Html.DisplayFor(modelItem => item.BoardName)
                     </td>
                     <td>
                         <div role="group" aria-label="...">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.ListId }, new { @class = "btn btn-warning", @style = "margin: 5px;" })
-                            @Html.ActionLink("Details", "Details", new { id = item.ListId }, new { @class = "btn btn-info", @style = "margin: 5px;" })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.ListId }, new { @class = "btn btn-danger", @style = "margin: 5px;" })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning", @style = "margin: 5px;" })
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", @style = "margin: 5px;" })
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "margin: 5px;" })
                         </div>
                     </td>
                 </tr>

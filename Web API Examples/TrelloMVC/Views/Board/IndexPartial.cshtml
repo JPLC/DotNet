@@ -1,25 +1,26 @@
 ﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>
 @using PagedList.Mvc;
-@{
-    Layout = null;
-}
+
+
 <div class="panel panel-default">
     <div class="panel-heading">All Boards</div>
-    <table class="table" id="BoardsTable">
-        <tr>
+    <table id="ItemTable" class="table">
+<thead>        
+ <tr>
+     <th>        
+         @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter}
+             /* , new AjaxOptions { UpdateTargetId = "IndexPartialView", Url = Url.Action("IndexPartial", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })}*/)
+     </th>
             <th>
-                @Ajax.ActionLink("Name", "IndexPartial", new {isAjax = true, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }
-                                                    , new AjaxOptions { UpdateTargetId = "IndexPartialView", Url = Url.Action("IndexPartial", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter }) })
-            </th>
-            <th>
-                @Html.ActionLink("Discription", "Index", new { isAjax = true, sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }
+                @Html.ActionLink("Discription", "Index", new {sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }
                                   /*,new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "IndexPartialView", InsertionMode = InsertionMode.Replace }*/)
             </th>
             <th>
                 Operations
             </th>
         </tr>
-
+        </thead>
+<tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -38,11 +39,12 @@
                 </td>
             </tr>
         }
+</tbody>
     </table>
     <br />
 </div>
 
 <div>
     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("IndexPartial", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>

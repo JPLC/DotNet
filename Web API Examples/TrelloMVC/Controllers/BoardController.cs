@@ -22,7 +22,6 @@ namespace TrelloMVC.Controllers
         #region Variables and Properties
         private static BoardRepositorySQL _br;
         private const int PageSize = 5;
-        public static IEnumerable<BoardViewModel> Boards { get; set; }
         #endregion
 
         #region Constructors
@@ -53,16 +52,9 @@ namespace TrelloMVC.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-            IEnumerable<BoardViewModel> boards;
-            if (isAjax/*Request.IsAjaxRequest()*/)
-            {
-                boards = Boards;
-            }
-            else
-            {
-                boards = VMConverters.ModelsToViewModels(_br.GetAll());
-                Boards = boards;
-            }
+            IEnumerable<BoardViewModel> boards = VMConverters.ModelsToViewModels(_br.GetAll());
+
+            //Boards = boards;
             if (!String.IsNullOrEmpty(searchString))
             {
                 boards = boards.Where(b => b.Name.Contains(searchString));
@@ -80,52 +72,7 @@ namespace TrelloMVC.Controllers
                     break;
             }
             int pageNumber = (page ?? 1);
-            if (isAjax/*Request.IsAjaxRequest()*/)
-            {
-                return PartialView("IndexPartial",boards.ToPagedList(pageNumber, PageSize));
-            }
             return View(boards.ToPagedList(pageNumber, PageSize));
-        }
-
-        [HttpGet]
-        [Route("AllPartial")]
-        [AllowAnonymous]
-        public ActionResult IndexPartial(string sortOrder, string currentFilter, string searchString, int? page)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Discription" ? "discription" : "Discription";
-
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
-
-            var boards = Boards;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                boards = boards.Where(b => b.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    boards = boards.OrderByDescending(b => b.Name);
-                    break;
-                case "Discription":
-                    boards = boards.OrderBy(b => b.Discription);
-                    break;
-                default:  // Name ascending 
-                    boards = boards.OrderBy(b => b.Name);
-                    break;
-            }
-            var pageNumber = (page ?? 1);
-            return PartialView("IndexPartial", boards.ToPagedList(pageNumber, PageSize));
         }
 
         // GET: Board/Details/5

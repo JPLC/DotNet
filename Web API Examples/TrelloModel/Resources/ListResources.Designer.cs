@@ -22,7 +22,7 @@ namespace TrelloModel.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ListResources {
+    public class ListResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace TrelloModel.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TrelloModel.Resources.ListResources", typeof(ListResources).Assembly);
@@ -51,7 +51,7 @@ namespace TrelloModel.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,9 +61,18 @@ namespace TrelloModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to List index is mandatory.
+        /// </summary>
+        public static string ListIndexMandatory {
+            get {
+                return ResourceManager.GetString("ListIndexMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List index must be a positive integer.
         /// </summary>
-        internal static string ListIndexNegative {
+        public static string ListIndexNegative {
             get {
                 return ResourceManager.GetString("ListIndexNegative", resourceCulture);
             }
@@ -72,7 +81,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is bigger than max value.
         /// </summary>
-        internal static string ListNameBiggerThanMaxValue {
+        public static string ListNameBiggerThanMaxValue {
             get {
                 return ResourceManager.GetString("ListNameBiggerThanMaxValue", resourceCulture);
             }
@@ -81,7 +90,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is mandatory.
         /// </summary>
-        internal static string ListNameIsEmpty {
+        public static string ListNameIsEmpty {
             get {
                 return ResourceManager.GetString("ListNameIsEmpty", resourceCulture);
             }
@@ -90,7 +99,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is mandatory.
         /// </summary>
-        internal static string ListNameIsNull {
+        public static string ListNameIsNull {
             get {
                 return ResourceManager.GetString("ListNameIsNull", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name has special characters.
         /// </summary>
-        internal static string ListNameSpecialChars {
+        public static string ListNameSpecialChars {
             get {
                 return ResourceManager.GetString("ListNameSpecialChars", resourceCulture);
             }

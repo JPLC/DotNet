@@ -218,6 +218,7 @@
     <Compile Include="Validations\Controllers\BoardControllerValidation.cs" />
     <Compile Include="ViewModels\Converters\VMConverters.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardViewModel.cs" />
+    <Compile Include="ViewModels\ListViewModels\ListViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +269,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery.tablesorter.js" />
     <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -341,7 +343,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Resources\" />
     <Folder Include="ViewModels\CardViewModel\" />
-    <Folder Include="ViewModels\ListViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

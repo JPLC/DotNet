@@ -2,6 +2,7 @@
 using System.Linq;
 using TrelloModel;
 using TrelloMVC.ViewModels.BoardViewModels;
+using TrelloMVC.ViewModels.ListViewModels;
 
 namespace TrelloMVC.ViewModels.Converters
 {
@@ -26,6 +27,28 @@ namespace TrelloMVC.ViewModels.Converters
         public static IEnumerable<Board> ViewModelsToModels(IEnumerable<BoardViewModel> boardsvms)
         {
             return boardsvms.Select(boardvm => ViewModelToModel(boardvm)).ToList();
+        }
+        #endregion
+
+        #region ListViewModel
+        public static ListViewModel ModelToViewModel(List list, string boardname)
+        {   
+            return new ListViewModel { Id = list.BoardId, Name = list.Name, Lix = list.Lix, BoardName = boardname};
+        }
+
+        public static IEnumerable<ListViewModel> ModelsToViewModels(IEnumerable<List> lists, string boardname)
+        {
+            return lists.Select(board => ModelToViewModel(board, boardname)).ToList();
+        }
+
+        public static List ViewModelToModel(ListViewModel listvm)
+        {
+            return new List { BoardId = listvm.Id, Name = listvm.Name, Lix = listvm.Lix };
+        }
+
+        public static IEnumerable<List> ViewModelsToModels(IEnumerable<ListViewModel> listvms)
+        {
+            return listvms.Select(boardvm => ViewModelToModel(boardvm)).ToList();
         }
         #endregion
     }

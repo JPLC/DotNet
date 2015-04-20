@@ -22,7 +22,7 @@ namespace TrelloModel.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CardResources {
+    public class CardResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace TrelloModel.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TrelloModel.Resources.CardResources", typeof(CardResources).Assembly);
@@ -51,7 +51,7 @@ namespace TrelloModel.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to DueDate must be after CreationDate.
         /// </summary>
-        internal static string CardCreationDateSuperiorToDueDate {
+        public static string CardCreationDateSuperiorToDueDate {
             get {
                 return ResourceManager.GetString("CardCreationDateSuperiorToDueDate", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Discription is mandatory.
         /// </summary>
-        internal static string CardDiscpriptionIsNull {
+        public static string CardDiscpriptionIsNull {
             get {
                 return ResourceManager.GetString("CardDiscpriptionIsNull", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Discription is bigger than max value.
         /// </summary>
-        internal static string CardDiscriptionBiggerThanMaxValue {
+        public static string CardDiscriptionBiggerThanMaxValue {
             get {
                 return ResourceManager.GetString("CardDiscriptionBiggerThanMaxValue", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Discription is mandatory.
         /// </summary>
-        internal static string CardDiscriptionIsEmpty {
+        public static string CardDiscriptionIsEmpty {
             get {
                 return ResourceManager.GetString("CardDiscriptionIsEmpty", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Discription has special characters.
         /// </summary>
-        internal static string CardDiscriptionSpecialChars {
+        public static string CardDiscriptionSpecialChars {
             get {
                 return ResourceManager.GetString("CardDiscriptionSpecialChars", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Card index must be a positive number.
         /// </summary>
-        internal static string CardIndexNegative {
+        public static string CardIndexNegative {
             get {
                 return ResourceManager.GetString("CardIndexNegative", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is bigger than max value.
         /// </summary>
-        internal static string CardNameBiggerThanMaxValue {
+        public static string CardNameBiggerThanMaxValue {
             get {
                 return ResourceManager.GetString("CardNameBiggerThanMaxValue", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is mandatory.
         /// </summary>
-        internal static string CardNameIsEmpty {
+        public static string CardNameIsEmpty {
             get {
                 return ResourceManager.GetString("CardNameIsEmpty", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name is mandatory.
         /// </summary>
-        internal static string CardNameIsNull {
+        public static string CardNameIsNull {
             get {
                 return ResourceManager.GetString("CardNameIsNull", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace TrelloModel.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Name has special characters.
         /// </summary>
-        internal static string CardNameSpecialChars {
+        public static string CardNameSpecialChars {
             get {
                 return ResourceManager.GetString("CardNameSpecialChars", resourceCulture);
             }

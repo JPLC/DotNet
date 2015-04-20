@@ -171,6 +171,14 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public string GetListBoardName(int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Board.Where(l => l.BoardId == boardId).Select(b=>b.Name).FirstOrDefault();
+            }
+        }
+
         public Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId)
         {
             throw new NotImplementedException();
