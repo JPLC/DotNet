@@ -130,9 +130,9 @@ namespace TrelloMVC.Controllers
 
         // GET: List/Edit/5
         [Route("Edit/{id:int}")]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? boardid, int? id)
         {
-            if (id == null)
+            if (boardid==null ||id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -151,6 +151,7 @@ namespace TrelloMVC.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Edit/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ListId,Lix,Name,BoardId")] List list)
         {
@@ -166,6 +167,7 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: List/Delete/5
+        [Route("Delete/{id:int}")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -182,6 +184,7 @@ namespace TrelloMVC.Controllers
 
         // POST: List/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("Delete/{id:int}")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
