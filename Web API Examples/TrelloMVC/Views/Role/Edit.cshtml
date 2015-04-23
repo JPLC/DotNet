@@ -5,7 +5,7 @@
 
 <h2>Edit Role</h2>
 
-@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+@Html.ActionLink("Roles List", "Index",null, new { @class = "btn btn-primary" }) @Html.ActionLink("Manage User Role", "ManageUserRoles", null, new { @class = "btn btn-primary" })
 <hr />
 @using (Html.BeginForm())
 {
@@ -18,5 +18,5 @@
     <p>
         @Html.TextBoxFor(model => model.Name)
     </p>
-    <input type="submit" value="Save" />
+    <input type="submit" value="Save" class="btn btn-warning"/>
 }

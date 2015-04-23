@@ -3,7 +3,7 @@
 }
 
 <h2>Create Role</h2>
-@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+@Html.ActionLink("List Roles", "Index", null, new { @class = "btn btn-primary" }) @Html.ActionLink("Manage User Role", "ManageUserRoles", null, new { @class = "btn btn-primary" })
 <hr />
 @using (Html.BeginForm())
 {
@@ -16,5 +16,5 @@
     <p>
         @Html.TextBox("RoleName")
     </p>
-    <input type="submit" value="Save" />
+    <input type="submit" value="Save" class="btn btn-success"/>
 }

@@ -5,17 +5,39 @@
 
 <h2>Roles Listing </h2>
 
-@Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+@Html.ActionLink("Create New Role", "Create", null, new { @class = "btn btn-danger" }) @Html.ActionLink("Manage User Role", "ManageUserRoles", null, new { @class = "btn btn-primary" })
 <hr />
-<div>
-    @foreach (var role in Model)
+
+<div class="panel panel-default">
+    <div class="panel-heading">All Boards</div>
+    <table id="RoleTable" class="table">
+<thead>        
+ <tr>
+     <th>        
+        Role Name
+     </th>
+
+            <th>
+                Operations
+            </th>
+        </tr>
+        </thead>
+<tbody>
+@foreach (var role in Model)
     {
-        <p>
-            <strong>@role.Name | </strong>
+        <tr>
+            <td>
+                @role.Name
+            </td>
+<td>
             <span onclick=" return confirm('Are you sure to delete?') ">
-                @Html.ActionLink("Delete", "Delete", new { roleName = @role.Name })
-            </span> |
-            @Html.ActionLink("Edit", "Edit", new { roleName = @role.Name })
-        </p>
+                @Html.ActionLink("Delete", "Delete", new {roleName = @role.Name}, new {@class = "btn btn-danger"})
+            </span>
+            @Html.ActionLink("Edit", "Edit", new {roleName = @role.Name}, new {@class = "btn btn-warning"})
+</td>
+        </tr>
     }
+</tbody>
+    </table>
+    <br />
 </div>

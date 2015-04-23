@@ -97,6 +97,7 @@
     <Compile Include="Interfaces\Repositories\IListRepositoryAsync.cs" />
     <Compile Include="Interfaces\Repositories\IRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryAsync.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ProcedureTest_Result.cs">
       <DependentUpon>TrelloModelDB.tt</DependentUpon>
     </Compile>
