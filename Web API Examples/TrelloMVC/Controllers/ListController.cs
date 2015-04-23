@@ -120,11 +120,15 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Create")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Lix,Name")] ListViewModel listvm)
+        public ActionResult Create(int? boardid,[Bind(Include = "Lix,Name")] ListViewModel listvm)
         {
+            if (boardid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             if (ModelState.IsValid)
             {
-                var list = 
+                var list = VMConverters.ViewModelToModel(listvm, boardid.Value);
                 _lr.Add(list);
                 return RedirectToAction("Details", new { id = listvm.Id });
             }

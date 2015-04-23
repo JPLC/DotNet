@@ -46,7 +46,7 @@ namespace TrelloMVC.ViewModels.Converters
             return new List { ListId= listvm.Id, Name = listvm.Name, Lix = listvm.Lix, BoardId = boardid};
         }
 
-        public static IEnumerable<List> ViewModelsToModels(IEnumerable<ListViewModel> listvms,, int boardid)
+        public static IEnumerable<List> ViewModelsToModels(IEnumerable<ListViewModel> listvms, int boardid)
         {
             return listvms.Select(boardvm => ViewModelToModel(boardvm, boardid)).ToList();
         }
