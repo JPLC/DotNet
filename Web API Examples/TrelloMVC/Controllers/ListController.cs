@@ -7,6 +7,7 @@ using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
 using TrelloMVC.ViewModels.Converters;
+using TrelloMVC.ViewModels.ListViewModels;
 
 namespace TrelloMVC.Controllers
 {
@@ -92,11 +93,13 @@ namespace TrelloMVC.Controllers
             }
             //List list = db.List.Find(id);
             var list = _lr.GetSingle(id.Value);
+            ViewBag.BoardId = boardid.Value;
+            var boardname = _lr.GetListBoardName(boardid.Value);
             if (list == null)
             {
                 return HttpNotFound();
             }
-            return View(list);
+            return View(VMConverters.ModelToViewModel(list,boardname));
         }
 
         // GET: List/Create
@@ -117,12 +120,13 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Create")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ListId,Lix,Name,BoardId")] List list)
+        public ActionResult Create([Bind(Include = "Lix,Name")] ListViewModel listvm)
         {
             if (ModelState.IsValid)
             {
+                var list = 
                 _lr.Add(list);
-                return RedirectToAction("Details", new { id = list.ListId });
+                return RedirectToAction("Details", new { id = listvm.Id });
             }
             //ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
             return RedirectToAction("ListsOfBoard");
@@ -144,7 +148,8 @@ namespace TrelloMVC.Controllers
             }
             //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", list.BoardId);
             ViewBag.BoardId = list.BoardId;
-            return View(list);
+            var boardname = _lr.GetListBoardName(boardid.Value);
+            return View(VMConverters.ModelToViewModel(list, boardname));
         }
 
         // POST: List/Edit/5
@@ -153,17 +158,22 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Edit/{id:int}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ListId,Lix,Name,BoardId")] List list)
+        public ActionResult Edit(int? boardid, int? id, [Bind(Include = "Lix,Name")] ListViewModel listvm)
         {
+            if (boardid == null || id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             if (ModelState.IsValid)
             {
-                list.BoardId = _lr.GetSingle(list.ListId).BoardId;
+                //list.BoardId = _lr.GetSingle(list.ListId).BoardId;
+                var list = VMConverters.ViewModelToModel(listvm, boardid.Value);
                 _lr.Edit(list);
                 return RedirectToAction("Details", new { id = list.ListId });
             }
             //ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", list.BoardId);
-            ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
-            return View(list);
+            ViewBag.BoardId = boardid.Value;
+            return View(listvm);
         }
 
         // GET: List/Delete/5

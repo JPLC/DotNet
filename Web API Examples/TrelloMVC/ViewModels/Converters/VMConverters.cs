@@ -41,14 +41,14 @@ namespace TrelloMVC.ViewModels.Converters
             return lists.Select(board => ModelToViewModel(board, boardname)).ToList();
         }
 
-        public static List ViewModelToModel(ListViewModel listvm)
+        public static List ViewModelToModel(ListViewModel listvm, int boardid)
         {
-            return new List { BoardId = listvm.Id, Name = listvm.Name, Lix = listvm.Lix };
+            return new List { ListId= listvm.Id, Name = listvm.Name, Lix = listvm.Lix, BoardId = boardid};
         }
 
-        public static IEnumerable<List> ViewModelsToModels(IEnumerable<ListViewModel> listvms)
+        public static IEnumerable<List> ViewModelsToModels(IEnumerable<ListViewModel> listvms,, int boardid)
         {
-            return listvms.Select(boardvm => ViewModelToModel(boardvm)).ToList();
+            return listvms.Select(boardvm => ViewModelToModel(boardvm, boardid)).ToList();
         }
         #endregion
     }

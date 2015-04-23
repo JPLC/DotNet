@@ -1,4 +1,4 @@
-﻿@model TrelloModel.List
+﻿@model TrelloMVC.ViewModels.ListViewModels.ListViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -26,16 +26,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Board.Name)
+            @Html.DisplayNameFor(model => model.BoardName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Board.Name)
+            @Html.DisplayFor(model => model.BoardName)
         </dd>
 
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ListId }, new { @class = "btn btn-warning"})
-    @Html.ActionLink("Back to List", "ListsOfBoard", new { boardid = Model.BoardId }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning"})
+    @Html.ActionLink("Back to List", "ListsOfBoard", new { boardid = ViewBag.BoardId }, new { @class = "btn btn-primary"})
 </div>
