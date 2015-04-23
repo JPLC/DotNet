@@ -171,6 +171,14 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public async Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.Where(l => l.BoardId == boardId).ToListAsync();
+            }
+        }
+
         public string GetListBoardName(int boardId)
         {
             using (var db = new TrelloModelDBContainer())
@@ -179,9 +187,12 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId)
+        public async Task<string> GetListBoardNameAsync(int boardId)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.Where(l => l.BoardId == boardId).Select(b => b.Name).FirstOrDefaultAsync();
+            }
         }
 
         public int Count()

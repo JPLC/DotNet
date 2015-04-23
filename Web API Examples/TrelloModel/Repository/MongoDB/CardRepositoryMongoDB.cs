@@ -83,6 +83,12 @@ namespace TrelloModel.Repository.MongoDB
         {
             throw new NotImplementedException();
         }
+
+        public string GetCardListName(int listId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

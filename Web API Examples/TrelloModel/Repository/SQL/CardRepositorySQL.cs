@@ -230,5 +230,21 @@ namespace TrelloModel.Repository.SQL
             }
         }
         #endregion
+
+        public string GetCardListName(int listId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.List.Where(l => l.ListId == listId).Select(b => b.Name).FirstOrDefault();
+            }
+        }
+
+        public async Task<string> GetCardListNameAsync(int listId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.Where(l => l.ListId == listId).Select(b => b.Name).FirstOrDefaultAsync();
+            }
+        }
     }
 }

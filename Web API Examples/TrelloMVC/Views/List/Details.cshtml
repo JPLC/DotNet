@@ -36,6 +36,7 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning"})
-    @Html.ActionLink("Back to List", "ListsOfBoard", new { boardid = ViewBag.BoardId }, new { @class = "btn btn-primary"})
+    @Html.ActionLink("Board's Cards", "CardsOfList", "Card", new {boardid = ViewBag.BoardId, listid = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Id}, new {@class = "btn btn-warning"})
+    @Html.ActionLink("Back to List", "ListsOfBoard", new {boardid = ViewBag.BoardId}, new {@class = "btn btn-primary"})
 </div>

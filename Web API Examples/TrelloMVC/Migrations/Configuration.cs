@@ -19,13 +19,13 @@ namespace TrelloMVC.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            var passwordHash = new PasswordHasher();
+            /*var passwordHash = new PasswordHasher();
               context.Users.AddOrUpdate(
                   new ApplicationUser { UserName = "JPLC",  PasswordHash = passwordHash.HashPassword("jplc1989!") },
                   new ApplicationUser { UserName = "Caetano",    PasswordHash = passwordHash.HashPassword("jplc1989!") },
                   new ApplicationUser { UserName = "Pedro",  PasswordHash = passwordHash.HashPassword("jplc1989!") },
                   new ApplicationUser { UserName = "Maria",  PasswordHash = passwordHash.HashPassword("jplc1989!") }
-                );
+                );*/
             //
         }
     }

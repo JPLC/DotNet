@@ -92,12 +92,12 @@ namespace TrelloMVC.Controllers
             }
             //List list = db.List.Find(id);
             var list = _lr.GetSingle(id.Value);
-            ViewBag.BoardId = boardid.Value;
-            var boardname = _lr.GetListBoardName(boardid.Value);
             if (list == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.BoardId = boardid.Value;
+            var boardname = _lr.GetListBoardName(boardid.Value);
             return View(VMConverters.ModelToViewModel(list,boardname));
         }
 

@@ -152,6 +152,10 @@
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -223,6 +227,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\Attributes\MaxWordsAttribute.cs" />
     <Compile Include="Validations\Controllers\BoardControllerValidation.cs" />
+    <Compile Include="ViewModels\CardViewModels\CardViewModels.cs" />
     <Compile Include="ViewModels\Converters\VMConverters.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\ListViewModels\ListViewModel.cs" />
@@ -267,6 +272,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="EF CF Commands.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -363,7 +369,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Resources\" />
-    <Folder Include="ViewModels\CardViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -8,5 +8,7 @@ namespace TrelloModel.Interfaces.Repositories
         Task<IEnumerable<Card>> GetCardsOfBoardAsync(int boardId);
 
         Task<IEnumerable<Card>> GetCardsOfListAsync(int listId);
+
+        Task<string> GetCardListNameAsync(int listId);
     }
 }

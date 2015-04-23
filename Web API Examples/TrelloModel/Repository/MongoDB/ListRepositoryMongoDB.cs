@@ -78,6 +78,12 @@ namespace TrelloModel.Repository.MongoDB
         {
             throw new NotImplementedException();
         }
+
+        public string GetListBoardName(int boardId)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

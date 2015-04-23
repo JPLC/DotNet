@@ -7,5 +7,7 @@ namespace TrelloModel.Interfaces.Repositories
         IEnumerable<Card> GetCardsOfBoard(int boardId);
 
         IEnumerable<Card> GetCardsOfList(int listId);
+
+        string GetCardListName(int listId);
     }
 }

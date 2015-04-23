@@ -7,18 +7,23 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
+using TrelloMVC.ViewModels.CardViewModels;
+using TrelloMVC.ViewModels.Converters;
 
 namespace TrelloMVC.Controllers
 {
+    [RoutePrefix("Board/{boardid:int}/List/{listid:int}/Card")]
     public class CardController : Controller
     {
         private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
         
         #region Variables
         private static CardRepositorySQL _cr;
+        private const int PageSize = 5;
         #endregion
 
         #region Constructor
@@ -29,56 +34,114 @@ namespace TrelloMVC.Controllers
         #endregion
 
         #region Action Methods
-        // GET: Card
-        public async Task<ActionResult> Index()
-        {
-            var card = db.Card.Include(c => c.Board).Include(c => c.List);
-            return View(await card.ToListAsync());
-        }
 
-        // GET: Card/Details/5
-        public async Task<ActionResult> Details(int? id)
+        // GET: Card
+        [Route("All")]
+        /*TODO Finishing pagination*/
+        public async Task<ActionResult> CardsOfList(int? boardid, int? listid, string sortOrder, string currentFilter, string searchString, int? page)
         {
-            if (id == null)
+            if (boardid == null || listid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Card card = await db.Card.FindAsync(id);
+            var listname = _cr.GetCardListName(listid.Value);
+            var cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfList(listid.Value), listname);
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Cix" ? "cix" : "Cix";
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cards = cards.Where(b => b.Name.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    cards = cards.OrderByDescending(b => b.Name);
+                    break;
+                case "Cix":
+                    cards = cards.OrderBy(b => b.Cix);
+                    break;
+                case "cix":
+                    cards = cards.OrderByDescending(b => b.Cix);
+                    break;
+                default: // Name ascending 
+                    cards = cards.OrderBy(b => b.Name);
+                    break;
+            }
+            int pageNumber = (page ?? 1);
+
+            return View("Index", (cards.ToPagedList(pageNumber, PageSize)));
+        }
+
+        // GET: Card/Details/5
+        [Route("Details/{id:int}")]
+        public async Task<ActionResult> Details(int? boardid, int? listid, int? id)
+        {
+            if (boardid == null || listid == null || id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var card = _cr.GetSingle(id.Value);
             if (card == null)
             {
                 return HttpNotFound();
             }
-            return View(card);
+            var listname = _cr.GetCardListName(listid.Value);
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
+            return View(VMConverters.ModelToViewModel(card, listname));
         }
 
         // GET: Card/Create
-        public ActionResult Create()
+        [Route("Create")]
+        public ActionResult Create(int? boardid, int? listid)
         {
-            ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name");
-            ViewBag.ListId = new SelectList(db.List, "ListId", "Name");
+            if (boardid == null || listid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
             return View();
         }
 
         // POST: Card/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "CardId,Cix,Name,Discription,CreationDate,DueDate,BoardId,ListId")] Card card)
+        public async Task<ActionResult> Create(int? boardid, int? listid, [Bind(Include = "Name,Discription,DueDate")] CardViewModel cardvm)
         {
+            if (boardid == null || listid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             if (ModelState.IsValid)
             {
-                db.Card.Add(card);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                _cr.Add(VMConverters.ViewModelToModel(cardvm, boardid.Value, listid.Value));
+                return RedirectToAction("CardsOfList");
             }
 
-            ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", card.BoardId);
-            ViewBag.ListId = new SelectList(db.List, "ListId", "Name", card.ListId);
-            return View(card);
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
+            return View(cardvm);
         }
 
         // GET: Card/Edit/5
+        [Route("Edit/{id:int}")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,9 +159,8 @@ namespace TrelloMVC.Controllers
         }
 
         // POST: Card/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("Edit/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "CardId,Cix,Name,Discription,CreationDate,DueDate,BoardId,ListId")] Card card)
         {
@@ -106,7 +168,7 @@ namespace TrelloMVC.Controllers
             {
                 db.Entry(card).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("CardsOfList");
             }
             ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", card.BoardId);
             ViewBag.ListId = new SelectList(db.List, "ListId", "Name", card.ListId);
@@ -114,13 +176,14 @@ namespace TrelloMVC.Controllers
         }
 
         // GET: Card/Delete/5
+        [Route("Delete/{id:int}")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Card card = await db.Card.FindAsync(id);
+            var card = _cr.GetSingle(id.Value);
             if (card == null)
             {
                 return HttpNotFound();
@@ -130,22 +193,12 @@ namespace TrelloMVC.Controllers
 
         // POST: Card/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("Delete/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Card card = await db.Card.FindAsync(id);
-            db.Card.Remove(card);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            _cr.Delete(_cr.GetSingle(id));
+            return RedirectToAction("CardsOfList");
         }
         #endregion
     }

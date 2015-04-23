@@ -1,4 +1,4 @@
-﻿@model TrelloModel.Card
+﻿@model TrelloMVC.ViewModels.CardViewModels.CardViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -50,25 +50,25 @@
             @Html.DisplayFor(model => model.DueDate)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Board.Name)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Board.Name)
-        </dd>
+        </dd>*@
 
         <dt>
-            @Html.DisplayNameFor(model => model.List.Name)
+            @Html.DisplayNameFor(model => model.ListName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.List.Name)
+            @Html.DisplayFor(model => model.ListName)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CardId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new {@class = "btn btn-warning"})
+    @Html.ActionLink("Back to List", "CardsOfList", new { boardid = ViewBag.BoardId, listid = ViewBag.ListId }, new { @class = "btn btn-primary" })
 </p>

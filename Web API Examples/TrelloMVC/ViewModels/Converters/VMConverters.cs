@@ -3,6 +3,7 @@ using System.Linq;
 using TrelloModel;
 using TrelloMVC.ViewModels.BoardViewModels;
 using TrelloMVC.ViewModels.ListViewModels;
+using TrelloMVC.ViewModels.CardViewModels;
 
 namespace TrelloMVC.ViewModels.Converters
 {
@@ -49,6 +50,30 @@ namespace TrelloMVC.ViewModels.Converters
         public static IEnumerable<List> ViewModelsToModels(IEnumerable<ListViewModel> listvms, int boardid)
         {
             return listvms.Select(boardvm => ViewModelToModel(boardvm, boardid)).ToList();
+        }
+        #endregion
+
+        #region CardViewModel
+        public static CardViewModel ModelToViewModel(Card card, string listname)
+        {
+            return new CardViewModel { Id = card.CardId, Name = card.Name, Cix = card.Cix, Discription=card.Discription,
+                                       CreationDate = card.CreationDate,  DueDate = card.DueDate, ListName = listname };
+        }
+
+        public static IEnumerable<CardViewModel> ModelsToViewModels(IEnumerable<Card> cards, string listname)
+        {
+            return cards.Select(board => ModelToViewModel(board, listname)).ToList();
+        }
+
+        public static Card ViewModelToModel(CardViewModel cardvm, int boardid, int listid)
+        {
+            return new Card { CardId = cardvm.Id, Name = cardvm.Name, Cix = cardvm.Cix, Discription = cardvm.Discription,
+                              DueDate = cardvm.DueDate, BoardId = boardid, ListId = listid };
+        }
+
+        public static IEnumerable<Card> ViewModelsToModels(IEnumerable<CardViewModel> listvms, int boardid, int listid)
+        {
+            return listvms.Select(boardvm => ViewModelToModel(boardvm, boardid, listid)).ToList();
         }
         #endregion
     }
