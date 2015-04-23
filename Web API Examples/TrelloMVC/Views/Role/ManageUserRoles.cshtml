@@ -3,7 +3,7 @@
 }
 
 <h2>Manage User Roles</h2>
-@Html.ActionLink("Create New Role", "Create") | @Html.ActionLink("Manage User Role", "ManageUserRoles")
+@Html.ActionLink("Create New Role", "Create", null,  new {@class = "btn btn-danger"})
 <hr />
 
 <h2>Role Add to User</h2>
@@ -13,13 +13,12 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <p>
-        Username : @Html.TextBox("UserName")
-        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
+    <div>
+       <p>Username : @Html.DropDownList("Username", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...")</p> 
+       <p>Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")</p> 
+    </div>
 
-    </p>
-
-    <input type="submit" value="Save" />
+    <input type="submit" value="Save" class = "btn btn-warning"/>
 }
 <hr />
 <h3>Get Roles for a User</h3>
@@ -27,8 +26,8 @@
 {
     @Html.AntiForgeryToken()
     <p>
-        Username : @Html.TextBox("UserName")
-        <input type="submit" value="Get Roles for this User" />
+        Username : @Html.DropDownList("Username", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...")
+        <input type="submit" value="Get Roles for this User" class = "btn btn-success" />
     </p>
 }
 
@@ -52,12 +51,10 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
     <p>
-        Username : @Html.TextBox("UserName")
+        Username : @Html.DropDownList("Username", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...")
         Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
-
     </p>
 
-    <input type="submit" value="Delete this user from Role" />
+    <input type="submit" value="Delete this user from Role" class = "btn btn-danger" />
 }

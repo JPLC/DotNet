@@ -146,6 +146,7 @@ namespace TrelloMVC.Controllers
         {
             var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
+            ViewBag.Users = _context.Users.OrderBy(r => r.UserName).ToList().Select(rr => new SelectListItem { Value = rr.UserName.ToString(), Text = rr.UserName }).ToList();
             return View();
         }
 
@@ -164,7 +165,7 @@ namespace TrelloMVC.Controllers
             // prepopulat roles for the view dropdown
             var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
-
+            ViewBag.Users = _context.Users.OrderBy(r => r.UserName).ToList().Select(rr => new SelectListItem { Value = rr.UserName.ToString(), Text = rr.UserName }).ToList();
             return View("ManageUserRoles");
         }
 
@@ -182,6 +183,7 @@ namespace TrelloMVC.Controllers
                     ViewBag.RolesForThisUser = UserManager.GetRoles(user.Id);
 
                 // prepopulat roles for the view dropdown
+                ViewBag.Users = _context.Users.OrderBy(r => r.UserName).ToList().Select(rr => new SelectListItem { Value = rr.UserName.ToString(), Text = rr.UserName }).ToList();
                 var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
                 ViewBag.Roles = list;
             }
@@ -209,7 +211,7 @@ namespace TrelloMVC.Controllers
             // prepopulat roles for the view dropdown
             var list = _context.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
-
+            ViewBag.Users = _context.Users.OrderBy(r => r.UserName).ToList().Select(rr => new SelectListItem { Value = rr.UserName.ToString(), Text = rr.UserName }).ToList();
             return View("ManageUserRoles");
         }
         #endregion
