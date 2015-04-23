@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using PagedList;
-using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
 using TrelloMVC.ViewModels.Converters;
