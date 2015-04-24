@@ -45,16 +45,13 @@ namespace TrelloMVC
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            //app.UseGoogleAuthentication();
-
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
-
-            /*app.UseTwitterAuthentication(
-              consumerKey: "",
-               consumerSecret: "");*/
+            /*app.UseMicrosoftAccountAuthentication(
+               clientId: "",
+               clientSecret: "");
+            */
+            app.UseTwitterAuthentication(
+              consumerKey: "3TynVLjQJJCK4YPqDdW2ESQc9",
+               consumerSecret: "aNz2yxk45bsBYdsxSsY1pjmlPxiKpNbwHUB5CUJJiycpZISMuQ");
 
             app.UseFacebookAuthentication(
                appId: "412994742216810",
