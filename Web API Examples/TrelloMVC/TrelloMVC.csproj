@@ -304,6 +304,7 @@
     <Content Include="Content\zocial-regular-webfont.eot" />
     <Content Include="Content\zocial-regular-webfont.ttf" />
     <Content Include="Content\zocial-regular-webfont.woff" />
+    <None Include="Properties\PublishProfiles\TrelloMVC.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="Scripts\bootstrap.js" />
