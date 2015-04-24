@@ -27,7 +27,7 @@ namespace TrelloModelTests
         #endregion
 
         #region Test Methods
-        //TODO MAae async tests and Improve Failed Scenarios
+        //TODO Make async tests and Improve Failed Scenarios
         #region Invalid Assert
         [TestMethod]
         public void TestAddInvalidListNullAsync()
