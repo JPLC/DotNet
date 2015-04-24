@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Entity;
 using System.Diagnostics;
-using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -31,7 +28,7 @@ namespace TrelloMVC
         {
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
-            myMessage.From = new System.Net.Mail.MailAddress(
+            myMessage.From = new MailAddress(
                                 "TrelloMVCApp@outlook.com", "Joao C.");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
