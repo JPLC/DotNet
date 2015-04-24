@@ -1,4 +1,4 @@
-﻿@model TrelloModel.Card
+﻿@model TrelloMVC.ViewModels.CardViewModels.CardViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -51,20 +51,20 @@
             @Html.DisplayFor(model => model.DueDate)
         </dd>
 
-        <dt>
+@*        <dt>
             @Html.DisplayNameFor(model => model.Board.Name)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Board.Name)
-        </dd>
+        </dd>*@
 
         <dt>
-            @Html.DisplayNameFor(model => model.List.Name)
+            @Html.DisplayNameFor(model => model.ListName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.List.Name)
+            @Html.DisplayFor(model => model.ListName)
         </dd>
 
     </dl>
@@ -73,8 +73,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            @Html.ActionLink("Back to Cards", "CardsOfList", new { boardid = ViewBag.BoardId, listid = ViewBag.ListId }, new { @class = "btn btn-primary" })
         </div>
     }
 </div>

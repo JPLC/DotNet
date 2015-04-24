@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using PagedList;
 using TrelloModel;
@@ -19,8 +15,6 @@ namespace TrelloMVC.Controllers
     [RoutePrefix("Board/{boardid:int}/List/{listid:int}/Card")]
     public class CardController : Controller
     {
-        private TrelloModelDBContainer db;// = new TrelloModelDBContainer();
-        
         #region Variables
         private static CardRepositorySQL _cr;
         private const int PageSize = 5;
@@ -29,7 +23,7 @@ namespace TrelloMVC.Controllers
         #region Constructor
         public CardController(ICardRepositoryFactory listRepository)
         {
-            _cr = (CardRepositorySQL) listRepository.GetCardRepositorySQL();
+            _cr = (CardRepositorySQL)listRepository.GetCardRepositorySQL();
         }
         #endregion
 
@@ -142,44 +136,9 @@ namespace TrelloMVC.Controllers
 
         // GET: Card/Edit/5
         [Route("Edit/{id:int}")]
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? boardid, int? listid, int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Card card = await db.Card.FindAsync(id);
-            if (card == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", card.BoardId);
-            ViewBag.ListId = new SelectList(db.List, "ListId", "Name", card.ListId);
-            return View(card);
-        }
-
-        // POST: Card/Edit/5
-        [HttpPost]
-        [Route("Edit/{id:int}")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "CardId,Cix,Name,Discription,CreationDate,DueDate,BoardId,ListId")] Card card)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(card).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("CardsOfList");
-            }
-            ViewBag.BoardId = new SelectList(db.Board, "BoardId", "Name", card.BoardId);
-            ViewBag.ListId = new SelectList(db.List, "ListId", "Name", card.ListId);
-            return View(card);
-        }
-
-        // GET: Card/Delete/5
-        [Route("Delete/{id:int}")]
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
+            if (boardid == null || listid == null || id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -188,7 +147,47 @@ namespace TrelloMVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(card);
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
+            var listname = _cr.GetCardListName(listid.Value);
+            return View(VMConverters.ModelToViewModel(card, listname));
+        }
+
+        // POST: Card/Edit/5
+        [HttpPost]
+        [Route("Edit/{id:int}")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int? boardid, int? listid, [Bind(Include = "Cix,Name,Discription,DueDate")] CardViewModel cardvm)
+        {
+            if (boardid == null || listid == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            if (ModelState.IsValid)
+            {
+                _cr.Edit(VMConverters.ViewModelToModel(cardvm, boardid.Value, listid.Value));
+                return RedirectToAction("CardsOfList");
+            }
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
+            return View(cardvm);
+        }
+
+        // GET: Card/Delete/5
+        [Route("Delete/{id:int}")]
+        public async Task<ActionResult> Delete(int? boardid, int? listid, int? id)
+        {
+            if (boardid == null || listid == null || id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var card = _cr.GetSingle(id.Value);
+            if (card == null)
+            {
+                return HttpNotFound();
+            }
+            var listname = _cr.GetCardListName(listid.Value);
+            return View(VMConverters.ModelToViewModel(card, listname));
         }
 
         // POST: Card/Delete/5
