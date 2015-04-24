@@ -9,6 +9,7 @@ namespace TrelloMVC.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "TrelloMVC.Models.ApplicationDbContext";
         }
 
