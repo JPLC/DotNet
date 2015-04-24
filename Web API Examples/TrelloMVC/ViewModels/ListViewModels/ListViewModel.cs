@@ -16,7 +16,7 @@ namespace TrelloMVC.ViewModels.ListViewModels
         [Display(Name = "List Name", Order = 15001)]
         [Required(ErrorMessageResourceType = typeof(ListResources), ErrorMessageResourceName = "ListNameIsEmpty")]
         [RegularExpression(TrelloRegularExpressions.BoardNameRegex, ErrorMessageResourceType = typeof(ListResources), ErrorMessageResourceName = "ListNameSpecialChars")]
-        [StringLength(TrelloSizeConstants.BoardNameSize, MinimumLength = 4, ErrorMessageResourceType = typeof(ListResources), ErrorMessageResourceName = "ListNameBiggerThanMaxValue")]
+        [StringLength(TrelloSizeConstants.BoardNameSize, MinimumLength = 3, ErrorMessageResourceType = typeof(ListResources), ErrorMessageResourceName = "ListNameBiggerThanMaxValue")]
         public string Name { get; set; }
 
         [Display(Name = "Index", Order = 15000)]

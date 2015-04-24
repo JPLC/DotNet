@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace TrelloMVC.ViewModels.CardViewModels
 {
+    /*TODO por os atributos de validacao*/
     public class CardViewModel
     {
         public int Id { get; set; }

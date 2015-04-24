@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.CardViewModels.CardViewModel>
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<TrelloMVC.ViewModels.CardViewModels.CardViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -15,21 +16,21 @@
         <thead>
         <tr>
             <th>
-                Cix
+                @Html.ActionLink("Index", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.CixSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
-                Name
+                @Html.ActionLink("Name", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
                 Discription
             </th>
             <th>
-                CreationDate
+                @Html.ActionLink("Creation Date", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.CDateSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
-                DueDate
+                @Html.ActionLink("Due Date", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.DueDateSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
-          @*<th>
+            @*<th>
                 Board Name
             </th>*@
             <th>
@@ -66,14 +67,18 @@
                             @Html.DisplayFor(modelItem => item.BoardName)
                         </td>*@
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning", @style = "margin: 5px;" })
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", @style = "margin: 5px;" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "margin: 5px;" })
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new {@class = "btn btn-warning", @style = "margin: 5px;"})
+                    @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-info", @style = "margin: 5px;"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger", @style = "margin: 5px;"})
                 </td>
             </tr>
         }
         </tbody>
     </table>
+</div>
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>
 <div>
     @Html.ActionLink("Back to List", "Details", "List", new { boardid = @ViewBag.BoardId, id = @ViewBag.ListId }, new { @class = "btn btn-primary" })

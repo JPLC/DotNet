@@ -18,10 +18,10 @@
         <thead>
         <tr>
             <th>
-                 @Html.ActionLink("Index", "ListsOfBoard", new {boardid=@ViewBag.BoardId, sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Index", "ListsOfBoard", new {boardid = @ViewBag.BoardId, sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
-                 @Html.ActionLink("Name", "ListsOfBoard", new {boardid=@ViewBag.BoardId, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Name", "ListsOfBoard", new {boardid = @ViewBag.BoardId, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
             </th>
             <th>
                 Board Name
@@ -32,31 +32,35 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Lix)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td style="vertical-align: middle">
-                        @Html.DisplayFor(modelItem => item.BoardName)
-                    </td>
-                    <td>
-                        <div role="group" aria-label="...">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-warning", @style = "margin: 5px;" })
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-info", @style = "margin: 5px;" })
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = "margin: 5px;" })
-                        </div>
-                    </td>
-                </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Lix)
+                </td>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td style="vertical-align: middle">
+                    @Html.DisplayFor(modelItem => item.BoardName)
+                </td>
+                <td>
+                    <div role="group" aria-label="...">
+                        @Html.ActionLink("Edit", "Edit", new {id = item.Id}, new {@class = "btn btn-warning", @style = "margin: 5px;"})
+                        @Html.ActionLink("Details", "Details", new {id = item.Id}, new {@class = "btn btn-info", @style = "margin: 5px;"})
+                        @Html.ActionLink("Delete", "Delete", new {id = item.Id}, new {@class = "btn btn-danger", @style = "margin: 5px;"})
+                    </div>
+                </td>
+            </tr>
 
-            }
+        }
         </tbody>
-</table>
-    </div>
+    </table>
+</div>
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("ListsOfBoard", new {boardid = @ViewBag.BoardId, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
 <div>
     @Html.ActionLink("Back to Board", "Index", "Board", new {boardid = @ViewBag.BoardId}, new {@class = "btn btn-primary"})
 </div>

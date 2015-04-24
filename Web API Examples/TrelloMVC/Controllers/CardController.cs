@@ -29,8 +29,8 @@ namespace TrelloMVC.Controllers
         #region Action Methods
 
         // GET: Card
+        /*TODO por a paginação mum metodo*/
         [Route("All")]
-        /*TODO Finishing pagination*/
         public async Task<ActionResult> CardsOfList(int? boardid, int? listid, string sortOrder, string currentFilter, string searchString, int? page)
         {
             if (boardid == null || listid == null)
@@ -43,7 +43,9 @@ namespace TrelloMVC.Controllers
             ViewBag.ListId = listid.Value;
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Cix" ? "cix" : "Cix";
+            ViewBag.CixSortParm = sortOrder == "Cix" ? "cix" : "Cix";
+            ViewBag.CDateSortParm = sortOrder == "CDate" ? "cDate" : "CDate";
+            ViewBag.DueDateSortParm = sortOrder == "DueDate" ? "dueDate" : "DueDate";
 
             if (searchString != null)
             {
@@ -71,6 +73,20 @@ namespace TrelloMVC.Controllers
                 case "cix":
                     cards = cards.OrderByDescending(b => b.Cix);
                     break;
+
+                case "CDate":
+                    cards = cards.OrderBy(b => b.CreationDate);
+                    break;
+                case "cDate":
+                    cards = cards.OrderByDescending(b => b.CreationDate);
+                    break;
+                case "DueDate":
+                    cards = cards.OrderBy(b => b.DueDate);
+                    break;
+                case "dueDate":
+                    cards = cards.OrderByDescending(b => b.DueDate);
+                    break;
+
                 default: // Name ascending 
                     cards = cards.OrderBy(b => b.Name);
                     break;
@@ -156,14 +172,15 @@ namespace TrelloMVC.Controllers
         [HttpPost]
         [Route("Edit/{id:int}")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int? boardid, int? listid, [Bind(Include = "Cix,Name,Discription,DueDate")] CardViewModel cardvm)
+        public async Task<ActionResult> Edit(int? boardid, int? listid, int? id, [Bind(Include = "Cix,Name,Discription,DueDate")] CardViewModel cardvm)
         {
-            if (boardid == null || listid == null)
+            if (boardid == null || listid == null || id==null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             if (ModelState.IsValid)
             {
+                cardvm.Id = id.Value;
                 _cr.Edit(VMConverters.ViewModelToModel(cardvm, boardid.Value, listid.Value));
                 return RedirectToAction("CardsOfList");
             }
@@ -185,6 +202,8 @@ namespace TrelloMVC.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.BoardId = boardid.Value;
+            ViewBag.ListId = listid.Value;
             var listname = _cr.GetCardListName(listid.Value);
             return View(VMConverters.ModelToViewModel(card, listname));
         }
@@ -198,6 +217,10 @@ namespace TrelloMVC.Controllers
             _cr.Delete(_cr.GetSingle(id));
             return RedirectToAction("CardsOfList");
         }
+        #endregion
+
+        #region Auxiliar Methods
+
         #endregion
     }
 }

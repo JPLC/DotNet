@@ -33,6 +33,7 @@ namespace TrelloMVC.Controllers
 
         #region Action Methods
         // GET: Board/All
+        /*TODO por a paginação mum metodo*/
         [HttpGet]
         [Route("All")]
         [AllowAnonymous]
@@ -196,6 +197,10 @@ namespace TrelloMVC.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         */
+        #endregion
+
+        #region Auxiliar Methods
+
         #endregion
     }
 }

@@ -1,4 +1,4 @@
-﻿@model TrelloModel.List
+﻿@model TrelloMVC.ViewModels.ListViewModels.ListViewModel
 
 @{
     ViewBag.Title = "Delete";
@@ -26,11 +26,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Board.Name)
+            @Html.DisplayNameFor(model => model.BoardName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Board.Name)
+            @Html.DisplayFor(model => model.BoardName)
         </dd>
 
     </dl>
@@ -40,7 +40,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-danger"/>
-            @Html.ActionLink("Back to List", "ListsOfBoard", new { boardid = Model.BoardId }, new { @class = "btn btn-primary"})
+            @Html.ActionLink("Back to List", "ListsOfBoard", new { boardid = ViewBag.BoardId }, new { @class = "btn btn-primary"})
         </div>
     }
 </div>

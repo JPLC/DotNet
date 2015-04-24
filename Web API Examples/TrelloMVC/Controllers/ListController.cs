@@ -33,6 +33,7 @@ namespace TrelloMVC.Controllers
              return View(list);
          }*/
         [Route("All")]
+        /*TODO por a paginação mum metodo*/
         public ActionResult ListsOfBoard(int? boardid, string sortOrder, string currentFilter, string searchString, int? page)
         {
             if (boardid == null)
@@ -127,10 +128,9 @@ namespace TrelloMVC.Controllers
             {
                 var list = VMConverters.ViewModelToModel(listvm, boardid.Value);
                 _lr.Add(list);
-                return RedirectToAction("Details", new { id = listvm.Id });
+                return RedirectToAction("ListsOfBoard");
             }
-            //ViewBag.BoardId = new SelectList(_lr.GetAll(), "BoardId", "Name", list.BoardId);
-            return RedirectToAction("ListsOfBoard");
+            return View();
         }
 
         // GET: List/Edit/5
@@ -179,9 +179,9 @@ namespace TrelloMVC.Controllers
 
         // GET: List/Delete/5
         [Route("Delete/{id:int}")]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? boardid, int? id)
         {
-            if (id == null)
+            if (boardid==null || id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -190,7 +190,9 @@ namespace TrelloMVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(list);
+            ViewBag.BoardId = boardid.Value;
+            var boardname = _lr.GetListBoardName(boardid.Value);
+            return View(VMConverters.ModelToViewModel(list, boardname));
         }
 
         // POST: List/Delete/5
@@ -203,6 +205,10 @@ namespace TrelloMVC.Controllers
             _lr.Delete(list);
             return RedirectToAction("ListsOfBoard", new { boardid = list.BoardId });
         }
+        #endregion
+
+        #region Auxiliar Methods
+
         #endregion
     }
 }
