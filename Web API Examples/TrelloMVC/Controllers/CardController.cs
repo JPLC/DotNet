@@ -29,7 +29,7 @@ namespace TrelloMVC.Controllers
 
         #region Action Methods
 
-        // GET: Card
+        // GET: Card/All
         /*TODO por a paginação mum metodo*/
         [Route("All")]
         public async Task<ActionResult> CardsOfList(int? boardid, int? listid, string sortOrder, string currentFilter, string searchString, int? page)
