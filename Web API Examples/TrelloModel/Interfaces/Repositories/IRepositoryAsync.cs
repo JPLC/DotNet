@@ -9,8 +9,6 @@ namespace TrelloModel.Interfaces.Repositories
     {
         Task<IEnumerable<T>> GetAllAsync();
 
-        Task<IEnumerable<T>> GetAllPagingAsync(string searchString, int pagenumber, int pagesize);
-
         Task<T> GetSingleAsync(int id);
 
         Task<T> FindByAsync(Expression<Func<T, bool>> predicate);

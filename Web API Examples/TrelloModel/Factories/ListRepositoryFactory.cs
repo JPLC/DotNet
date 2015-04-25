@@ -1,4 +1,6 @@
-﻿using TrelloModel.Interfaces.Factories;
+﻿using System;
+using EntityFramework.Audit;
+using TrelloModel.Interfaces.Factories;
 using TrelloModel.Interfaces.Repositories;
 using TrelloModel.Repository.MongoDB;
 using TrelloModel.Repository.SQL;
@@ -13,7 +15,8 @@ namespace TrelloModel.Factories
         }
         public IRepository<List> GetListRepositoryMongoDB()
         {
-            return ListRepositoryMongoDB.Instance;
+            //return ListRepositoryMongoDB.Instance;
+            throw new NotImplementedException();
         }
     }
 }

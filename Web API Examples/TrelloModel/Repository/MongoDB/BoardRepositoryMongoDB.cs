@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TrelloModel.Interfaces.Repositories;
 
 namespace TrelloModel.Repository.MongoDB
 {
-    public class BoardRepositoryMongoDB : IRepository<Board>
+    public class BoardRepositoryMongoDB : IBoardRepositoryAsync
     {
         #region Variables and Properties
         private static readonly Lazy<BoardRepositoryMongoDB> BoardRepo = new Lazy<BoardRepositoryMongoDB>(() => new BoardRepositoryMongoDB());
@@ -14,67 +15,82 @@ namespace TrelloModel.Repository.MongoDB
         #endregion
 
         #region Methods
-        public IEnumerable<Board> GetAll()
+        public Task<IEnumerable<Board>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Board> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        public Task<IEnumerable<Board>> GetAllPagingAsync(Expression<Func<Board, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             throw new NotImplementedException();
         }
 
-        public Board GetSingle(int id)
+        public Task<Board> GetSingleAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Board FindBy(Expression<Func<Board, bool>> predicate)
+        public Task<Board> FindByAsync(Expression<Func<Board, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Board> FindAllBy(Expression<Func<Board, bool>> predicate)
+        public Task<IEnumerable<Board>> FindAllByAsync(Expression<Func<Board, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Add(Board t)
+        public Task<Board> AddAsync(Board t)
         {
             throw new NotImplementedException();
         }
 
-        public void AddRange(IEnumerable<Board> t)
+        public Task AddRangeAsync(IEnumerable<Board> t)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Board t)
+        public Task DeleteAsync(Board t)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteRange(IEnumerable<Board> t)
+        public Task DeleteRangeAsync(IEnumerable<Board> t)
         {
             throw new NotImplementedException();
         }
 
-        public void Edit(Board t)
+        public Task EditAsync(Board t)
         {
             throw new NotImplementedException();
         }
 
-        public void EditRange(IEnumerable<Board> t)
+        public Task EditRangeAsync(IEnumerable<Board> t)
         {
             throw new NotImplementedException();
         }
 
-        public int Count()
+        public Task<int> CountAsync()
         {
             throw new NotImplementedException();
         }
 
-        public bool ValidId(int id)
+        public Task<bool> ValidIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> HasRepeatedBoardNameAsync(int boardid, string boardname)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountConditionalAsync(Expression<Func<Board, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Board>> GetAllPaging(Expression<Func<Board, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             throw new NotImplementedException();
         }

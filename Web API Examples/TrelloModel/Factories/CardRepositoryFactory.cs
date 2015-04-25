@@ -1,4 +1,5 @@
-﻿using TrelloModel.Interfaces.Factories;
+﻿using System;
+using TrelloModel.Interfaces.Factories;
 using TrelloModel.Interfaces.Repositories;
 using TrelloModel.Repository.MongoDB;
 using TrelloModel.Repository.SQL;
@@ -14,7 +15,7 @@ namespace TrelloModel.Factories
 
         public IRepository<Card> GetCardRepositoryMongoDB()
         {
-            return CardRepositoryMongoDB.Instance;
+            throw new NotImplementedException();
         }
     }
 }

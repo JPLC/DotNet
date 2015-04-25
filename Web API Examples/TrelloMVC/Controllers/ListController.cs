@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
-using PagedList;
 using TrelloModel.Interfaces.Factories;
+using TrelloModel.Repository;
 using TrelloModel.Repository.SQL;
+using TrelloMVC.ViewModels;
 using TrelloMVC.ViewModels.Converters;
 using TrelloMVC.ViewModels.ListViewModels;
 
@@ -40,47 +41,32 @@ namespace TrelloMVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.BoardId = boardid.Value;
             var boardname = _lr.GetListBoardName(boardid.Value);
-            var lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoard(boardid.Value), boardname);
-
-            ViewBag.BoardId = boardid;
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Lix" ? "lix" : "Lix";
-
             if (searchString != null)
-            {
                 page = 1;
-            }
             else
-            {
                 searchString = currentFilter;
-            }
 
-            ViewBag.CurrentFilter = searchString;
-
-            if (!String.IsNullOrEmpty(searchString))
+            var sortfiltaux = new ListSortFilter
             {
-                lists = lists.Where(b => b.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    lists = lists.OrderByDescending(b => b.Name);
-                    break;
-                case "Lix":
-                    lists = lists.OrderBy(b => b.Lix);
-                    break;
-                case "lix":
-                    lists = lists.OrderByDescending(b => b.Lix);
-                    break;
-                default: // Name ascending 
-                    lists = lists.OrderBy(b => b.Name);
-                    break;
-            }
-            int pageNumber = (page ?? 1);
+                CurrentSort = sortOrder,
+                NameSortParm = string.IsNullOrEmpty(sortOrder) ? ListVMConstants.NameDesc : string.Empty,
+                LixSortParm = sortOrder == ListVMConstants.LixAsc ? ListVMConstants.LixDesc : ListVMConstants.LixAsc,
+                CurrentFilter = searchString,
+            };
 
-            return View("Index", (lists.ToPagedList(pageNumber, PageSize)));
+            var elemcount = !String.IsNullOrEmpty(searchString) ? _lr.CountConditionalListsOfBoard(b => b.Name.Contains(searchString), boardid.Value) : _lr.CountListsOfBoard(boardid.Value);
+            var pageaux = new PaginationAux
+            {
+                ElementsCount = elemcount,
+                PageCount = (int)Math.Ceiling((double)elemcount / PageSize),
+                PageNumber = (page ?? 1),
+                PageSize = PageSize
+            };
+
+            IEnumerable<ListViewModel> lists = SortingFilteringPaging(sortOrder, searchString, pageaux.PageNumber, boardid.Value, boardname);
+            return View("Index", new Tuple<IEnumerable<ListViewModel>, PaginationAux, ListSortFilter>(lists, pageaux, sortfiltaux));
         }
 
         // GET: List/Details/5
@@ -208,7 +194,29 @@ namespace TrelloMVC.Controllers
         #endregion
 
         #region Auxiliar Methods
-
+        public IEnumerable<ListViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber, int boardid, string boardname)
+        {
+            IEnumerable<ListViewModel> lists;
+            switch (sortOrder)
+            {
+                case ListVMConstants.NameDesc:
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Name, SortDirection.Descending, searchString, pagenumber, PageSize, boardid), boardname);
+                    break;
+                case ListVMConstants.NameAsc:
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Name, SortDirection.Descending, searchString, pagenumber, PageSize, boardid), boardname);
+                    break;
+                case ListVMConstants.LixAsc:
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Ascending, searchString, pagenumber, PageSize, boardid), boardname);
+                    break;
+                case ListVMConstants.LixDesc:
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Descending, searchString, pagenumber, PageSize, boardid), boardname);
+                    break;
+                default: // Lix ascending 
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Ascending, searchString, pagenumber, PageSize, boardid), boardname);
+                    break;
+            }
+            return lists;
+        }
         #endregion
     }
 }

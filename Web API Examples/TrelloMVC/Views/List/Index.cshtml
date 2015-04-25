@@ -1,4 +1,5 @@
-﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.ListViewModels.ListViewModel>
+﻿@model Tuple<IEnumerable<TrelloMVC.ViewModels.ListViewModels.ListViewModel>, TrelloMVC.ViewModels.PaginationAux, TrelloMVC.ViewModels.ListViewModels.ListSortFilter>
+@using PagedList
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
@@ -12,16 +13,26 @@
     @Html.ActionLink("Create New", "Create", new {boardid = ViewBag.BoardId}, new {@class = "btn btn-success"})
 </p>
 
+<div style="padding: 7px 0 7px 0">
+    @using (@Html.BeginForm("ListsOfBoard", "List", FormMethod.Get))
+    {
+        <p>
+            Find by List Name: @Html.TextBox("SearchString", Model.Item3.CurrentFilter)
+            <input type="submit" value="Search" class="btn btn-info"/>
+        </p>
+    }
+</div>
+
 <div class="panel panel-default">
     <div class="panel-heading">All Lists from Board</div>
     <table class="table" id="Lists">
         <thead>
         <tr>
             <th>
-                @Html.ActionLink("Index", "ListsOfBoard", new {boardid = @ViewBag.BoardId, sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Index", "ListsOfBoard", new { boardid = @ViewBag.BoardId, sortOrder = Model.Item3.LixSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Name", "ListsOfBoard", new {boardid = @ViewBag.BoardId, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Name", "ListsOfBoard", new { boardid = @ViewBag.BoardId, sortOrder = Model.Item3.NameSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             <th>
                 Board Name
@@ -32,7 +43,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Item1)
         {
             <tr>
                 <td style="vertical-align: middle">
@@ -57,9 +68,16 @@
         </tbody>
     </table>
 </div>
+@{
+    var pagelist = new List<string>();
+    for (var i = 0; i < Model.Item2.ElementsCount; i++)
+    {
+        pagelist.Add(string.Empty);
+    }
+}
 <div>
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("ListsOfBoard", new {boardid = @ViewBag.BoardId, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    Page @Model.Item2.PageNumber of @Model.Item2.PageCount
+    @Html.PagedListPager(pagelist.ToPagedList(Model.Item2.PageNumber, Model.Item2.PageSize), page => Url.Action("ListsOfBoard", new { boardid = @ViewBag.BoardId, page, sortOrder = Model.Item3.CurrentSort, currentFilter = Model.Item3.CurrentFilter }))
 </div>
 <div>
     @Html.ActionLink("Back to Board", "Index", "Board", new {boardid = @ViewBag.BoardId}, new {@class = "btn btn-primary"})

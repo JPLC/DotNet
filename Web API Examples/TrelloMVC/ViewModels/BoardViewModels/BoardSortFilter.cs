@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace TrelloMVC.ViewModels.BoardViewModels
+﻿namespace TrelloMVC.ViewModels.BoardViewModels
 {
     public class BoardSortFilter
     {

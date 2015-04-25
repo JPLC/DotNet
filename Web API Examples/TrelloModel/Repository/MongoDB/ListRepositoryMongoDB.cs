@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using TrelloModel.Interfaces.Repositories;
 
 namespace TrelloModel.Repository.MongoDB
 {
-    public class ListRepositoryMongoDB : IListRepository
+    public class ListRepositoryMongoDB : IListRepositoryAsync
     {
         #region Variables and Properties
         private static readonly Lazy<ListRepositoryMongoDB> BoardRepo = new Lazy<ListRepositoryMongoDB>(() => new ListRepositoryMongoDB());
@@ -14,77 +15,93 @@ namespace TrelloModel.Repository.MongoDB
         #endregion
 
         #region Methods
-        public IEnumerable<List> GetAll()
+        public Task<IEnumerable<List>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<List> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        public Task<IEnumerable<List>> GetAllPagingAsync(Expression<Func<List, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             throw new NotImplementedException();
         }
 
-        public List GetSingle(int id)
+        public Task<List> GetSingleAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public List FindBy(Expression<Func<List, bool>> predicate)
+        public Task<List> FindByAsync(Expression<Func<List, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<List> FindAllBy(Expression<Func<List, bool>> predicate)
+        public Task<IEnumerable<List>> FindAllByAsync(Expression<Func<List, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public void Add(List t)
+        public Task<List> AddAsync(List t)
         {
             throw new NotImplementedException();
         }
 
-        public void AddRange(IEnumerable<List> t)
+        public Task AddRangeAsync(IEnumerable<List> t)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(List t)
+        public Task DeleteAsync(List t)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteRange(IEnumerable<List> t)
+        public Task DeleteRangeAsync(IEnumerable<List> t)
         {
             throw new NotImplementedException();
         }
 
-        public void Edit(List t)
+        public Task EditAsync(List t)
         {
             throw new NotImplementedException();
         }
 
-        public void EditRange(IEnumerable<List> t)
+        public Task EditRangeAsync(IEnumerable<List> t)
         {
             throw new NotImplementedException();
         }
 
-        public int Count()
+        public Task<int> CountAsync()
         {
             throw new NotImplementedException();
         }
 
-        public bool ValidId(int id)
+        public Task<bool> ValidIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<List> GetListsOfBoard(int boardId)
+        public Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId)
         {
             throw new NotImplementedException();
         }
 
-        public string GetListBoardName(int boardId)
+        public Task<IEnumerable<List>> GetListsOfBoardPagingAsync(Expression<Func<List, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+            int pagesize, int boardid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<string> GetListBoardNameAsync(int boardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountListsOfBoardAsync(int boardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountConditionalListsOfBoardAsync(Expression<Func<List, bool>> predicate, int boardId)
         {
             throw new NotImplementedException();
         }

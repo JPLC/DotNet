@@ -32,19 +32,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public IEnumerable<Board> GetAllPaging(string searchString, int pagenumber, int pagesize)
-        {
-            using (var db = new TrelloModelDBContainer())
-            {
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    return db.Board.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
-                }
-                return db.Board.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
-            }
-        }
-
-        public IEnumerable<Board> GetAllPaging(Func<Board, object> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
+        public IEnumerable<Board> GetAllPaging(Expression<Func<Board, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -176,15 +164,19 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task<IEnumerable<Board>> GetAllPagingAsync(string searchString, int pagenumber, int pagesize)
+        public async Task<IEnumerable<Board>> GetAllPagingAsync(Expression<Func<Board, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    return await db.Board.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+                    return direction == SortDirection.Ascending ? 
+                        await db.Board.Where(b => b.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                       : await db.Board.Where(b => b.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
                 }
-                return await db.Board.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+                return direction == SortDirection.Ascending ?
+                    await db.Board.OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                  : await db.Board.OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
             }
         }
 
@@ -289,6 +281,11 @@ namespace TrelloModel.Repository.SQL
             {
                 return await db.Board.Where(predicate).CountAsync();
             }
+        }
+
+        Task<IEnumerable<Board>> IBoardRepositoryAsync.GetAllPaging(Expression<Func<Board, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<bool> ValidIdAsync(int id)

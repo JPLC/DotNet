@@ -8,8 +8,6 @@ namespace TrelloModel.Interfaces.Repositories
     {
         IEnumerable<T> GetAll();
 
-        IEnumerable<T> GetAllPaging(string searchString, int pagenumber, int pagesize);
-
         T GetSingle(int id);
 
         T FindBy(Expression<Func<T, bool>> predicate);

@@ -32,15 +32,15 @@ namespace TrelloModel.Repository.SQL
                 return db.Card.ToList();
             }
         }
-        public IEnumerable<Card> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        public IEnumerable<Card> GetAllPaging(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                    return db.Card.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                    return direction == SortDirection.Ascending ? db.Card.Where(b => b.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList() : db.Card.Where(b => b.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
                 }
-                return db.Card.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                return direction == SortDirection.Ascending ? db.Card.OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList() : db.Card.OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
             }
         }
 
@@ -181,9 +181,20 @@ namespace TrelloModel.Repository.SQL
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Card>> GetAllPagingAsync(string searchString, int pagenumber, int pagesize)
+        public async Task<IEnumerable<Card>> GetAllPagingAsync(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                        await db.Card.Where(b => b.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                       : await db.Card.Where(b => b.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+                }
+                return direction == SortDirection.Ascending ?
+                    await db.Card.OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                  : await db.Card.OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+            }
         }
 
         public Task<Card> GetSingleAsync(int id)
