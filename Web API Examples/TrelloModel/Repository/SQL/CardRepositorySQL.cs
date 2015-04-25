@@ -33,6 +33,11 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public IEnumerable<Card> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Card>> GetAllAsync()
         {
             throw new NotImplementedException();

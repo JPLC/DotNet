@@ -1,5 +1,4 @@
-﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>
-@using PagedList.Mvc;
+﻿@model Tuple<IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>, int>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
@@ -11,7 +10,7 @@
     @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
 </div>
 
-<div style="padding: 7px 0px 7px 0px">
+<div style="padding: 7px 0 7px 0">
     @using (@Html.BeginForm("Index", "Board", FormMethod.Get))
     {
         <p>

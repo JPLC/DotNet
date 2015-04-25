@@ -40,6 +40,30 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public IEnumerable<Board> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return db.Board.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize*(pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return db.Board.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
+        }
+
+        public async Task<IEnumerable<Board>> GetAllPagingAsync(string searchString, int pagenumber, int pagesize)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return await db.Board.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize*(pagenumber - 1)).Take(pagesize).ToListAsync();
+                }
+                return await db.Board.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+            }
+        }
+
         public Board GetSingle(int id)
         {
             using (var db = new TrelloModelDBContainer())

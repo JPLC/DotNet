@@ -10,7 +10,6 @@ using TrelloModel.Repository.SQL;
 using TrelloModel.Resources;
 using TrelloMVC.ViewModels.BoardViewModels;
 using TrelloMVC.ViewModels.Converters;
-using PagedList;
 
 namespace TrelloMVC.Controllers
 {
@@ -32,7 +31,6 @@ namespace TrelloMVC.Controllers
 
         #region Action Methods
         // GET: Board/All
-        /*TODO por a paginação mum metodo*/
         [HttpGet]
         [Route("All")]
         [AllowAnonymous]
@@ -43,36 +41,16 @@ namespace TrelloMVC.Controllers
             ViewBag.DateSortParm = sortOrder == "Discription" ? "discription" : "Discription";
 
             if (searchString != null)
-            {
                 page = 1;
-            }
             else
-            {
                 searchString = currentFilter;
-            }
-
+            var elemc = _br.Count();
+            ViewBag.ElemCount = elemc;
             ViewBag.CurrentFilter = searchString;
-            IEnumerable<BoardViewModel> boards = VMConverters.ModelsToViewModels(_br.GetAll());
-
-            //Boards = boards;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                boards = boards.Where(b => b.Name.Contains(searchString));
-            }
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    boards = boards.OrderByDescending(b => b.Name);
-                    break;
-                case "Discription":
-                    boards = boards.OrderBy(b => b.Discription);
-                    break;
-                default: // Name ascending 
-                    boards = boards.OrderBy(b => b.Name);
-                    break;
-            }
-            int pageNumber = (page ?? 1);
-            return View(boards.ToPagedList(pageNumber, PageSize));
+            ViewBag.PageCount = (int)Math.Ceiling((double) elemc/PageSize);
+            var pageNumber = (page ?? 1);
+            IEnumerable<BoardViewModel> boards = SortingFilteringPaging(sortOrder, searchString, pageNumber);            
+            return View(new Tuple<IEnumerable<BoardViewModel>, int>(boards, pageNumber));
         }
 
         // GET: Board/Details/5
@@ -199,7 +177,26 @@ namespace TrelloMVC.Controllers
         #endregion
 
         #region Auxiliar Methods
-
+        public  IEnumerable<BoardViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber)
+        {
+            var boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(searchString, pagenumber, PageSize));
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    boards = boards.OrderByDescending(b => b.Name);
+                    break;
+                case "Discription":
+                    boards = boards.OrderBy(b => b.Discription);
+                    break;
+                case "discription":
+                    boards = boards.OrderByDescending(b => b.Discription);
+                    break;
+                default: // Name ascending 
+                    boards = boards.OrderBy(b => b.Name);
+                    break;
+            }
+            return boards;
+        }
         #endregion
     }
 }

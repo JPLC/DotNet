@@ -1,5 +1,6 @@
-﻿@model PagedList.IPagedList<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>
-@using PagedList.Mvc;
+﻿@using PagedList
+@using PagedList.Mvc
+@model Tuple<IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>,int>
 
 
 <div class="panel panel-default">
@@ -21,7 +22,7 @@
         </tr>
         </thead>
 <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Item1)
         {
             <tr>
                 <td style="vertical-align: middle">
@@ -44,7 +45,16 @@
     <br />
 </div>
 
-<div>
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-</div>
+@{
+    var pagelist = new List<string>();
+    for(var i=0;i<@ViewBag.ElemCount;i++)
+    {
+        pagelist.Add(string.Empty);
+    }
+}
+
+
+    <div>
+        Page @Model.Item2 of @ViewBag.PageCount
+        @Html.PagedListPager(pagelist.ToPagedList(Model.Item2, 20), page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>

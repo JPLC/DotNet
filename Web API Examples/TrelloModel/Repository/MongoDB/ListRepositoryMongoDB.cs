@@ -19,6 +19,11 @@ namespace TrelloModel.Repository.MongoDB
             throw new NotImplementedException();
         }
 
+        public IEnumerable<List> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        {
+            throw new NotImplementedException();
+        }
+
         public List GetSingle(int id)
         {
             throw new NotImplementedException();

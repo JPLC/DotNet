@@ -30,9 +30,24 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<IEnumerable<List>> GetAllAsync()
+        public async Task<IEnumerable<List>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.ToListAsync();
+            }
+        }
+
+        public IEnumerable<List> GetAllPaging(string searchString, int pagenumber, int pagesize)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return db.List.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return db.List.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
         }
 
         public List GetSingle(int id)
@@ -44,9 +59,12 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<List> GetSingleAsync(int id)
+        public async Task<List> GetSingleAsync(int id)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.FirstOrDefaultAsync(l => l.ListId == id);
+            }
         }
 
         public List FindBy(Expression<Func<List, bool>> predicate)
@@ -58,9 +76,13 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<List> FindByAsync(Expression<Func<List, bool>> predicate)
+        public async Task<List> FindByAsync(Expression<Func<List, bool>> predicate)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
+                return await db.List.Where(predicate).FirstOrDefaultAsync();
+            }
         }
 
         public IEnumerable<List> FindAllBy(Expression<Func<List, bool>> predicate)
@@ -71,9 +93,12 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<IEnumerable<List>> FindAllByAsync(Expression<Func<List, bool>> predicate)
+        public async Task<IEnumerable<List>> FindAllByAsync(Expression<Func<List, bool>> predicate)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.List.Where(predicate).ToListAsync();
+            }
         }
 
         public void Add(List list)
@@ -86,9 +111,14 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task AddAsync(List t)
+        public async Task AddAsync(List list)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                list.Lix = db.List.Count(li => li.BoardId == list.BoardId) + 1;
+                db.List.Add(list);
+                await db.SaveChangesAsync();
+            }
         }
 
         public void AddRange(IEnumerable<List> lists)
@@ -106,9 +136,19 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task AddRangeAsync(IEnumerable<List> t)
+        public async Task AddRangeAsync(IEnumerable<List> lists)
         {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                int i = 1;
+                foreach (var l in lists)
+                {
+                    l.Lix = db.List.Count(li => li.BoardId == l.BoardId) + i;
+                    db.List.Add(l);
+                    i++;
+                }
+                await db.SaveChangesAsync();
+            }
         }
 
         public void Delete(List list)
@@ -199,7 +239,6 @@ namespace TrelloModel.Repository.SQL
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
                 return db.List.Count();
             }
         }

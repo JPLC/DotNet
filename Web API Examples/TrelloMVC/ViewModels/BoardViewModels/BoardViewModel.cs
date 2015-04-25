@@ -1,6 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using PagedList;
 using TrelloModel.Resources;
 using TrelloModel.Business.Constants;
 using TrelloMVC.Validations.Attributes;
