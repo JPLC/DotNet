@@ -34,7 +34,7 @@ namespace TrelloMVC.Controllers
         [HttpGet]
         [Route("All")]
         [AllowAnonymous]
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,bool isAjax=false)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";

@@ -42,19 +42,17 @@
         }
 </tbody>
     </table>
-    <br />
+    <br/>
 </div>
 
 @{
     var pagelist = new List<string>();
-    for(var i=0;i<@ViewBag.ElemCount;i++)
+    for (var i = 0; i < @ViewBag.ElemCount; i++)
     {
         pagelist.Add(string.Empty);
     }
 }
-
-
-    <div>
-        Page @Model.Item2 of @ViewBag.PageCount
-        @Html.PagedListPager(pagelist.ToPagedList(Model.Item2, 20), page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-    </div>
+<div>
+    Page @Model.Item2 of @ViewBag.PageCount
+    @Html.PagedListPager(pagelist.ToPagedList(Model.Item2, 5), page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+</div>
