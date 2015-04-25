@@ -245,7 +245,9 @@
     <Compile Include="Validations\Controllers\BoardControllerValidation.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardSortFilter.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardVMConstants.cs" />
+    <Compile Include="ViewModels\CardViewModels\CardSortFilter.cs" />
     <Compile Include="ViewModels\CardViewModels\CardViewModels.cs" />
+    <Compile Include="ViewModels\CardViewModels\CardVMConstants.cs" />
     <Compile Include="ViewModels\Converters\VMConverters.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardViewModel.cs" />
     <Compile Include="ViewModels\ListViewModels\ListSortFilter.cs" />

@@ -143,11 +143,63 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public IEnumerable<Card> GetCardsOfBoardPaging(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+            int pagesize, int boardid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                             db.Card.Where(c => c.BoardId == boardid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                           : db.Card.Where(c => c.BoardId == boardid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return direction == SortDirection.Ascending ?
+                         db.Card.Where(c => c.BoardId == boardid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                       : db.Card.Where(c => c.BoardId == boardid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
+        }
+
         public IEnumerable<Card> GetCardsOfList(int listId)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return db.Card.Where(c => c.ListId == listId).ToList();
+            }
+        }
+
+        public IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+            int pagesize, int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                             db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                           : db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return direction == SortDirection.Ascending ?
+                         db.Card.Where(c => c.ListId == listid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                       : db.Card.Where(c => c.ListId == listid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
+        }
+
+        /*TODO tentar por genrico para object e struct*/
+        public IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, int>> sorter, SortDirection direction, string searchString, int pagenumber,
+    int pagesize, int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                             db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                           : db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return direction == SortDirection.Ascending ?
+                         db.Card.Where(c => c.ListId == listid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                       : db.Card.Where(c => c.ListId == listid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
             }
         }
 
@@ -281,11 +333,45 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public async Task<IEnumerable<Card>> GetCardsOfBoardPagingAsync(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+            int pagesize, int boardid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                            await db.Card.Where(c => c.BoardId == boardid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                           : await db.Card.Where(c => c.BoardId == boardid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+                }
+                return direction == SortDirection.Ascending ?
+                         await db.Card.Where(c => c.BoardId == boardid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                       : await db.Card.Where(c => c.BoardId == boardid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+            }
+        }
+
         public async Task<IEnumerable<Card>> GetCardsOfListAsync(int listId)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return await db.Card.Where(c => c.ListId == listId).ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Card>> GetCardsOfListPagingAsync(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize,
+            int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                           await  db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                           : await db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
+                }
+                return direction == SortDirection.Ascending ?
+                        await db.Card.Where(c => c.ListId == listid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                       : await db.Card.Where(c => c.ListId == listid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
             }
         }
 

@@ -34,7 +34,6 @@ namespace TrelloMVC.Controllers
              return View(list);
          }*/
         [Route("All")]
-        /*TODO por a paginação mum metodo*/
         public ActionResult ListsOfBoard(int? boardid, string sortOrder, string currentFilter, string searchString, int? page)
         {
             if (boardid == null)
@@ -203,13 +202,13 @@ namespace TrelloMVC.Controllers
                     lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Name, SortDirection.Descending, searchString, pagenumber, PageSize, boardid), boardname);
                     break;
                 case ListVMConstants.NameAsc:
-                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Name, SortDirection.Descending, searchString, pagenumber, PageSize, boardid), boardname);
-                    break;
-                case ListVMConstants.LixAsc:
-                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Ascending, searchString, pagenumber, PageSize, boardid), boardname);
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Name, SortDirection.Ascending, searchString, pagenumber, PageSize, boardid), boardname);
                     break;
                 case ListVMConstants.LixDesc:
                     lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Descending, searchString, pagenumber, PageSize, boardid), boardname);
+                    break;
+                case ListVMConstants.LixAsc:
+                    lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Ascending, searchString, pagenumber, PageSize, boardid), boardname);
                     break;
                 default: // Lix ascending 
                     lists = VMConverters.ModelsToViewModels(_lr.GetListsOfBoardPaging(e => e.Lix, SortDirection.Ascending, searchString, pagenumber, PageSize, boardid), boardname);
