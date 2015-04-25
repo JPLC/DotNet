@@ -150,6 +150,14 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public int CountConditional(Expression<Func<Board, bool>> predicate)
+        {
+             using (var db = new TrelloModelDBContainer())
+             {
+                 return db.Board.Where(predicate).Count();
+            }
+        }
+
         public bool ValidId(int id)
         {
             using (var db = new TrelloModelDBContainer())
@@ -272,6 +280,14 @@ namespace TrelloModel.Repository.SQL
             using (var db = new TrelloModelDBContainer())
             {
                 return await db.Board.AnyAsync(b => b.Name == boardname && b.BoardId != boardid);
+            }
+        }
+
+        public async Task<int> CountConditionalAsync(Expression<Func<Board, bool>> predicate)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Board.Where(predicate).CountAsync();
             }
         }
 

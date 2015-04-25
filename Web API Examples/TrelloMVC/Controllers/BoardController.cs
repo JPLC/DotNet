@@ -48,7 +48,7 @@ namespace TrelloMVC.Controllers
                 searchString = currentFilter;
             ViewBag.CurrentFilter = searchString;
 
-            var elemcount = _br.Count();
+            var elemcount = !String.IsNullOrEmpty(searchString) ? _br.CountConditional(b => b.Name.Contains(searchString)) : _br.Count();
             var pageaux = new PaginationAux
             {
                 ElementsCount = elemcount,
@@ -187,7 +187,7 @@ namespace TrelloMVC.Controllers
         #region Auxiliar Methods
         public IEnumerable<BoardViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber)
         {
-            IEnumerable<BoardViewModel> boards;// = VMConverters.ModelsToViewModels(_br.GetAllPaging(searchString, pagenumber, PageSize));
+            IEnumerable<BoardViewModel> boards;
             switch (sortOrder)
             {
                 case "name_desc":
