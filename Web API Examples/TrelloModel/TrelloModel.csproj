@@ -108,6 +108,7 @@
     <Compile Include="Repository\MongoDB\BoardRepositoryMongoDB.cs" />
     <Compile Include="Repository\MongoDB\CardRepositoryMongoDB.cs" />
     <Compile Include="Repository\MongoDB\ListRepositoryMongoDB.cs" />
+    <Compile Include="Repository\SortDirection.cs" />
     <Compile Include="Repository\SQL\BoardRepositorySQL.cs" />
     <Compile Include="Repository\SQL\CardRepositorySQL.cs" />
     <Compile Include="Repository\SQL\ListRepositorySQL.cs" />

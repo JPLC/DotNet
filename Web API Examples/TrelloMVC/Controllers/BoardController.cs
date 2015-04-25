@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using TrelloModel;
 using TrelloModel.Interfaces.Factories;
+using TrelloModel.Repository;
 using TrelloModel.Repository.SQL;
 using TrelloModel.Resources;
 using TrelloMVC.ViewModels;
@@ -186,20 +187,20 @@ namespace TrelloMVC.Controllers
         #region Auxiliar Methods
         public IEnumerable<BoardViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber)
         {
-            var boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(searchString, pagenumber, PageSize));
+            IEnumerable<BoardViewModel> boards;// = VMConverters.ModelsToViewModels(_br.GetAllPaging(searchString, pagenumber, PageSize));
             switch (sortOrder)
             {
                 case "name_desc":
-                    boards = boards.OrderByDescending(b => b.Name);
+                    boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e=>e.Name,SortDirection.Descending, searchString, pagenumber, PageSize));
                     break;
                 case "Discription":
-                    boards = boards.OrderBy(b => b.Discription);
+                    boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e => e.Discription, SortDirection.Ascending, searchString, pagenumber, PageSize));
                     break;
                 case "discription":
-                    boards = boards.OrderByDescending(b => b.Discription);
+                    boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e => e.Discription, SortDirection.Descending, searchString, pagenumber, PageSize));
                     break;
                 default: // Name ascending 
-                    boards = boards.OrderBy(b => b.Name);
+                    boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e => e.Name, SortDirection.Ascending, searchString, pagenumber, PageSize));
                     break;
             }
             return boards;

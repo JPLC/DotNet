@@ -44,6 +44,18 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        public IEnumerable<Board> GetAllPaging(Func<Board, object> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ? db.Board.Where(b => b.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList() : db.Board.Where(b => b.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return direction == SortDirection.Ascending ? db.Board.OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList() : db.Board.OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
+        }
+
         public Board GetSingle(int id)
         {
             using (var db = new TrelloModelDBContainer())
@@ -146,7 +158,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
         #endregion
-        
+
         #region Async Methods
         public async Task<IEnumerable<Board>> GetAllAsync()
         {
