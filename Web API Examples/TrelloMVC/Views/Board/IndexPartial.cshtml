@@ -1,6 +1,6 @@
 ﻿@using PagedList
 @using PagedList.Mvc
-@model Tuple<IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>,int>
+@model Tuple<IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>, TrelloMVC.ViewModels.PaginationAux>
 
 
 <div class="panel panel-default">
@@ -13,7 +13,7 @@
              /* , new AjaxOptions { UpdateTargetId = "IndexPartialView", Url = Url.Action("IndexPartial", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })}*/)
      </th>
             <th>
-                @Html.ActionLink("Discription", "Index", new {sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter }
+                @Html.ActionLink("Discription", "Index", new { sortOrder = ViewBag.DiscriptionSortParm, currentFilter = ViewBag.CurrentFilter }
                                   /*,new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "IndexPartialView", InsertionMode = InsertionMode.Replace }*/)
             </th>
             <th>
@@ -47,12 +47,12 @@
 
 @{
     var pagelist = new List<string>();
-    for (var i = 0; i < @ViewBag.ElemCount; i++)
+    for (var i = 0; i < Model.Item2.ElementsCount; i++)
     {
         pagelist.Add(string.Empty);
     }
 }
 <div>
-    Page @Model.Item2 of @ViewBag.PageCount
-    @Html.PagedListPager(pagelist.ToPagedList(Model.Item2, 5), page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    Page @Model.Item2.PageNumber of @Model.Item2.PageCount
+    @Html.PagedListPager(pagelist.ToPagedList(Model.Item2.PageNumber, Model.Item2.PageSize), page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </div>

@@ -8,6 +8,7 @@ using TrelloModel;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository.SQL;
 using TrelloModel.Resources;
+using TrelloMVC.ViewModels;
 using TrelloMVC.ViewModels.BoardViewModels;
 using TrelloMVC.ViewModels.Converters;
 
@@ -38,19 +39,25 @@ namespace TrelloMVC.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Discription" ? "discription" : "Discription";
+            ViewBag.DiscriptionSortParm = sortOrder == "Discription" ? "discription" : "Discription";
 
             if (searchString != null)
                 page = 1;
             else
                 searchString = currentFilter;
-            var elemc = _br.Count();
-            ViewBag.ElemCount = elemc;
             ViewBag.CurrentFilter = searchString;
-            ViewBag.PageCount = (int)Math.Ceiling((double) elemc/PageSize);
-            var pageNumber = (page ?? 1);
-            IEnumerable<BoardViewModel> boards = SortingFilteringPaging(sortOrder, searchString, pageNumber);            
-            return View(new Tuple<IEnumerable<BoardViewModel>, int>(boards, pageNumber));
+
+            var elemcount = _br.Count();
+            var pageaux = new PaginationAux
+            {
+                ElementsCount = elemcount,
+                PageCount = (int)Math.Ceiling((double)elemcount / PageSize),
+                PageNumber = (page ?? 1),
+                PageSize = PageSize
+            };
+
+            IEnumerable<BoardViewModel> boards = SortingFilteringPaging(sortOrder, searchString, pageaux.PageNumber);
+            return View(new Tuple<IEnumerable<BoardViewModel>, PaginationAux>(boards, pageaux));
         }
 
         // GET: Board/Details/5
@@ -177,7 +184,7 @@ namespace TrelloMVC.Controllers
         #endregion
 
         #region Auxiliar Methods
-        public  IEnumerable<BoardViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber)
+        public IEnumerable<BoardViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber)
         {
             var boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(searchString, pagenumber, PageSize));
             switch (sortOrder)
