@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TrelloModel.Interfaces.Repositories
 {
-    public interface ICardRepositoryAsync : ICardRepository
+    public interface ICardRepositoryAsync : IRepositoryAsync<Card>
     {
         Task<IEnumerable<Card>> GetCardsOfBoardAsync(int boardId);
 

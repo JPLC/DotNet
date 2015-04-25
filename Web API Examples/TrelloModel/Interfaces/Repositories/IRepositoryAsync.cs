@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TrelloModel.Interfaces.Repositories
 {
-    public interface IRepositoryAsync<T> : IRepository<T> where T : class
+    public interface IRepositoryAsync<T> where T : class
     {
         Task<IEnumerable<T>> GetAllAsync();
 

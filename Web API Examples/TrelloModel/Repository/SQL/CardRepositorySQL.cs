@@ -11,7 +11,7 @@ using TrelloModel.Interfaces.Repositories;
 
 namespace TrelloModel.Repository.SQL
 {
-    public class CardRepositorySQL : ICardRepositoryAsync
+    public class CardRepositorySQL : ICardRepository, ICardRepositoryAsync
     {
         #region Variables and Properties
         private static readonly Lazy<CardRepositorySQL> CardRepo = new Lazy<CardRepositorySQL>(() => new CardRepositorySQL());
@@ -23,8 +23,8 @@ namespace TrelloModel.Repository.SQL
         private CardRepositorySQL() { }
         #endregion
 
-        //TODO aplicar e melhorar expection handling
-        #region Methods
+        //TODO aplicar e melhorar expection handling       
+        #region Sync Methods
         public IEnumerable<Card> GetAll()
         {
             using (var db = new TrelloModelDBContainer())
@@ -32,15 +32,16 @@ namespace TrelloModel.Repository.SQL
                 return db.Card.ToList();
             }
         }
-
         public IEnumerable<Card> GetAllPaging(string searchString, int pagenumber, int pagesize)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<Card>> GetAllAsync()
-        {
-            throw new NotImplementedException();
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return db.Card.Where(b => b.Name.Contains(searchString)).OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return db.Card.OrderBy(b => b.Name).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
         }
 
         public Card GetSingle(int id)
@@ -51,11 +52,6 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<Card> GetSingleAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Card FindBy(Expression<Func<Card, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
@@ -64,22 +60,12 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<Card> FindByAsync(Expression<Func<Card, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Card> FindAllBy(Expression<Func<Card, bool>> predicate)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return db.Card.Where(predicate).ToList();
             }
-        }
-
-        public Task<IEnumerable<Card>> FindAllByAsync(Expression<Func<Card, bool>> predicate)
-        {
-            throw new NotImplementedException();
         }
 
         public void Add(Card card)
@@ -91,11 +77,6 @@ namespace TrelloModel.Repository.SQL
                 db.Card.Add(card);
                 db.SaveChanges();
             }
-        }
-
-        public Task AddAsync(Card t)
-        {
-            throw new NotImplementedException();
         }
 
         public void AddRange(IEnumerable<Card> cards)
@@ -114,11 +95,6 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task AddRangeAsync(IEnumerable<Card> t)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(Card card)
         {
             using (var db = new TrelloModelDBContainer())
@@ -126,23 +102,12 @@ namespace TrelloModel.Repository.SQL
                 db.DeleteCard(card.CardId, card.Cix, card.ListId);
             }
         }
-
-        public Task DeleteAsync(Card t)
-        {
-            throw new NotImplementedException();
-        }
-
         public void DeleteRange(IEnumerable<Card> cards)
         {
             foreach (var c in cards)
             {
                 Delete(c);
             }
-        }
-
-        public Task DeleteRangeAsync(IEnumerable<Card> t)
-        {
-            throw new NotImplementedException();
         }
 
         public void Edit(Card card)
@@ -161,22 +126,12 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task EditAsync(Card t)
-        {
-            throw new NotImplementedException();
-        }
-
         public void EditRange(IEnumerable<Card> cards)
         {
             foreach (var card in cards)
             {
                 Edit(card);
             }
-        }
-
-        public Task EditRangeAsync(IEnumerable<Card> t)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Card> GetCardsOfBoard(int boardId)
@@ -187,11 +142,6 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<IEnumerable<Card>> GetCardsOfBoardAsync(int boardId)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Card> GetCardsOfList(int listId)
         {
             using (var db = new TrelloModelDBContainer())
@@ -200,23 +150,12 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public Task<IEnumerable<Card>> GetCardsOfListAsync(int listId)
-        {
-            throw new NotImplementedException();
-        }
-
         public int Count()
         {
             using (var db = new TrelloModelDBContainer())
             {
-                //db.Database.Log = (msg) => { Console.WriteLine(msg ); };
                 return db.Card.Count();
             }
-        }
-
-        public Task<int> CountAsync()
-        {
-            throw new NotImplementedException();
         }
 
         public bool ValidId(int id)
@@ -227,20 +166,91 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task<bool> ValidIdAsync(int id)
-        {
-            using (var db = new TrelloModelDBContainer())
-            {
-                return await db.Card.AnyAsync(c =>c.CardId  == id);
-            }
-        }
-        #endregion
-
         public string GetCardListName(int listId)
         {
             using (var db = new TrelloModelDBContainer())
             {
                 return db.List.Where(l => l.ListId == listId).Select(b => b.Name).FirstOrDefault();
+            }
+        }
+        #endregion
+        
+        #region Async Methods
+        public Task<IEnumerable<Card>> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Card>> GetAllPagingAsync(string searchString, int pagenumber, int pagesize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Card> GetSingleAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Card> FindByAsync(Expression<Func<Card, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Card>> FindAllByAsync(Expression<Func<Card, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Card> AddAsync(Card t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddRangeAsync(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(Card t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteRangeAsync(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EditAsync(Card t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EditRangeAsync(IEnumerable<Card> t)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Card>> GetCardsOfBoardAsync(int boardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Card>> GetCardsOfListAsync(int listId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> CountAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> ValidIdAsync(int id)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Card.AnyAsync(c => c.CardId == id);
             }
         }
 
@@ -251,5 +261,6 @@ namespace TrelloModel.Repository.SQL
                 return await db.List.Where(l => l.ListId == listId).Select(b => b.Name).FirstOrDefaultAsync();
             }
         }
+        #endregion
     }
 }
