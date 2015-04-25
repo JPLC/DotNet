@@ -18,5 +18,13 @@ namespace TrelloModel.Interfaces.Repositories
         string searchString, int pagenumber, int pagesize, int listid);
 
         string GetCardListName(int listId);
+
+        int CountCardsOfBoard(int boardId);
+
+        int CountConditionalCardsOfBoard(Expression<Func<Card, bool>> predicate, int boardId);
+
+        int CountCardsOfList(int listid);
+
+        int CountConditionalCardsOfList(Expression<Func<Card, bool>> predicate, int listid);
     }
 }

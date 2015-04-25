@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using PagedList;
 using TrelloModel.Interfaces.Factories;
 using TrelloModel.Repository;
 using TrelloModel.Repository.SQL;
+using TrelloMVC.ViewModels;
 using TrelloMVC.ViewModels.CardViewModels;
 using TrelloMVC.ViewModels.Converters;
 
@@ -42,61 +41,34 @@ namespace TrelloMVC.Controllers
             var listname = _cr.GetCardListName(listid.Value);
             ViewBag.BoardId = boardid.Value;
             ViewBag.ListId = listid.Value;
-
-            var cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfList(listid.Value), listname);
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.CixSortParm = sortOrder == "Cix" ? "cix" : "Cix";
-            ViewBag.CDateSortParm = sortOrder == "CDate" ? "cDate" : "CDate";
-            ViewBag.DueDateSortParm = sortOrder == "DueDate" ? "dueDate" : "DueDate";
-
             if (searchString != null)
-            {
                 page = 1;
-            }
             else
-            {
                 searchString = currentFilter;
-            }
 
-            ViewBag.CurrentFilter = searchString;
-
-            if (!String.IsNullOrEmpty(searchString))
+            var sortfiltaux = new CardSortFilter
             {
-                cards = cards.Where(b => b.Name.Contains(searchString));
-            }
-            switch (sortOrder)
+                CurrentSort = sortOrder,
+                NameSortParm = string.IsNullOrEmpty(sortOrder) ? CardVMConstants.NameDesc : string.Empty,
+                DiscriptionSortParm = sortOrder == CardVMConstants.DiscriptionAsc ? CardVMConstants.DiscriptionDesc : CardVMConstants.DiscriptionAsc,
+                CDateSortParm = sortOrder == CardVMConstants.CDateAsc ? CardVMConstants.CDateDesc : CardVMConstants.CDateAsc,
+                DueDateSortParm = sortOrder == CardVMConstants.DueDateAsc ? CardVMConstants.DueDateDesc : CardVMConstants.DueDateAsc,
+                CixSortParm = sortOrder == CardVMConstants.CixAsc ? CardVMConstants.CixDesc : CardVMConstants.CixAsc,
+                CurrentFilter = searchString,
+            };
+
+            var elemcount = !String.IsNullOrEmpty(searchString) ? _cr.CountConditionalCardsOfList(b => b.Name.Contains(searchString), boardid.Value) : _cr.CountCardsOfList(boardid.Value);
+            var pageaux = new PaginationAux
             {
-                case "name_desc":
-                    cards = cards.OrderByDescending(b => b.Name);
-                    break;
-                case "Cix":
-                    cards = cards.OrderBy(b => b.Cix);
-                    break;
-                case "cix":
-                    cards = cards.OrderByDescending(b => b.Cix);
-                    break;
+                ElementsCount = elemcount,
+                PageCount = (int)Math.Ceiling((double)elemcount / PageSize),
+                PageNumber = (page ?? 1),
+                PageSize = PageSize
+            };
 
-                case "CDate":
-                    cards = cards.OrderBy(b => b.CreationDate);
-                    break;
-                case "cDate":
-                    cards = cards.OrderByDescending(b => b.CreationDate);
-                    break;
-                case "DueDate":
-                    cards = cards.OrderBy(b => b.DueDate);
-                    break;
-                case "dueDate":
-                    cards = cards.OrderByDescending(b => b.DueDate);
-                    break;
+            IEnumerable<CardViewModel> cards = SortingFilteringPaging(sortOrder, searchString, pageaux.PageNumber, listid.Value, listname);
 
-                default: // Name ascending 
-                    cards = cards.OrderBy(b => b.Name);
-                    break;
-            }
-            int pageNumber = (page ?? 1);
-
-            return View("Index", (cards.ToPagedList(pageNumber, PageSize)));
+            return View("Index", new Tuple<IEnumerable<CardViewModel>, PaginationAux, CardSortFilter>(cards, pageaux, sortfiltaux));
         }
 
         // GET: Card/Details/5
@@ -225,44 +197,44 @@ namespace TrelloMVC.Controllers
         #region Auxiliar Methods
         public IEnumerable<CardViewModel> SortingFilteringPaging(string sortOrder, string searchString, int pagenumber, int listid, string listname)
         {
-            IEnumerable<CardViewModel> lists;
+            IEnumerable<CardViewModel> cards;
             switch (sortOrder)
             {
                 case CardVMConstants.NameDesc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Name, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Name, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.NameAsc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Name, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Name, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.DiscriptionDesc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.DiscriptionAsc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.CDateDesc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.CreationDate, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.CDateAsc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.CreationDate, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.DueDateDesc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.DueDate, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.DueDateAsc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Discription, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.DueDate, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.CixDesc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Cix, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Cix, SortDirection.Descending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 case CardVMConstants.CixAsc:
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Cix, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Cix, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
                     break;
                 default: // Cix ascending 
-                    lists = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Cix, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
+                    cards = VMConverters.ModelsToViewModels(_cr.GetCardsOfListPaging(e => e.Cix, SortDirection.Ascending, searchString, pagenumber, PageSize, listid), listname);
                     break;
             }
-            return lists;
+            return cards;
         }
         #endregion
     }

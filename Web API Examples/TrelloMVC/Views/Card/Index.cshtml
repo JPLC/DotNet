@@ -1,5 +1,6 @@
-﻿@using PagedList.Mvc
-@model PagedList.IPagedList<TrelloMVC.ViewModels.CardViewModels.CardViewModel>
+﻿@using PagedList
+@using PagedList.Mvc
+@model Tuple<IEnumerable<TrelloMVC.ViewModels.CardViewModels.CardViewModel>, TrelloMVC.ViewModels.PaginationAux, TrelloMVC.ViewModels.CardViewModels.CardSortFilter>
 
 @{
     ViewBag.Title = "Index";
@@ -8,27 +9,38 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", new { boardid = ViewBag.BoardId, listid = ViewBag.ListId }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Create New", "Create", new {boardid = ViewBag.BoardId, listid = ViewBag.ListId}, new {@class = "btn btn-success"})
 </p>
+
+<div style="padding: 7px 0 7px 0">
+    @using (@Html.BeginForm("CardsOfList", "Card", FormMethod.Get))
+    {
+        <p>
+            Find by Card Name: @Html.TextBox("SearchString", Model.Item3.CurrentFilter)
+            <input type="submit" value="Search" class="btn btn-info" />
+        </p>
+    }
+</div>
+
 <div class="panel panel-default">
     <div class="panel-heading">All Cards from List</div>
     <table class="table" id="Cards">
         <thead>
         <tr>
             <th>
-                @Html.ActionLink("Index", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.CixSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Index", "CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = Model.Item3.CixSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Name", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Name", "CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = Model.Item3.NameSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             <th>
-                Discription
+                @Html.ActionLink("Discription", "CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = Model.Item3.DiscriptionSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Creation Date", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.CDateSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Creation Date", "CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = Model.Item3.CDateSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             <th>
-                @Html.ActionLink("Due Date", "CardsOfList", new {boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = ViewBag.DueDateSortParm, currentFilter = ViewBag.CurrentFilter})
+                @Html.ActionLink("Due Date", "CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, sortOrder = Model.Item3.DueDateSortParm, currentFilter = Model.Item3.CurrentFilter })
             </th>
             @*<th>
                 Board Name
@@ -42,7 +54,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Item1)
         {
             <tr>
                 <td>
@@ -76,9 +88,17 @@
         </tbody>
     </table>
 </div>
+
+@{
+    var pagelist = new List<string>();
+    for (var i = 0; i < Model.Item2.ElementsCount; i++)
+    {
+        pagelist.Add(string.Empty);
+    }
+}
 <div>
-    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    Page @Model.Item2.PageNumber of @Model.Item2.PageCount
+    @Html.PagedListPager(pagelist.ToPagedList(Model.Item2.PageNumber, Model.Item2.PageSize), page => Url.Action("CardsOfList", new { boardid = @ViewBag.BoardId, listid = @ViewBag.ListId, page, sortOrder = Model.Item3.CurrentSort, currentFilter = Model.Item3.CurrentFilter }))
 </div>
 <div>
     @Html.ActionLink("Back to List", "Details", "List", new { boardid = @ViewBag.BoardId, id = @ViewBag.ListId }, new { @class = "btn btn-primary" })

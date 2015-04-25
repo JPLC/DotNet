@@ -32,6 +32,7 @@ namespace TrelloModel.Repository.SQL
                 return db.Card.ToList();
             }
         }
+
         public IEnumerable<Card> GetAllPaging(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             using (var db = new TrelloModelDBContainer())
@@ -187,7 +188,24 @@ namespace TrelloModel.Repository.SQL
 
         /*TODO tentar por genrico para object e struct*/
         public IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, int>> sorter, SortDirection direction, string searchString, int pagenumber,
-    int pagesize, int listid)
+        int pagesize, int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    return direction == SortDirection.Ascending ?
+                             db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                           : db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+                }
+                return direction == SortDirection.Ascending ?
+                         db.Card.Where(c => c.ListId == listid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
+                       : db.Card.Where(c => c.ListId == listid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
+            }
+        }
+
+        public IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, DateTime>> sorter, SortDirection direction, string searchString, int pagenumber,
+        int pagesize, int listid)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -226,8 +244,41 @@ namespace TrelloModel.Repository.SQL
                 return db.List.Where(l => l.ListId == listId).Select(b => b.Name).FirstOrDefault();
             }
         }
+
+        public int CountCardsOfBoard(int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Count(l => l.BoardId == boardId);
+            }
+        }
+
+        public int CountConditionalCardsOfBoard(Expression<Func<Card, bool>> predicate, int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Where(predicate).Count(l => l.BoardId == boardId);
+            }
+        }
+
+        public int CountCardsOfList(int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Count(l => l.ListId == listid);
+            }
+        }
+
+        public int CountConditionalCardsOfList(Expression<Func<Card, bool>> predicate, int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return db.Card.Where(predicate).Count(l => l.ListId == listid);
+            }
+        }
+
         #endregion
-        
+
         #region Async Methods
         public async Task<IEnumerable<Card>> GetAllAsync()
         {
@@ -366,7 +417,7 @@ namespace TrelloModel.Repository.SQL
                 if (!String.IsNullOrEmpty(searchString))
                 {
                     return direction == SortDirection.Ascending ?
-                           await  db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
+                           await db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync()
                            : await db.Card.Where(c => c.ListId == listid && c.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToListAsync();
                 }
                 return direction == SortDirection.Ascending ?
@@ -396,6 +447,38 @@ namespace TrelloModel.Repository.SQL
             using (var db = new TrelloModelDBContainer())
             {
                 return await db.List.Where(l => l.ListId == listId).Select(b => b.Name).FirstOrDefaultAsync();
+            }
+        }
+
+        public async Task<int> CountCardsOfBoardAsyn(int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Card.CountAsync(l => l.BoardId == boardId);
+            }
+        }
+
+        public async Task<int> CountConditionalCardsOfBoardAsyn(Expression<Func<Card, bool>> predicate, int boardId)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Card.Where(predicate).CountAsync(l => l.BoardId == boardId);
+            }
+        }
+
+        public async Task<int> CountCardsOfListAsyn(int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Card.CountAsync(l => l.ListId == listid);
+            }
+        }
+
+        public async Task<int> CountConditionalCardsOfListAsync(Expression<Func<Card, bool>> predicate, int listid)
+        {
+            using (var db = new TrelloModelDBContainer())
+            {
+                return await db.Card.Where(predicate).CountAsync(l => l.ListId == listid);
             }
         }
         #endregion

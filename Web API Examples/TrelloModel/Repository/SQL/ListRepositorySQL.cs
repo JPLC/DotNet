@@ -47,6 +47,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
+        /*TODO tentar por genrico para object e struct*/
         public IEnumerable<List> GetListsOfBoardPaging(Expression<Func<List, int>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize, int boardid)
         {
             using (var db = new TrelloModelDBContainer())
@@ -100,7 +101,7 @@ namespace TrelloModel.Repository.SQL
         {
             using (var db = new TrelloModelDBContainer())
             {
-                int i = 1;
+                var i = 1;
                 foreach (var l in lists)
                 {
                     l.Lix = db.List.Count(li => li.BoardId == l.BoardId) + i;
