@@ -248,12 +248,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        Task<List> IRepositoryAsync<List>.AddAsync(List t)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task AddAsync(List list)
+        public async Task<List> AddAsync(List list)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -261,13 +256,14 @@ namespace TrelloModel.Repository.SQL
                 db.List.Add(list);
                 await db.SaveChangesAsync();
             }
+            return list;
         }
 
         public async Task AddRangeAsync(IEnumerable<List> lists)
         {
             using (var db = new TrelloModelDBContainer())
             {
-                int i = 1;
+                var i = 1;
                 foreach (var l in lists)
                 {
                     l.Lix = db.List.Count(li => li.BoardId == l.BoardId) + i;
