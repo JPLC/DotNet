@@ -243,6 +243,8 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\Attributes\MaxWordsAttribute.cs" />
     <Compile Include="Validations\Controllers\BoardControllerValidation.cs" />
+    <Compile Include="ViewModels\BoardViewModels\BoardSortFilter.cs" />
+    <Compile Include="ViewModels\BoardViewModels\BoardVMConstants.cs" />
     <Compile Include="ViewModels\CardViewModels\CardViewModels.cs" />
     <Compile Include="ViewModels\Converters\VMConverters.cs" />
     <Compile Include="ViewModels\BoardViewModels\BoardViewModel.cs" />

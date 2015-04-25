@@ -1,4 +1,4 @@
-﻿@model Tuple<IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>, TrelloMVC.ViewModels.PaginationAux>
+﻿@model Tuple<IEnumerable<TrelloMVC.ViewModels.BoardViewModels.BoardViewModel>, TrelloMVC.ViewModels.PaginationAux, TrelloMVC.ViewModels.BoardViewModels.BoardSortFilter>
 
 @{
     ViewBag.Title = "Index";
@@ -14,7 +14,7 @@
     @using (@Html.BeginForm("Index", "Board", FormMethod.Get))
     {
         <p>
-            Find by Board Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+            Find by Board Name: @Html.TextBox("SearchString", Model.Item3.CurrentFilter)
             <input type="submit" value="Search" class="btn btn-info"/>
         </p>
     }

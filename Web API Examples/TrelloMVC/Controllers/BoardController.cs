@@ -38,15 +38,18 @@ namespace TrelloMVC.Controllers
         [AllowAnonymous]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DiscriptionSortParm = sortOrder == "Discription" ? "discription" : "Discription";
-
             if (searchString != null)
                 page = 1;
             else
                 searchString = currentFilter;
-            ViewBag.CurrentFilter = searchString;
+
+            var sortfiltaux = new BoardSortFilter
+            {
+                CurrentSort = sortOrder,
+                NameSortParm = string.IsNullOrEmpty(sortOrder) ? BoardVMConstants.NameDesc : string.Empty,
+                DiscriptionSortParm = sortOrder == BoardVMConstants.DiscriptionAsc ? BoardVMConstants.DiscriptionDesc : BoardVMConstants.DiscriptionAsc,
+                CurrentFilter = searchString,
+            };
 
             var elemcount = !String.IsNullOrEmpty(searchString) ? _br.CountConditional(b => b.Name.Contains(searchString)) : _br.Count();
             var pageaux = new PaginationAux
@@ -58,7 +61,7 @@ namespace TrelloMVC.Controllers
             };
 
             IEnumerable<BoardViewModel> boards = SortingFilteringPaging(sortOrder, searchString, pageaux.PageNumber);
-            return View(new Tuple<IEnumerable<BoardViewModel>, PaginationAux>(boards, pageaux));
+            return View(new Tuple<IEnumerable<BoardViewModel>, PaginationAux, BoardSortFilter>(boards, pageaux, sortfiltaux));
         }
 
         // GET: Board/Details/5
@@ -190,13 +193,13 @@ namespace TrelloMVC.Controllers
             IEnumerable<BoardViewModel> boards;
             switch (sortOrder)
             {
-                case "name_desc":
+                case BoardVMConstants.NameDesc:
                     boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e=>e.Name,SortDirection.Descending, searchString, pagenumber, PageSize));
                     break;
-                case "Discription":
+                case BoardVMConstants.DiscriptionAsc:
                     boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e => e.Discription, SortDirection.Ascending, searchString, pagenumber, PageSize));
                     break;
-                case "discription":
+                case BoardVMConstants.DiscriptionDesc:
                     boards = VMConverters.ModelsToViewModels(_br.GetAllPaging(e => e.Discription, SortDirection.Descending, searchString, pagenumber, PageSize));
                     break;
                 default: // Name ascending 
