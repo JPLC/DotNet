@@ -36,7 +36,6 @@ namespace TrelloMVC.Migrations
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Address = c.String(),
-                        TwitterHandle = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
