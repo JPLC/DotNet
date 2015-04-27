@@ -9,12 +9,12 @@ namespace TrelloModel.Interfaces.Repositories
     {
         IEnumerable<Card> GetCardsOfBoard(int boardId);
 
-        IEnumerable<Card> GetCardsOfBoardPaging(Expression<Func<Card, object>> sorter, SortDirection direction,
+        IEnumerable<Card> GetCardsOfBoardPaging<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction,
         string searchString, int pagenumber, int pagesize, int boardid);
 
         IEnumerable<Card> GetCardsOfList(int listId);
 
-        IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, object>> sorter, SortDirection direction,
+        IEnumerable<Card> GetCardsOfListPaging<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction,
         string searchString, int pagenumber, int pagesize, int listid);
 
         string GetCardListName(int listId);

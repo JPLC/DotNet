@@ -13,7 +13,7 @@ using TrelloMVC.Models;
 namespace TrelloMVC.Controllers
 {
     [Authorize]
-    [Route("Account")]
+    [RoutePrefix("Account")]
     public class AccountController : Controller
     {
         #region Variables

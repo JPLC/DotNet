@@ -11,7 +11,9 @@ using TrelloMVC.Models;
 namespace TrelloMVC.Controllers
 {
     [RoutePrefix("Roles")]
+
     /*TODO Trocar ViewBags por ViewModels*/
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         readonly ApplicationDbContext _context = new ApplicationDbContext();

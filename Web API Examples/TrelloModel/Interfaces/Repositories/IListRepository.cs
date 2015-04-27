@@ -9,7 +9,7 @@ namespace TrelloModel.Interfaces.Repositories
     {
         IEnumerable<List> GetListsOfBoard(int boardId);
 
-        IEnumerable<List> GetListsOfBoardPaging(Expression<Func<List, object>> sorter, SortDirection direction,
+        IEnumerable<List> GetListsOfBoardPaging<TKey>(Expression<Func<List, TKey>> sorter, SortDirection direction,
             string searchString, int pagenumber, int pagesize, int boardid);
 
         string GetListBoardName(int boardId);

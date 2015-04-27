@@ -7,5 +7,8 @@
 </div>
 <div class="jumbotron">
     @Html.ActionLink("Get All Boards", "Index", "Board", null, new { @class = "btn btn-primary btn-lg" })
-    @Html.ActionLink("Role Management", "Index", "Role", null, new { @class = "btn btn-primary btn-lg" })
+    @if (@ViewBag.IsAdmin)
+    {
+        @Html.ActionLink("Role Management", "Index", "Role", null, new {@class = "btn btn-primary btn-lg"})
+    }
 </div>

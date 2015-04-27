@@ -144,7 +144,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public IEnumerable<Card> GetCardsOfBoardPaging(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+        public IEnumerable<Card> GetCardsOfBoardPaging<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction, string searchString, int pagenumber,
             int pagesize, int boardid)
         {
             using (var db = new TrelloModelDBContainer())
@@ -169,7 +169,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+        public IEnumerable<Card> GetCardsOfListPaging<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction, string searchString, int pagenumber,
             int pagesize, int listid)
         {
             using (var db = new TrelloModelDBContainer())
@@ -185,8 +185,7 @@ namespace TrelloModel.Repository.SQL
                        : db.Card.Where(c => c.ListId == listid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
             }
         }
-
-        /*TODO tentar por genrico para object e struct*/
+        /*
         public IEnumerable<Card> GetCardsOfListPaging(Expression<Func<Card, int>> sorter, SortDirection direction, string searchString, int pagenumber,
         int pagesize, int listid)
         {
@@ -220,7 +219,7 @@ namespace TrelloModel.Repository.SQL
                        : db.Card.Where(c => c.ListId == listid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
             }
         }
-
+        */
         public int Count()
         {
             using (var db = new TrelloModelDBContainer())
@@ -288,7 +287,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task<IEnumerable<Card>> GetAllPagingAsync(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
+        public async Task<IEnumerable<Card>> GetAllPagingAsync<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -384,7 +383,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task<IEnumerable<Card>> GetCardsOfBoardPagingAsync(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber,
+        public async Task<IEnumerable<Card>> GetCardsOfBoardPagingAsync<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction, string searchString, int pagenumber,
             int pagesize, int boardid)
         {
             using (var db = new TrelloModelDBContainer())
@@ -409,7 +408,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task<IEnumerable<Card>> GetCardsOfListPagingAsync(Expression<Func<Card, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize,
+        public async Task<IEnumerable<Card>> GetCardsOfListPagingAsync<TKey>(Expression<Func<Card, TKey>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize,
             int listid)
         {
             using (var db = new TrelloModelDBContainer())

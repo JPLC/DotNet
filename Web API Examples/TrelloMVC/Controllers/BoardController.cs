@@ -14,7 +14,6 @@ using TrelloMVC.ViewModels.Converters;
 
 namespace TrelloMVC.Controllers
 {
-    /*[RequireHttps]*/
     [RoutePrefix("Board")]
     public class BoardController : Controller
     {
@@ -34,7 +33,6 @@ namespace TrelloMVC.Controllers
         // GET: Board/All
         [HttpGet]
         [Route("All")]
-        [AllowAnonymous]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
             if (searchString != null)

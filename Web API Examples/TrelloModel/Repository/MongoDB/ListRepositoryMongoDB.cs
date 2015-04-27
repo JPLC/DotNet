@@ -20,7 +20,7 @@ namespace TrelloModel.Repository.MongoDB
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<List>> GetAllPagingAsync(Expression<Func<List, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
+        public Task<IEnumerable<List>> GetAllPagingAsync<TKey>(Expression<Func<List, TKey>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize)
         {
             throw new NotImplementedException();
         }
@@ -81,6 +81,12 @@ namespace TrelloModel.Repository.MongoDB
         }
 
         public Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<List>> GetListsOfBoardPagingAsync<TKey>(Expression<Func<List, TKey>> sorter, SortDirection direction, string searchString, int pagenumber,
+            int pagesize, int boardid)
         {
             throw new NotImplementedException();
         }

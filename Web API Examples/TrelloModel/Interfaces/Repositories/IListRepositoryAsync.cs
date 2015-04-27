@@ -10,7 +10,7 @@ namespace TrelloModel.Interfaces.Repositories
     {
         Task<IEnumerable<List>> GetListsOfBoardAsync(int boardId);
 
-        Task<IEnumerable<List>> GetListsOfBoardPagingAsync(Expression<Func<List, object>> sorter, SortDirection direction,
+        Task<IEnumerable<List>> GetListsOfBoardPagingAsync<TKey>(Expression<Func<List, TKey>> sorter, SortDirection direction,
         string searchString, int pagenumber, int pagesize, int boardid);
 
         Task<string> GetListBoardNameAsync(int boardId);

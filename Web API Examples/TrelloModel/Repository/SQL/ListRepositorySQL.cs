@@ -31,7 +31,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public IEnumerable<List> GetListsOfBoardPaging(Expression<Func<List, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize, int boardid)
+        public IEnumerable<List> GetListsOfBoardPaging<TKey>(Expression<Func<List, TKey>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize, int boardid)
         {
             using (var db = new TrelloModelDBContainer())
             {
@@ -44,23 +44,6 @@ namespace TrelloModel.Repository.SQL
                 return direction == SortDirection.Ascending ?
                          db.List.Where(b => b.BoardId == boardid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
                        : db.List.Where(b => b.BoardId == boardid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
-            }
-        }
-
-        /*TODO tentar por genrico para object e struct*/
-        public IEnumerable<List> GetListsOfBoardPaging(Expression<Func<List, int>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize, int boardid)
-        {
-            using (var db = new TrelloModelDBContainer())
-            {
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    return direction == SortDirection.Ascending ?
-                        db.List.Where(b => b.BoardId == boardid && b.Name.Contains(searchString)).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
-                        : db.List.Where(b => b.BoardId == boardid && b.Name.Contains(searchString)).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
-                }
-                return direction == SortDirection.Ascending ?
-                    db.List.Where(b => b.BoardId == boardid).OrderBy(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList()
-                    : db.List.Where(b => b.BoardId == boardid).OrderByDescending(sorter).Skip(pagesize * (pagenumber - 1)).Take(pagesize).ToList();
             }
         }
         
@@ -209,7 +192,7 @@ namespace TrelloModel.Repository.SQL
             }
         }
 
-        public async Task<IEnumerable<List>> GetListsOfBoardPagingAsync(Expression<Func<List, object>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize, int boardid)
+        public async Task<IEnumerable<List>> GetListsOfBoardPagingAsync<TKey>(Expression<Func<List, TKey>> sorter, SortDirection direction, string searchString, int pagenumber, int pagesize, int boardid)
         {
             using (var db = new TrelloModelDBContainer())
             {
