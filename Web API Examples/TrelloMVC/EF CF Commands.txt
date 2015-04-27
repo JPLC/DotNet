@@ -1,5 +1,6 @@
-﻿Enable-Migrations
-Update-Database-Verbose
+﻿Add-Migration
+Enable-Migrations
+Update-Database –Verbose 
 
 Pass: 
 @TrelloMVC1@

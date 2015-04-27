@@ -2,7 +2,7 @@ namespace TrelloMVC.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class InitialCreate : DbMigration
     {
         public override void Up()
@@ -16,7 +16,7 @@ namespace TrelloMVC.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
-            
+
             CreateTable(
                 "dbo.AspNetUserRoles",
                 c => new
@@ -29,7 +29,7 @@ namespace TrelloMVC.Migrations
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
-            
+
             CreateTable(
                 "dbo.AspNetUsers",
                 c => new
@@ -50,7 +50,7 @@ namespace TrelloMVC.Migrations
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex");
-            
+
             CreateTable(
                 "dbo.AspNetUserClaims",
                 c => new
@@ -63,7 +63,7 @@ namespace TrelloMVC.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+
             CreateTable(
                 "dbo.AspNetUserLogins",
                 c => new
@@ -75,9 +75,20 @@ namespace TrelloMVC.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+
+            /*CreateTable(
+                "dbo.AspNetUserContent",
+                c => new
+                {
+                    BoardId = c.String(nullable: false, maxLength: 128),
+                    UserId = c.String(nullable: false, maxLength: 128),
+                    Access = c.String(nullable: false, maxLength: 128),
+                })
+                .PrimaryKey(t => new { t.UserId, t.BoardId, })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);*/
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");

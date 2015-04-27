@@ -37,6 +37,8 @@ namespace TrelloMVC.Models
         {
         }
 
+        public DbSet<UserContent> UserContents { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
